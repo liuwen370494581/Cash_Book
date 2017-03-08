@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/item_url"
+            android:layout_width="match_parent"
+            android:layout_height="185dp"
+            android:fitsSystemWindows="true"
+            android:src="@mipmap/che"/>
+
+        <TextView
+            android:id="@+id/item_plan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:text="买车"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_19"/>
+
+        <TextView
+            android:id="@+id/item_peopele_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_plan_name"
+            android:layout_marginLeft="20dp"
+            android:text="48234人已加入"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/item_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/plan_save_money_jia_shape"
+            android:padding="5dp"
+            android:text="加入 +"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:padding="8dp"
+        android:text="离开公家地铁的拥挤，给自己一片舒适的净土"/>
+</LinearLayout>

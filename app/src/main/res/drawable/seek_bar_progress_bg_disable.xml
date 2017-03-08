@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景图 -->
+    <item android:id="@android:id/background">
+        <shape android:shape="line">
+            <stroke
+                android:width="6dp"
+                android:color="#E0E0E0"/>
+        </shape>
+    </item>
+    <!-- 缓冲进度 -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape android:shape="line">
+                <stroke
+                    android:width="6dp"
+                    android:color="#E0E0E0"/>
+            </shape>
+        </clip>
+    </item>
+    <!-- 播放进度 -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="line">
+                <stroke
+                    android:width="6dp"
+                    android:color="#E0E0E0"/>
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

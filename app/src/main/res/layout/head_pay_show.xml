@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/pay_ry"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="@color/blue">
+
+        <star.liuwen.com.cash_books.View.NumberAnimTextView
+            android:id="@+id/pay_show_txt_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:onClick="toYuer"
+            android:padding="4dp"
+            android:text="账户余额大"
+            android:textColor="@color/white"
+            android:textSize="24sp"/>
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/pay_show_txt_account"
+            android:src="@mipmap/bianji_bai"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pay_show_txt_account"
+            android:layout_centerInParent="true"
+            android:text="账户余额"
+            android:textColor="@color/bga_adapter_divider"
+            android:textSize="@dimen/txr_13"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom">
+
+            <TextView
+                android:id="@+id/pay_show_txt_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="25dp"
+                android:clickable="true"
+                android:drawableRight="@mipmap/btg_icon_arrow_normal"
+                android:onClick="toData"
+                android:text="2017-03"
+                android:textColor="@color/white"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/pay_show_txt_liuchu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="0.00"
+                android:textColor="@color/white"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pay_show_txt_liuchu"
+                android:layout_centerHorizontal="true"
+                android:text="流出"
+                android:textColor="@color/bga_adapter_divider"
+                android:textSize="@dimen/txr_12"/>
+
+            <TextView
+                android:id="@+id/pay_show_txt_liuru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"
+                android:text="0.00"
+                android:textColor="@color/white"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/pay_show_txt_liuru"
+                android:layout_marginRight="45dp"
+                android:text="流入"
+                android:textColor="@color/bga_adapter_divider"
+                android:textSize="@dimen/txr_12"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

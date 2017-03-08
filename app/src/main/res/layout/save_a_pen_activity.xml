@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar"/>
+
+
+    <star.liuwen.com.cash_books.View.DampView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="720dp"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/re_save_a_pen_platform"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="存款平台"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/txt_save_a_pen_platform"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:textColor="@color/text_color_99"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_save_a_pen_money"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="金额"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/txt_save_a_pen_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:text="0.00"
+                    android:textColor="@color/text_color_99"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_save_a_pen_yield"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="年化收益率"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/txt_save_a_pen_yield"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:text="0.00%"
+                    android:textColor="@color/text_color_99"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_save_a_pen_account"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="使用账户"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/txt_save_a_pen_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:textColor="@color/text_color_99"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_save_a_pen_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="起息时间"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/txt_save_a_pen_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="22dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:textColor="@color/text_color_99"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_save_a_pen_end_time"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="结束时间"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/txt_save_a_pen_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:textColor="@color/text_color_99"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_save_a_pen_remark"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="备注"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/txt_save_a_pen_remark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:textColor="@color/text_color_99"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </star.liuwen.com.cash_books.View.DampView>
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="MagnificentChart">
+        <attr name="animation" format="boolean"/>
+        <attr name="round" format="boolean"/>
+        <attr name="shadow" format="boolean"/>
+        <attr name="showTitle" format="boolean"/>
+        <attr name="shadowColor" format="color"/>
+        <attr name="bg" format="color"/>
+    </declare-styleable>
+
+
+    <!-- 圆形头像控件-->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color2" format="color"/>
+    </declare-styleable>
+</resources>

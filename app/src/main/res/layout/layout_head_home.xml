@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="true"
+                android:fitsSystemWindows="true">
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="1dp"
+        android:layout_height="25dp"
+        android:layout_centerHorizontal="true"
+        android:background="#A6A6A6"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:layout_toLeftOf="@+id/f_h_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/home_shouru_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12月收入"/>
+
+            <star.liuwen.com.cash_books.View.NumberAnimTextView
+                android:id="@+id/home_shouru_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="@dimen/textSize_18"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/f_h_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/yundongjianshen"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/f_h_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/home_zhichu_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12月支出"/>
+
+            <star.liuwen.com.cash_books.View.NumberAnimTextView
+                android:id="@+id/home_zhichu_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="@dimen/textSize_18"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

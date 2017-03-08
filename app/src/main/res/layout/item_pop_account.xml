@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_choose_cash"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="5dp">
+
+        <ImageView
+            android:src="@mipmap/ic_laun"
+            android:id="@+id/choose_cash_img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_marginTop="3dp"
+            android:id="@+id/choose_cash_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/choose_cash_img"
+            android:padding="5dp"
+            android:text="现金"
+            android:textColor="@color/text_color_66"
+            android:textSize="@dimen/textSize_16"/>
+
+        <TextView
+            android:textSize="@dimen/txr_12"
+            android:id="@+id/layout_cash_y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choose_cash_txt"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/choose_cash_img"
+            android:text="余额：1200"
+            android:textColor="@color/text_color_99"/>
+
+        <TextView
+            android:textSize="@dimen/txr_12"
+            android:id="@+id/layout_cash_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choose_cash_txt"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/choose_cash_img"
+            android:text="剩余额度：0.00"
+            android:textColor="@color/text_color_99"/>
+
+        <TextView
+            android:textSize="@dimen/txr_12"
+            android:id="@+id/layout_cash_limit_y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choose_cash_txt"
+            android:layout_marginLeft="12dp"
+            android:layout_toRightOf="@id/layout_cash_limit"
+            android:text="欠款：2500"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+</LinearLayout>

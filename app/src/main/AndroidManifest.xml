@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="star.liuwen.com.cash_books">
+
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 获取当前WiFi接入的状态以及WLAN热点的信息 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <!-- 改变WiFi多播状态 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <application
+        android:name=".Base.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_laun"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activity.LoadingActivity"
+            android:theme="@style/welcomeTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!--日历-->
+        <activity
+            android:name=".Activity.CalendarActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--支出和收入-->
+        <activity
+            android:name=".Activity.IncomeAndCostActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--显示money页面-->
+        <!--钱的设置页面-->
+        <!--修改的通用界面-->
+        <!--存钱和账单总结的通用页面-->
+        <activity
+            android:name=".Activity.SaveMoneyActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--存钱计划-->
+        <activity
+            android:name=".Activity.PlanSaveMoneyActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--整理消费账单-->
+        <activity
+            android:name=".Activity.FixXiaofeiCheckActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--选择发卡行-->
+        <activity
+            android:name=".Activity.ChoiceIssuingBankActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--提醒记账页面-->
+        <activity
+            android:name=".Activity.RemindActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--新建存钱计划-->
+        <activity
+            android:name=".Activity.newSaveMoneyPlanActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--主题皮肤-->
+        <activity
+            android:name=".Activity.ChangeSkinActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--通用修改存钱计划页面-->
+        <!--用户界面-->
+        <activity
+            android:name=".Activity.UserInfoActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--关于界面-->
+        <activity
+            android:name=".Activity.AboutMeActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--设置页面-->
+        <activity
+            android:name=".Activity.SettingActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--密码锁页面-->
+        <activity
+            android:name=".Activity.CodedLockActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--货币页面-->
+        <activity
+            android:name=".Activity.HuoBiActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--货币设置页面-->
+        <activity
+            android:name=".Activity.HuoBiSettingActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--报表明细页面-->
+        <activity
+            android:name=".Activity.ReportsDetailActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--登陆界面-->
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--设置九宫格解锁页面-->
+        <activity
+            android:name=".Activity.GraphicLockActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+
+        <!--登陆的时候弹出九宫格解锁页面-->
+        <activity
+            android:name=".Activity.LoginLockActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--主页-->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--展示存钱的页面-->
+        <activity
+            android:name=".Activity.ShowSaveMoneyPlanActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+
+        <!--存一笔-->
+        <activity
+            android:name=".Activity.SaveAPenActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--存钱平台-->
+        <activity
+            android:name=".Activity.SavePlatformActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+
+        <!--通用的修改页面-->
+        <activity
+            android:name=".Activity.UpdateCommonKeyBoardActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+
+        <!--钱包显示页面-->
+        <activity
+            android:name=".Activity.PayShowActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--设置账户页面-->
+        <activity
+            android:name=".Activity.PaySettingsActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+    </application>
+
+
+</manifest>

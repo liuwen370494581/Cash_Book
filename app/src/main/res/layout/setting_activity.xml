@@ -1,0 +1,202 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/common_toolbar"/>
+    </FrameLayout>
+
+
+    <star.liuwen.com.cash_books.View.DampView
+        overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp"
+        android:fadingEdge="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/re_setting_save_account"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="17dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/f_my_1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:background="@mipmap/config_icon_gesturelock"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/f_my_1"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="8dp"
+                    android:text="账号安全"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_setting_huobi"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/f_my_2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:background="@mipmap/huobi"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/f_my_2"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="8dp"
+                    android:text="货币"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_setting_hucun"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/f_my_3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:background="@mipmap/config_daochuzhangben"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/f_my_3"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="8dp"
+                    android:text="清除缓存"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_setting_share"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/f_my_4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:background="@mipmap/config_fenxiang"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/f_my_4"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="8dp"
+                    android:text="分享App"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_setting_update"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/f_my_5"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:background="@mipmap/config_jianchagengxin"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/f_my_5"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="8dp"
+                    android:text="检查更新"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_setting_clean_all_data"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="17dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="永久清除掉所以数据"
+                    android:textColor="@android:color/holo_red_light"
+                    android:textSize="@dimen/txt_17"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </star.liuwen.com.cash_books.View.DampView>
+</android.support.v4.widget.DrawerLayout>

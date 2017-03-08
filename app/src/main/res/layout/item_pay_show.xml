@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/item_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textSize="16sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="8dp">
+
+
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/item_rd_image"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@mipmap/maicai"/>
+
+        <TextView
+            android:id="@+id/item_rd_txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/item_rd_image"
+            android:text="淘宝"
+            android:textSize="@dimen/textSize_16"/>
+
+        <TextView
+            android:id="@+id/item_rd_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:text="51.9%"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/item_rd_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="1526.00"
+            android:textColor="@color/text_color_66"
+            android:textSize="@dimen/textSize_16"/>
+    </RelativeLayout>
+</LinearLayout>

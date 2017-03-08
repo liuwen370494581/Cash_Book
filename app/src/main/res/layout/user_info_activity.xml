@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+
+    <include layout="@layout/common_toolbar"/>
+
+    <star.liuwen.com.cash_books.View.DampView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <star.liuwen.com.cash_books.View.CircleImageView
+                    android:id="@+id/user_info_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/huatimorentouxiang"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_user_info_nickName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="昵称"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/user_info_nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="70dp"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:text="小米"
+                    android:textColor="@color/text_color_33"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_user_info_signature"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="签名"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/user_info_signature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="小米"
+                    android:textColor="@color/text_color_33"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_user_info_sex"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="性别"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/user_info_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="男"
+                    android:textColor="@color/text_color_33"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_user_info_location"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_arrow_gray"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="所在地"
+                    android:textSize="@dimen/txt_16"/>
+
+                <TextView
+                    android:id="@+id/user_info_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="12dp"
+                    android:text="湖南"
+                    android:textColor="@color/text_color_33"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_user_info_out"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="20dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:padding="6dp"
+                    android:text="退出登录"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/txt_16"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </star.liuwen.com.cash_books.View.DampView>
+</LinearLayout>

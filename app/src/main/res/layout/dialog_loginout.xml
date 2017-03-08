@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/dialog_round_bg_shape">
+
+    <RelativeLayout
+        android:id="@+id/sethint_dialoglayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialog_hint"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="15dp"
+            android:text="提示"
+            android:textColor="@color/text_color_33"
+            android:textSize="@dimen/txt_18"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/splint_line"
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/dialog_hint"
+            android:alpha="0.2"
+            android:background="@color/text_color_99"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/dialog_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/splint_line"
+            android:gravity="center"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="8dp"
+            android:textColor="@color/text_color_66"
+            android:textSize="@dimen/txr_14"/>
+
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialog_tv"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/edittext_dialog_content_et"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_below="@id/title"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_rectangle_background_white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:maxLength="80"
+                android:paddingBottom="3dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:singleLine="true"
+                android:textColor="@color/text_color_33"
+                android:textColorHint="@color/text_color_66"
+                android:textSize="@dimen/txt_16"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/dialog_line"
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/layout"
+            android:alpha="0.2"
+            android:background="@color/text_color_99"/>
+
+        <LinearLayout
+            android:id="@+id/layout_button"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/dialog_line">
+
+            <TextView
+                android:id="@+id/dialog_left"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_radius_left_selector"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/text_color_66"
+                android:textSize="@dimen/txt_16"/>
+
+            <TextView
+                android:id="@+id/line_s"
+                android:layout_width="0.5dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:alpha="0.2"
+                android:background="@color/text_color_99"/>
+
+            <TextView
+                android:id="@+id/dialog_right"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/btn_radius_right_selector"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/text_color_66"
+                android:textSize="@dimen/txt_16"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

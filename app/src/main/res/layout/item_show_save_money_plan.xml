@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/re_head_show"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/item_plan_platform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="钱宝网"
+            android:textSize="@dimen/textSize_18"/>
+
+        <TextView
+            android:id="@+id/item_plan_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="3dp"
+            android:text="本金:1.00"
+            android:textColor="@color/text_color_99"/>
+
+        <TextView
+            android:id="@+id/item_plan_lixi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/item_plan_money"
+            android:layout_marginRight="10dp"
+            android:padding="3dp"
+            android:text="预计利息：0.00"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/item_re_show"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <LinearLayout
+            android:id="@+id/ly_01"
+            android:layout_width="match_parent"
+            android:layout_height="27.5dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="起息时间"
+                android:textColor="@color/text_color_99"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="代收本金"
+                android:textColor="@color/text_color_99"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="代收利息"
+                android:textColor="@color/text_color_99"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="到期时间"
+                android:textColor="@color/text_color_99"/>
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/ly_01"
+            android:background="@color/half_transparent_black"/>
+
+        <LinearLayout
+            android:id="@+id/ly_03"
+            android:layout_width="match_parent"
+            android:layout_height="27.5dp"
+            android:layout_below="@id/view_1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_plan_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="起息时间"/>
+
+            <TextView
+                android:id="@+id/item_plan_benjin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="代收本金"/>
+
+            <TextView
+                android:id="@+id/item_plan_daishoulixi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="代收利息"/>
+
+            <TextView
+                android:id="@+id/item_plan_endtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:text="到期时间"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/ly_03"
+        android:background="@color/half_transparent_black"/>
+</LinearLayout>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tool="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background">
+
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="1dp"
+        android:layout_height="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="#A6A6A6"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/itme_h__img_data"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_below="@id/view_1"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/bg_green_circle_smic"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/item_h__txt_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_1"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@id/itme_h__img_data"
+        android:text="时间"
+        android:textColor="@color/text_color_33"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tool:text="somethingelse"/>
+
+    <View
+        android:id="@+id/view_2"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:layout_below="@id/itme_h__img_data"
+        android:layout_centerHorizontal="true"
+        android:background="#A6A6A6"/>
+
+    <ImageView
+        android:id="@+id/item_h__img_time"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/view_2"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/timeline_green"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/re_zhichu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_2"
+        android:layout_toRightOf="@id/item_h__img_time"
+        android:visibility="gone"
+        app:cardCornerRadius="3dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            >
+
+            <TextView
+                android:id="@+id/item_h_txt_zhichu_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="18:23:25"
+                android:textSize="10sp"/>
+
+            <ImageView
+                android:id="@+id/item_h_image_zhichu"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@id/item_h_txt_zhichu_time"
+                android:src="@mipmap/maicai"/>
+
+            <TextView
+                android:id="@+id/item_h_txt_zhichu_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_h_txt_zhichu_time"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/item_h_image_zhichu"
+                android:padding="3dp"
+                android:text="支出："
+                android:textSize="@dimen/txr_14"/>
+
+            <TextView
+                android:id="@+id/item_h_txt_zhichu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_h_txt_zhichu_time"
+                android:layout_toRightOf="@id/item_h_txt_zhichu_type"
+                android:padding="3dp"
+                android:text="0.00"
+                android:textSize="@dimen/txr_14"/>
+
+            <TextView
+                android:id="@+id/item_h_txt_xiaofei_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_h_image_zhichu"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="2dp"
+                android:padding="3dp"
+                android:text="消费类型："
+                android:textSize="@dimen/txr_11"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/re_shouru"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_2"
+        android:layout_toLeftOf="@id/item_h__img_time"
+        android:visibility="gone"
+        app:cardCornerRadius="3dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            >
+
+            <TextView
+                android:id="@+id/item_h_txt_shouru_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="3dp"
+                android:text="18:23:25"
+                android:textSize="10sp"/>
+
+            <ImageView
+                android:id="@+id/item_h_image_shouru"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_below="@id/item_h_txt_shouru_time"
+                android:layout_marginLeft="22dp"
+                android:layout_toLeftOf="@+id/item_h_txt_shouru_type"
+                android:src="@mipmap/maicai"/>
+
+            <TextView
+                android:id="@+id/item_h_txt_shouru_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_h_txt_shouru_time"
+                android:layout_marginLeft="3dp"
+                android:layout_toLeftOf="@+id/item_h_txt_shouru"
+                android:padding="2dp"
+                android:text="收入："
+                android:textSize="@dimen/txr_14"/>
+
+            <TextView
+                android:id="@+id/item_h_txt_shouru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/item_h_txt_shouru_time"
+                android:layout_marginRight="20dp"
+                android:padding="2dp"
+                android:text="0.00"
+                android:textSize="@dimen/txr_14"/>
+
+            <TextView
+                android:id="@+id/item_h_txt_chucun_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_h_txt_shouru_type"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="2dp"
+                android:padding="3dp"
+                android:text="存储类型："
+                android:textSize="@dimen/txr_11"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/view_3"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/item_h__img_time"
+        android:layout_centerHorizontal="true"
+        android:background="#A6A6A6"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/view_3"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/timeline_green"/>
+</RelativeLayout>

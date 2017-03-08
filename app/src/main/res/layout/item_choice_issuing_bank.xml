@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_item_choice_issuing_bank"
+    style="@style/MatchWrap"
+    android:paddingBottom="12sp"
+    android:paddingLeft="13sp"
+    android:paddingRight="13sp"
+    android:paddingTop="12sp"
+    android:text="成都"
+    android:textColor="@color/text_color_99"
+    android:textSize="14sp"/>

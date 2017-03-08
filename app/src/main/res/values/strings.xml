@@ -1,0 +1,125 @@
+<resources>
+    <string name="app_name">记账宝</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="qianbao_my">我的钱包</string>
+    <string name="my_more">我的</string>
+    <string name="home_mingxi">明细</string>
+    <string name="reports_my">我的报表</string>
+    <string name="qianbao_zhuanzhang">转账</string>
+
+    <string name="calendar_no_jilu">%s当前无记账记录</string>
+    <string name="calendar_jia">0.00</string>
+
+    <string name="qianbao_yuer">余额</string>
+    <string name="qianbao_cash">现金</string>
+    <string name="qianbao_cash_yuer">现金余额</string>
+    <string name="qianbao_chuxuka">储蓄卡</string>
+    <string name="qianbao_chuxuka_yuer">储蓄卡余额</string>
+    <string name="qianbao_xinyka">信用卡</string>
+    <string name="qianbao_xinyka_yuer">未设置信用卡额度</string>
+    <string name="qianbao_zhifb">支付宝</string>
+    <string name="qianbao_zhifb_yuer">网络账户余额</string>
+    <string name="qianbao_jiechu">借出</string>
+    <string name="qianbao_jiechu_yuer">别人借我的钱</string>
+    <string name="qianbao_jieru">借入</string>
+    <string name="qianbao_jieru_yuer">我欠别人的钱</string>
+
+    <string name="pay_setting">设置</string>
+    <string name="back">返回</string>
+    <string name="edit_account_name">编辑账户名称</string>
+    <string name="edit_account_money">编辑账户余额</string>
+    <string name="edit_credit_limit">编辑信用卡额度</string>
+    <string name="edit_debt">编辑信用卡欠款</string>
+
+
+    <string name="edit_Money">编辑金额</string>
+    <string name="edit_percent">输入年华收益率%</string>
+    <string name="save">保存</string>
+    <string name="save_money_plan">存钱计划</string>
+    <string name="zhangdan_zongjie">账单总结</string>
+    <string name="zhangdan_cunqian">开始我的存钱计划</string>
+    <string name="zhangdan_xiaofei">开始梳理我的冲动消费</string>
+
+    <string name="save_money_target">存钱目标</string>
+    <string name="me_setting">自定义</string>
+    <string name="new_save_money_target">新建存钱计划</string>
+    <string name="no_setting">未设置</string>
+    <string name="chong_dong_xiaofei">标记冲动消费</string>
+
+    <string name="remind">记账提醒</string>
+    <string name="finish">完成</string>
+    <string name="lx">生活不止眼前的苟且，还有远方的诗和田野</string>
+    <string name="theme">主题皮肤</string>
+
+    <string name="edit_money">编辑目标金额</string>
+    <string name="edit_remark">编辑备注</string>
+    <string name="edit_renickName">编辑昵称</string>
+    <string name="edit_reSignature">编辑签名</string>
+    <string name="edit_setCashYuEr">输入现金余额</string>
+    <string name="edit_setCxkYuEr">输入储蓄卡余额</string>
+    <string name="edit_setXykYuEr">输入信用卡额度</string>
+    <string name="edit_setZfbYuEr">输入支付宝余额</string>
+
+    <string name="edit_input_money">请输入目标金额</string>
+    <string name="edit_input_remark">请输入备注</string>
+    <string name="edit_input_renickName">请输入昵称</string>
+    <string name="edit_input_reSignature">请输入签名</string>
+    <string name="edit_input_yuer">请输入账户余额</string>
+
+    <string name="user_ino">我的个人资料</string>
+    <string name="about_me">关于</string>
+    <string name="my_github_web">https://github.com/liuwen370494581</string>
+    <string name="about_me_show">*本应用代码都在GitHub上Cash_Books中,如果喜欢，谢谢star</string>
+    <string name="ring">只响一次</string>
+    <string name="everyday">每天</string>
+    <string name="mon">周一</string>
+    <string name="tue">周二</string>
+    <string name="wed">周三</string>
+    <string name="thu">周四</string>
+    <string name="fri">周五</string>
+    <string name="sat">周六</string>
+    <string name="sun">周日</string>
+    <string name="cycle_sure">确定</string>
+
+    <string name="reports_xiaofei">消费合计(元)</string>
+    <string name="reports_find_detail">查看明细</string>
+    <string name="reports_xiaofei_detail">消费(元)：</string>
+    <string name="reports_xiaofei_txt">%s元</string>
+    <string name="reports_detail">消费明细</string>
+
+
+    <string name="setting">设置</string>
+    <string name="setting_save_account">账号安全</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
+
+
+    <string name="huobi_setting">货币设置</string>
+    <string name="huobi_benweibi">选择本位币</string>
+
+    <string name="share_content">Hi,我是记账宝，很高兴认识你</string>
+    <string name="share_fail">分享失败</string>
+
+
+    <string name="clean_all_data">初始化将会删除你所有的记录并且恢复到软件的最初设置，你确定要这么做吗？</string>
+
+    <string name="lock_title">设置手势密码</string>
+    <string name="lock_Unlock_pattern">绘制解锁图案</string>
+    <string name="lock_again_unlock_pattern">再次绘制图案进行确认</string>
+    <string name="lock_passWord_success">设置密码成功</string>
+    <string name="lock_login">您现在可以输入手势密码登陆了</string>
+    <string name="lock_password_error">两次设置的密码不一致,请重试"</string>
+    <string name="lock_login_success">登陆成功</string>
+    <string name="lock_login_error">密码错误,登陆失败</string>
+    <string name="lock_more_four_point">请至少连接四个点</string>
+    <string name="lock_can_login">你可以登录了</string>
+    <string name="lock_password_short">密码过短,设置失败</string>
+
+    <string name="dao_excel">导出excel</string>
+    <string name="welcome">立即体验</string>
+
+    <string name="save_a_pen">存一笔</string>
+    <string name="ling">0.00</string>
+</resources>

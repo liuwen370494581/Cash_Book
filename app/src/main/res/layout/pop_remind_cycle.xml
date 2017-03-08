@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/layout_choose_zhanghu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:drawablePadding="20dp"
+            android:gravity="center"
+            android:text="选择提醒周期"
+            android:textColor="@color/text_color_66"
+            android:textSize="@dimen/txt_17"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/re_pop_week_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="40dp"
+            android:minWidth="120dp"
+            android:text="周一"
+            android:textSize="@dimen/txt_17"
+            />
+
+        <ImageView
+            android:id="@+id/image_pop_one"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/gou_lan"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/re_pop_week_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="40dp"
+            android:minWidth="120dp"
+            android:text="周二"
+            android:textSize="@dimen/txt_17"
+            />
+
+        <ImageView
+            android:id="@+id/image_pop_two"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/gou_lan"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/re_pop_week_three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="40dp"
+            android:minWidth="120dp"
+            android:text="周三"
+            android:textSize="@dimen/txt_17"
+            />
+
+        <ImageView
+            android:id="@+id/image_pop_three"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/gou_lan"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/re_pop_week_four"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="40dp"
+            android:minWidth="120dp"
+            android:text="周四"
+            android:textSize="@dimen/txt_17"
+            />
+
+        <ImageView
+            android:id="@+id/image_pop_four"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/gou_lan"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/re_pop_week_five"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="40dp"
+            android:minWidth="120dp"
+            android:text="周五"
+            android:textSize="@dimen/txt_17"
+            />
+
+        <ImageView
+            android:id="@+id/image_pop_five"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/gou_lan"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/re_pop_week_six"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="40dp"
+            android:minWidth="120dp"
+            android:text="周六"
+            android:textSize="@dimen/txt_17"
+            />
+
+        <ImageView
+            android:id="@+id/image_pop_six"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/gou_lan"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/re_pop_week_seven"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="40dp"
+            android:minWidth="120dp"
+            android:text="周日"
+            android:textSize="@dimen/txt_17"
+            />
+
+        <ImageView
+            android:id="@+id/image_pop_seven"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:src="@mipmap/gou_lan"/>
+    </RelativeLayout>
+</LinearLayout>

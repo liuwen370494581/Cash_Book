@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tv_item_choice_issuing_bank"
+        style="@style/MatchWrap"
+        android:paddingBottom="8dp"
+        android:paddingLeft="13sp"
+        android:paddingRight="13sp"
+        android:paddingTop="12sp"
+        android:text="常用"
+        android:textColor="@color/text_color_99"
+        android:textSize="14sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/choice_head_bank_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="170dp">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

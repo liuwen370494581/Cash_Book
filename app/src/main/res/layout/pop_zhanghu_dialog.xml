@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/layout_choose_zhanghu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:drawablePadding="20dp"
+            android:gravity="center"
+            android:text="选择账户"
+            android:textColor="@color/text_color_66"
+            android:textSize="@dimen/txt_17"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
+
+    <ListView
+        android:id="@+id/lv_popup_list"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@mipmap/two"
+        android:focusableInTouchMode="true"
+        android:listSelector="#00000000"
+        />
+</LinearLayout>

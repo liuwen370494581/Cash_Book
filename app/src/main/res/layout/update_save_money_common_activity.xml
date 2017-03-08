@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/activity_reset_tel_next_step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:background="@color/background"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/activity_update_account_money"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:alpha="0.5"
+            android:background="@drawable/account_shape"
+            android:hint="请输入余额"
+            android:inputType="number"
+            android:maxLength="13"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/text_color_33"
+            android:textColorHint="@color/text_color_99"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/txt_18"/>
+    </LinearLayout>
+</LinearLayout>

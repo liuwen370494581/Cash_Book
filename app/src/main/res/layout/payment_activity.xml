@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/pay_ry"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/blue">
+
+        <star.liuwen.com.cash_books.View.NumberAnimTextView
+            android:id="@+id/pay_txt_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:onClick="toYuer"
+            android:padding="10dp"
+            android:text="账户余额"
+            android:textColor="@color/white"
+            android:textSize="23sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/pay_txt_account"
+            android:src="@mipmap/photo_picker_ic_tab_filter"/>
+
+        <TextView
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pay_txt_account"
+            android:layout_centerInParent="true"
+            android:text="账户余额"
+            android:textColor="@color/text_color_bg"
+            android:textSize="@dimen/txr_13"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/pay_txt_year"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/btg_icon_arrow_normal"
+                android:onClick="toData"
+                android:text="12月"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_16"/>
+
+            <TextView
+                android:id="@+id/pay_chu"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_weight="1"
+                android:text="流出：0.00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_16"/>
+
+            <TextView
+                android:id="@+id/pay_ru"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_weight="1"
+                android:text="流入：0.00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_16"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pay_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/pay_zhuanzhuang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:onClick="toZhuangZhang"
+                android:text="转账"
+                android:textColor="@color/xinyongka"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+
+        <ViewStub
+            android:layout_marginTop="100dp"
+            android:id="@+id/view_stub"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout="@layout/accout_no_result"/>
+    </RelativeLayout>
+
+</LinearLayout>
