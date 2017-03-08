@@ -58,7 +58,9 @@ public class App extends Application {
         DaoMaster daoMaster = new DaoMaster(db);
         mDaoSession = daoMaster.newSession();
         if (SharedPreferencesUtil.getBooleanPreferences(this, Config.FistStar, true)) {
+            DataEnige.InsertAccountData();
             DataEnige.InsertShouRuData();
+            DataEnige.InsertZHiCHuData();
         }
     }
 

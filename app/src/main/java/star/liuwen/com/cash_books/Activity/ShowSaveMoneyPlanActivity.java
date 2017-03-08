@@ -24,7 +24,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoSaveMoneyPlan;
-import star.liuwen.com.cash_books.Dialog.TipAndEditDialog;
+import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
@@ -156,13 +156,13 @@ public class ShowSaveMoneyPlanActivity extends BaseActivity implements BGAOnRVIt
 
     @Override
     public boolean onRVItemLongClick(ViewGroup parent, View itemView, final int position) {
-        TipAndEditDialog dialog = new TipAndEditDialog(this, "确定要删除吗");
+        TipandEditDialog dialog = new TipandEditDialog(this, "确定要删除吗");
         dialog.show();
         dialog.setLeftText(getString(R.string.cancel));
         dialog.setLeftTextColor(getResources().getColor(R.color.jiechu));
         dialog.setRightText(getString(R.string.sure));
         dialog.setRightTextColor(getResources().getColor(R.color.blue));
-        dialog.setListener(new TipAndEditDialog.ITipEndEditDialogListener() {
+        dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
             @Override
             public void ClickLeft() {
 

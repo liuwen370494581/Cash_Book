@@ -171,6 +171,11 @@
             android:name=".Activity.PaySettingsActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--增加支出或者收入的页面-->
+        <activity
+            android:name=".Activity.EditIncomeAndCostActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
     </application>
 
 

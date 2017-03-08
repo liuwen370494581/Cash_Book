@@ -27,7 +27,7 @@ public class ChoiceAccount implements Serializable {
     public String mAccountType; //账户类型
     private double liuChu; //账户流出
     private double liuRu; //账户流入
-    private String data;// 消费和支出日期
+    private String timeMinSec;// 消费和支出日期
 
 
     public ChoiceAccount(int url, String accountName, double money, double debt, String account, int color) {
@@ -40,13 +40,42 @@ public class ChoiceAccount implements Serializable {
     }
 
 
+
+
+    @Generated(hash = 659872583)
+    public ChoiceAccount(Long id, int url, String accountName, double money, double Debt, String DebtDate,
+            String IssuingBank, int color, String mAccountType, double liuChu, double liuRu, String timeMinSec) {
+        this.id = id;
+        this.url = url;
+        this.accountName = accountName;
+        this.money = money;
+        this.Debt = Debt;
+        this.DebtDate = DebtDate;
+        this.IssuingBank = IssuingBank;
+        this.color = color;
+        this.mAccountType = mAccountType;
+        this.liuChu = liuChu;
+        this.liuRu = liuRu;
+        this.timeMinSec = timeMinSec;
+    }
+
+
+
+
+    @Generated(hash = 1743186768)
+    public ChoiceAccount() {
+    }
+
+
+
+
     public String getData() {
-        return this.data;
+        return this.timeMinSec;
     }
 
 
     public void setData(String data) {
-        this.data = data;
+        this.timeMinSec = data;
     }
 
 
@@ -129,7 +158,6 @@ public class ChoiceAccount implements Serializable {
         this.money = money;
     }
 
-
     public String getAccountName() {
         return this.accountName;
     }
@@ -159,29 +187,19 @@ public class ChoiceAccount implements Serializable {
     }
 
 
-    @Generated(hash = 307480590)
-    public ChoiceAccount(Long id, int url, String accountName, double money, double Debt, String DebtDate,
-            String IssuingBank, int color, String mAccountType, double liuChu, double liuRu, String data) {
-        this.id = id;
-        this.url = url;
-        this.accountName = accountName;
-        this.money = money;
-        this.Debt = Debt;
-        this.DebtDate = DebtDate;
-        this.IssuingBank = IssuingBank;
-        this.color = color;
-        this.mAccountType = mAccountType;
-        this.liuChu = liuChu;
-        this.liuRu = liuRu;
-        this.data = data;
+
+
+    public String getTimeMinSec() {
+        return this.timeMinSec;
     }
 
 
-    @Generated(hash = 1743186768)
-    public ChoiceAccount() {
+
+
+    public void setTimeMinSec(String timeMinSec) {
+        this.timeMinSec = timeMinSec;
     }
-
-
+    
    
 
 }

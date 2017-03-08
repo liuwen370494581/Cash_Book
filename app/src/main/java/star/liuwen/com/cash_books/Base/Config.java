@@ -40,12 +40,12 @@ public class Config {
 
     public final static String ZHI_CHU = "ZHICHU";
     public final static String SHOU_RU = "SHOURU";
-    public final static String CASH = "CASH";
-    public final static String CXK = "CXK";
-    public final static String XYK = "XYK";
-    public final static String ZFB = "ZFB";
-    public final static String JC = "JC";
-    public final static String JR = "JR";
+    public final static String CASH = "现金";
+    public final static String CXK = "储蓄卡";
+    public final static String XYK = "信用卡";
+    public final static String ZFB = "支付宝";
+    public final static String JC = "借出";
+    public final static String JR = "借入";
     public final static String OTHER = "OTHER";
 
 

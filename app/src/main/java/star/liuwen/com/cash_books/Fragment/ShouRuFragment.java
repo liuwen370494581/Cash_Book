@@ -1,12 +1,9 @@
 package star.liuwen.com.cash_books.Fragment;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -29,30 +25,24 @@ import com.bigkoo.pickerview.TimePickerView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import cn.aigestudio.datepicker.cons.DPMode;
-import cn.aigestudio.datepicker.views.DatePicker;
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Adapter.ZhiChuAdapter;
-import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
-import star.liuwen.com.cash_books.Enage.DataEnige;
+import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
+import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
-import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
-import star.liuwen.com.cash_books.bean.ChoiceAccount;
+import star.liuwen.com.cash_books.bean.ShouRuModel;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
@@ -60,7 +50,7 @@ import star.liuwen.com.cash_books.bean.ZhiChuModel;
  */
 public class ShouRuFragment extends BaseFragment implements View.OnClickListener {
 
-    private List<ZhiChuModel> mList;
+    private List<ShouRuModel> mList;
     private RecyclerView mRecyclerView;
     private ZhiChuAdapter mAdapter;
     private EditText edName;
@@ -90,7 +80,6 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         tvData = (TextView) getContentView().findViewById(R.id.f_shouru_data);
         tvZhanghu = (TextView) getContentView().findViewById(R.id.f_shouru_zhanghu);
         tvSure = (TextView) getContentView().findViewById(R.id.f_shouru_sure);
-
         tvData.setOnClickListener(this);
         tvZhanghu.setOnClickListener(this);
         tvSure.setOnClickListener(this);
@@ -107,21 +96,12 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         final GridLayoutManager manager = new GridLayoutManager(getActivity(), 5, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         mList = new ArrayList<>();
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_gongzi, "工资"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_shenghuofei, "生活费"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_hongbao, "红包"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_linghuaqian, "零花钱"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jianzhiwaikuai, "外快兼职"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_touzishouru, "投资收入"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jiangjin, "奖金"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_zhichu_type_baoxiaozhang, "报销"));
-        mList.add(new ZhiChuModel(R.mipmap.xianjin, "现金"));
-        mList.add(new ZhiChuModel(R.mipmap.tuikuan, "退款"));
-        mList.add(new ZhiChuModel(R.mipmap.zhifubao, "支付宝"));
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_qita, "其他"));
-        mAdapter.setData(mList);
-        mAdapter.addLastItem(new ZhiChuModel(R.mipmap.icon_add, "更多"));
-        mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        if (DaoShouRuModel.query().size() != 0) {
+            mList = DaoShouRuModel.query();
+            mAdapter.setData(mList);
+            mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        }
         mAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
             @Override
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
@@ -257,6 +237,18 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         pvTime.show();
     }
 
+    private class ZhiChuAdapter extends BGARecyclerViewAdapter<ShouRuModel> {
+
+        public ZhiChuAdapter(RecyclerView recyclerView) {
+            super(recyclerView, R.layout.item_zhichu_fragment);
+        }
+
+        @Override
+        protected void fillData(BGAViewHolderHelper helper, int position, ShouRuModel model) {
+            helper.setImageResource(R.id.item_imag, model.getUrl());
+            helper.setText(R.id.item_name, model.getName());
+        }
+
 //    private void showData() {
 //        final AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
 //        dialog.show();
@@ -276,4 +268,6 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
 //        dialog.getWindow().setContentView(picker, params);
 //        dialog.getWindow().setGravity(Gravity.CENTER);
 //    }
+
+    }
 }

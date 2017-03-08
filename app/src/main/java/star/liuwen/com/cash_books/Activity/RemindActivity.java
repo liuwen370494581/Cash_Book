@@ -1,40 +1,22 @@
 package star.liuwen.com.cash_books.Activity;
 
-import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.bigkoo.pickerview.TimePickerView;
 
 import java.util.Date;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.SelectRemindCyclePopup;
-import star.liuwen.com.cash_books.bean.ZhiChuModel;
-
-import static com.bigkoo.pickerview.TimePickerView.Type.HOURS_MINS;
 
 /**
  * Created by liuwen on 2017/1/17.

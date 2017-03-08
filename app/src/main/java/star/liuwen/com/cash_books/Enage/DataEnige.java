@@ -5,15 +5,16 @@ import java.util.Collections;
 import java.util.List;
 
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.Dao.DaoAccount;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
+import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
+import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.IndexModel;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
-import star.liuwen.com.cash_books.bean.ReportsDetailModel;
+import star.liuwen.com.cash_books.bean.ShouRuModel;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 import star.liuwen.com.cash_books.widget.CharacterParser;
 import star.liuwen.com.cash_books.widget.PinyinComparator;
@@ -22,24 +23,6 @@ import star.liuwen.com.cash_books.widget.PinyinComparator;
  * Created by liuwen on 2017/1/5.
  */
 public class DataEnige {
-
-
-    public static List<ZhiChuModel> getZhiChuData() {
-        List<ZhiChuModel> mList = new ArrayList<>();
-        mList.add(new ZhiChuModel(R.mipmap.icon_shouru_type_qita, "一般"));
-        mList.add(new ZhiChuModel(R.mipmap.maicai, "买菜"));
-        mList.add(new ZhiChuModel(R.mipmap.zaocan, "早餐"));
-        mList.add(new ZhiChuModel(R.mipmap.zhongfan, "中饭"));
-        mList.add(new ZhiChuModel(R.mipmap.xiaochi, "小吃"));
-        mList.add(new ZhiChuModel(R.mipmap.naifen, "奶粉"));
-        mList.add(new ZhiChuModel(R.mipmap.jiushui, "酒水"));
-        mList.add(new ZhiChuModel(R.mipmap.lingshi, "零食"));
-        mList.add(new ZhiChuModel(R.mipmap.richangyongpin, "生活品"));
-        mList.add(new ZhiChuModel(R.mipmap.xiezi, "鞋子"));
-        mList.add(new ZhiChuModel(R.mipmap.yaopinfei, "医药费"));
-        mList.add(new ZhiChuModel(R.mipmap.yifu, "衣服"));
-        return mList;
-    }
 
     public static List<PlanSaveMoneyModel> getPlanSaveMoneyData() {
         List<PlanSaveMoneyModel> list = new ArrayList<>();
@@ -137,18 +120,7 @@ public class DataEnige {
     }
 
 
-    public static List<ChoiceAccount> getShouRuData() {
-        List<ChoiceAccount> list = new ArrayList<>();
-        list.add(new ChoiceAccount(R.mipmap.icon_account_xianjin, "现金", 0.00, 0.00, Config.CASH, R.color.xianjian));
-        list.add(new ChoiceAccount(R.mipmap.icon_account_yinhangka, "储蓄卡", 0.00, 0.00, Config.CXK, R.color.chuxuka));
-        list.add(new ChoiceAccount(R.mipmap.icon_account_xinyongka, "信用卡", 0.00, 0.00, Config.XYK, R.color.xinyongka));
-        list.add(new ChoiceAccount(R.mipmap.wangluozhanghu, "支付宝", 0.00, 0.00, Config.ZFB, R.color.zhifubao));
-        list.add(new ChoiceAccount(R.mipmap.jiedai, "借出", 0.00, 0.00, Config.JC, R.color.jiechu));
-        list.add(new ChoiceAccount(R.mipmap.jiedai, "借入", 0.00, 0.00, Config.JR, R.color.jieru));
-        return list;
-    }
-
-    public static void InsertShouRuData() {
+    public static void InsertAccountData() {
         DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xianjin, "现金", 0.00, 0.00, "", "", R.color.xianjian, Config.CASH, 0.00, 0.00, DateTimeUtil.getCurrentYear()));
         DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_yinhangka, "储蓄卡", 0.00, 0.00, "", "", R.color.chuxuka, Config.CXK, 0.00, 0.00, DateTimeUtil.getCurrentYear()));
         DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xinyongka, "信用卡", 0.00, 0.00, "", "", R.color.xinyongka, Config.XYK, 0.00, 0.00, DateTimeUtil.getCurrentYear()));
@@ -157,8 +129,42 @@ public class DataEnige {
         DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借入", 0.00, 0.00, "", "", R.color.jieru, Config.JR, 0.00, 0.00, DateTimeUtil.getCurrentYear()));
     }
 
+    public static void InsertShouRuData() {
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_gongzi, "工资"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_shenghuofei, "生活费"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_hongbao, "红包"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_linghuaqian, "零花钱"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_jianzhiwaikuai, "外快兼职"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_touzishouru, "投资收入"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_jiangjin, "奖金"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_zhichu_type_baoxiaozhang, "报销"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.xianjin, "现金"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.tuikuan, "退款"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.zhifubao, "支付宝"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_qita, "其他"));
+    }
 
 
+    public static void InsertZHiCHuData() {
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_shouru_type_qita, "一般"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.maicai, "买菜"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.zaocan, "早餐"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.zhongfan, "中饭"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.wanfan, "晚饭"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.xiaochi, "小吃"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.wanggou, "网购"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.naifen, "奶粉"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.jiushui, "酒水"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.lingshi, "零食"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.richangyongpin, "生活品"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.xiezi, "鞋子"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.yaopinfei, "医药费"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.yifu, "衣服"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_zhichu_type_taobao, "淘宝"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.tingchefei, "停车"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.majiang, "麻将"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_add_12, "结婚礼金"));
+    }
 
     public static List<IndexModel> getHuoBiData() {
         List<IndexModel> list = new ArrayList<>();

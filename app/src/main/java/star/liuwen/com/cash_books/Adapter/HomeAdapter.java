@@ -23,7 +23,6 @@ public class HomeAdapter extends BGARecyclerViewAdapter<AccountModel> {
 
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, AccountModel model) {
-
         if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
             helper.setVisibility(R.id.re_zhichu, View.VISIBLE);
             helper.setVisibility(R.id.re_shouru, View.GONE);
@@ -44,7 +43,7 @@ public class HomeAdapter extends BGARecyclerViewAdapter<AccountModel> {
             helper.setText(R.id.item_h_txt_chucun_type, "存款类型：" + model.getAccountType());
             helper.setText(R.id.item_h_txt_shouru_type, model.getConsumeType() + ":");
             helper.setText(R.id.item_h_txt_shouru, String.format("%.2f", model.getMoney()));
-            helper.setText(R.id.item_h_txt_shouru_time, DateTimeUtil.getShowCurrentTime(model.getTimeMinSec()));
+           // helper.setText(R.id.item_h_txt_shouru_time, DateTimeUtil.getShowCurrentTime(model.getTimeMinSec()));
             helper.setImageResource(R.id.item_h_image_shouru, model.getUrl());
             if (needTitle(position)) {
                 helper.setVisibility(R.id.item_h__txt_data, View.VISIBLE);

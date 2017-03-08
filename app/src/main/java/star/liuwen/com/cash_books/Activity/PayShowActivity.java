@@ -79,6 +79,8 @@ public class PayShowActivity extends BaseActivity {
         txtMonth.setText(DateTimeUtil.getCurrentYearMonth());
 
         mRecyclerView = (RecyclerView) findViewById(R.id.pay_show_recycler_view);
+
+
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
         mAdapter = new PaySHowAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
@@ -153,8 +155,6 @@ public class PayShowActivity extends BaseActivity {
             }
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
-
-
     }
 
 
@@ -252,11 +252,14 @@ public class PayShowActivity extends BaseActivity {
                 } else {
                     helper.setText(R.id.item_data, model.getData());
                 }
+
             } else {
                 helper.setVisibility(R.id.item_data, View.GONE);
             }
             if (model.getZhiChuShouRuType().equals(Config.SHOU_RU)) {
                 helper.setText(R.id.item_rd_money, String.format("+%.2f", model.getMoney()));
+                helper.setTextColor(R.id.item_rd_money, getResources().getColor(R.color.blue));
+
             } else {
                 helper.setText(R.id.item_rd_money, String.format("-%.2f", model.getMoney()));
             }

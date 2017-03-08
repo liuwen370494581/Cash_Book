@@ -13,7 +13,7 @@ import star.liuwen.com.cash_books.R;
 /**
  * Created by liuwen on 2017/2/9.
  */
-public class TipAndEditDialog extends Dialog implements View.OnClickListener {
+public class TipandEditDialog extends Dialog implements View.OnClickListener {
     private String mContent = "";
     private ITipEndEditDialogListener mListener;
     private TextView mTvLeft = null;
@@ -24,7 +24,7 @@ public class TipAndEditDialog extends Dialog implements View.OnClickListener {
     private RelativeLayout mReLayout;
     private EditText mEditText;
 
-    public TipAndEditDialog(Context context, String content) {
+    public TipandEditDialog(Context context, String content) {
         super(context, R.style.CustomDialogStyle);
         this.mContent = content;
     }

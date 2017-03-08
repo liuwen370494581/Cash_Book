@@ -52,5 +52,4 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
     }
 
-
 }

@@ -8,16 +8,16 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by liuwen on 2017/3/8.
  */
 @Entity
-public class ZhiChuModel {
+public class ShouRuModel {
     @Id(autoincrement = true)
     private long id;
     private int url;
-    private String names;
-    public String getNames() {
-        return this.names;
+    private String name;
+    public String getName() {
+        return this.name;
     }
-    public void setNames(String names) {
-        this.names = names;
+    public void setName(String name) {
+        this.name = name;
     }
     public int getUrl() {
         return this.url;
@@ -31,13 +31,13 @@ public class ZhiChuModel {
     public void setId(long id) {
         this.id = id;
     }
-    @Generated(hash = 196369667)
-    public ZhiChuModel(long id, int url, String names) {
+    @Generated(hash = 1005587625)
+    public ShouRuModel(long id, int url, String name) {
         this.id = id;
         this.url = url;
-        this.names = names;
+        this.name = name;
     }
-    @Generated(hash = 1865233734)
-    public ZhiChuModel() {
+    @Generated(hash = 835496406)
+    public ShouRuModel() {
     }
 }

@@ -23,7 +23,7 @@ import java.io.InputStream;
 import cn.sharesdk.framework.ShareSDK;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.Dialog.TipAndEditDialog;
+import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
@@ -134,13 +134,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void CleanAllData() {
-        final TipAndEditDialog dialog = new TipAndEditDialog(SettingActivity.this, getString(R.string.clean_all_data));
+        final TipandEditDialog dialog = new TipandEditDialog(SettingActivity.this, getString(R.string.clean_all_data));
         dialog.show();
         dialog.setLeftText(getString(R.string.cancel));
         dialog.setLeftTextColor(getResources().getColor(R.color.jiechu));
         dialog.setRightText(getString(R.string.sure));
         dialog.setRightTextColor(getResources().getColor(R.color.blue));
-        dialog.setListener(new TipAndEditDialog.ITipEndEditDialogListener() {
+        dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
             @Override
             public void ClickLeft() {
                 dialog.dismiss();

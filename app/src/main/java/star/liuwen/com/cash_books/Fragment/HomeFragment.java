@@ -4,7 +4,6 @@ package star.liuwen.com.cash_books.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,34 +11,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import star.liuwen.com.cash_books.Activity.CalendarActivity;
 import star.liuwen.com.cash_books.Adapter.HomeAdapter;
-import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
-import star.liuwen.com.cash_books.Dialog.TipAndEditDialog;
+import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
+import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
-import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.bean.AccountModel;
+import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
  * 明细
@@ -59,6 +53,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     private View headView;
     private double zhiChuAdd, shouRuAdd;
     private double totalZhiChuAdd, totalShouRuAdd;
+    private AccountModel model;
 
     @Nullable
     @Override
@@ -152,7 +147,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 for (int i = 0; i < mList.size(); i++) {
                     if (mList.get(i).getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                         zhiChuAdd = zhiChuAdd + mList.get(i).getMoney() + totalZhiChuAdd;
-                        AccountModel model = new AccountModel();
+                        model = new AccountModel();
                         model.setId(DaoAccount.getCount() + 1);
                         model.setAccountType(mList.get(i).getAccountType());
                         model.setData(mList.get(i).getData());
@@ -163,11 +158,12 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setZhiChuShouRuType(Config.ZHI_CHU);
                         model.setZhiCHuAdd(mList.get(i).getMoney());
                         model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
+                        insertAccountYuer(mList.get(i).getAccountType());
                         DaoAccount.insertAccount(model);
                         tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
                     } else {
                         shouRuAdd = shouRuAdd + mList.get(i).getMoney() + totalShouRuAdd;
-                        AccountModel model = new AccountModel();
+                        model = new AccountModel();
                         model.setId(DaoAccount.getCount() + 1);
                         model.setAccountType(mList.get(i).getAccountType());
                         model.setData(mList.get(i).getData());
@@ -178,6 +174,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setZhiChuShouRuType(Config.SHOU_RU);
                         model.setSHouRuAdd(mList.get(i).getMoney());
                         model.setConsumePercent((float) (model.getMoney() / shouRuAdd) * 100);
+                        insertAccountYuer(mList.get(i).getAccountType());
                         DaoAccount.insertAccount(model);
                         tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
                     }
@@ -189,6 +186,28 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
             }
         });
 
+    }
+
+    private void insertAccountYuer(String type) {
+        if (type.equals(Config.CASH)) {
+            ChoiceAccount account = DaoChoiceAccount.query().get(0);
+            model.setAccountYuer(account.getMoney());
+        } else if (type.equals(Config.CXK)) {
+            ChoiceAccount account = DaoChoiceAccount.query().get(1);
+            model.setAccountYuer(account.getMoney());
+        } else if (type.equals(Config.XYK)) {
+            ChoiceAccount account = DaoChoiceAccount.query().get(2);
+            model.setAccountYuer(account.getMoney());
+        } else if (type.equals(Config.ZFB)) {
+            ChoiceAccount account = DaoChoiceAccount.query().get(3);
+            model.setAccountYuer(account.getMoney());
+        } else if (type.equals(Config.JC)) {
+            ChoiceAccount account = DaoChoiceAccount.query().get(4);
+            model.setAccountYuer(account.getMoney());
+        } else if (type.equals(Config.JR)) {
+            ChoiceAccount account = DaoChoiceAccount.query().get(5);
+            model.setAccountYuer(account.getMoney());
+        }
     }
 
 
@@ -216,13 +235,13 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
     @Override
     public boolean onRVItemLongClick(final ViewGroup parent, View itemView, final int position) {
-        final TipAndEditDialog dialog = new TipAndEditDialog(getActivity(), "确定要删除吗?");
+        final TipandEditDialog dialog = new TipandEditDialog(getActivity(), "确定要删除吗?");
         dialog.show();
         dialog.setLeftText(getString(R.string.cancel));
         dialog.setLeftTextColor(getResources().getColor(R.color.jiechu));
         dialog.setRightText(getString(R.string.sure));
         dialog.setRightTextColor(getResources().getColor(R.color.blue));
-        dialog.setListener(new TipAndEditDialog.ITipEndEditDialogListener() {
+        dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
             @Override
             public void ClickLeft() {
                 dialog.dismiss();

@@ -23,6 +23,7 @@ import java.util.List;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoSaveMoneyPlan;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
@@ -249,7 +250,7 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
         mListView = (ListView) popView.findViewById(R.id.lv_popup_list);
         window = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopWindowAdapter = new PopWindowAdapter(this, R.layout.item_pop_account);
-        mPopWindowAdapter.setData(DataEnige.getShouRuData());
+        mPopWindowAdapter.setData(DaoChoiceAccount.query());
         mListView.setAdapter(mPopWindowAdapter);
         window.setFocusable(true);
         window.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);

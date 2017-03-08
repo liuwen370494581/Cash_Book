@@ -19,7 +19,7 @@ public class ZhiChuAdapter extends BGARecyclerViewAdapter<ZhiChuModel> {
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, ZhiChuModel model) {
         helper.setImageResource(R.id.item_imag, model.getUrl());
-        helper.setText(R.id.item_name, model.getName());
+        helper.setText(R.id.item_name, model.getNames());
     }
 
 }
