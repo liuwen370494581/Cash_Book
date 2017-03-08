@@ -1,5 +1,6 @@
 package star.liuwen.com.cash_books.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import java.util.List;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import star.liuwen.com.cash_books.Activity.EditIncomeAndCostActivity;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Adapter.ZhiChuAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
@@ -39,6 +41,7 @@ import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
+import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
@@ -107,7 +110,9 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
 
                 if (mAdapter.getItemCount() - 1 == position) {
-                    ToastUtils.showToast(getActivity(), "改功能正在完善中");
+                    Intent intent = new Intent(getActivity(), EditIncomeAndCostActivity.class);
+                    intent.putExtra(Config.OTHER, Config.SHOU_RU);
+                    startActivity(intent);
                 } else {
                     txtName.setText(mList.get(position).getName());
                     imageName.setImageResource(mList.get(position).getUrl());
@@ -120,7 +125,20 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData() {
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxToSHouRu, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                ShouRuModel model = (ShouRuModel) o;
+                mAdapter.addItem(mList.size() - 1, model);
+            }
+        });
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().release();
+        ToastUtils.removeToast();
     }
 
 

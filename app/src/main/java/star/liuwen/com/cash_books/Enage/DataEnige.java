@@ -24,6 +24,55 @@ import star.liuwen.com.cash_books.widget.PinyinComparator;
  */
 public class DataEnige {
 
+
+    public static List<ZhiChuModel> getZhiChuData() {
+        List<ZhiChuModel> list = new ArrayList<>();
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_qita, "一般"));
+        list.add(new ZhiChuModel(R.mipmap.dapai, "打牌"));
+        list.add(new ZhiChuModel(R.mipmap.dianfei, "电费"));
+        list.add(new ZhiChuModel(R.mipmap.dianying, "电影"));
+        list.add(new ZhiChuModel(R.mipmap.fangdai, "房贷"));
+        list.add(new ZhiChuModel(R.mipmap.fangzu, "房租"));
+        list.add(new ZhiChuModel(R.mipmap.fanka, "饭卡"));
+        list.add(new ZhiChuModel(R.mipmap.feijipiao, "飞机票"));
+        list.add(new ZhiChuModel(R.mipmap.icon_gouwu, "购物"));
+        list.add(new ZhiChuModel(R.mipmap.icon_jaotongyunshu, "交通出行"));
+        list.add(new ZhiChuModel(R.mipmap.icon_jinianpin, "礼物"));
+        list.add(new ZhiChuModel(R.mipmap.icon_lingshixiaochi, "零食小吃"));
+        list.add(new ZhiChuModel(R.mipmap.icon_jiudianzhusu, "好玩"));
+        list.add(new ZhiChuModel(R.mipmap.youfei, "邮费"));
+        list.add(new ZhiChuModel(R.mipmap.maicai, "买菜"));
+        list.add(new ZhiChuModel(R.mipmap.zaocan, "早餐"));
+        list.add(new ZhiChuModel(R.mipmap.zhongfan, "中饭"));
+        list.add(new ZhiChuModel(R.mipmap.wanfan, "晚饭"));
+        list.add(new ZhiChuModel(R.mipmap.xiaochi, "小吃"));
+        list.add(new ZhiChuModel(R.mipmap.wanggou, "网购"));
+        list.add(new ZhiChuModel(R.mipmap.naifen, "奶粉"));
+        list.add(new ZhiChuModel(R.mipmap.jiushui, "酒水"));
+        list.add(new ZhiChuModel(R.mipmap.lingshi, "零食"));
+        list.add(new ZhiChuModel(R.mipmap.richangyongpin, "生活品"));
+        list.add(new ZhiChuModel(R.mipmap.xiezi, "鞋子"));
+        list.add(new ZhiChuModel(R.mipmap.yaopinfei, "医药费"));
+        list.add(new ZhiChuModel(R.mipmap.yifu, "衣服"));
+        list.add(new ZhiChuModel(R.mipmap.icon_zhichu_type_taobao, "淘宝"));
+        list.add(new ZhiChuModel(R.mipmap.tingchefei, "停车"));
+        list.add(new ZhiChuModel(R.mipmap.majiang, "麻将"));
+        list.add(new ZhiChuModel(R.mipmap.icon_add_12, "结婚礼金"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_gongzi, "工资"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_shenghuofei, "生活费"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_hongbao, "红包"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_linghuaqian, "零花钱"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jianzhiwaikuai, "外快兼职"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_touzishouru, "投资收入"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jiangjin, "奖金"));
+        list.add(new ZhiChuModel(R.mipmap.icon_zhichu_type_baoxiaozhang, "报销"));
+        list.add(new ZhiChuModel(R.mipmap.xianjin, "现金"));
+        list.add(new ZhiChuModel(R.mipmap.tuikuan, "退款"));
+        list.add(new ZhiChuModel(R.mipmap.zhifubao, "支付宝"));
+        return list;
+    }
+
+
     public static List<PlanSaveMoneyModel> getPlanSaveMoneyData() {
         List<PlanSaveMoneyModel> list = new ArrayList<>();
         list.add(new PlanSaveMoneyModel("旅行", "48234人已经加入", R.mipmap.lvyou, "加入 +", "生活不止眼前的苟且，还有远方的诗和田野"));
@@ -163,7 +212,7 @@ public class DataEnige {
         DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_zhichu_type_taobao, "淘宝"));
         DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.tingchefei, "停车"));
         DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.majiang, "麻将"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_add_12, "结婚礼金"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.dianying, "电影"));
     }
 
     public static List<IndexModel> getHuoBiData() {

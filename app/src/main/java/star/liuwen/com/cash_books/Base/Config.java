@@ -105,5 +105,7 @@ public class Config {
     public static final String ModelSaveAPen = "ModeSaveAPen";
 
     public static final String RxToReports = "RxToReports";
+    public static final String RxToZhiChu = "RxToZhiChu";
+    public static final String RxToSHouRu = "RxToSHouRu";
 
 }

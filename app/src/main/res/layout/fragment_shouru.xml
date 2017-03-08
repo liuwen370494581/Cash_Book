@@ -3,10 +3,12 @@
                 android:id="@+id/relay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 android:clipToPadding="true"
                 android:fitsSystemWindows="true">
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="4dp"
         android:id="@+id/f_shouru_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

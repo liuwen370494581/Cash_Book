@@ -4,6 +4,7 @@ import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
+import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
  * Created by liuwen on 2017/3/8.

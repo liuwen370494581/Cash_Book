@@ -18,12 +18,13 @@
             android:src="@mipmap/icon_shouru_type_qita"/>
 
         <TextView
+            android:layout_marginTop="3dp"
             android:id="@+id/item_name"
-            android:layout_width="90dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_imag"
-            android:layout_marginLeft="7dp"
-            android:padding="10dp"
+            android:layout_marginLeft="8dp"
+            android:padding="7dp"
             android:text="买菜"/>
     </RelativeLayout>
 </LinearLayout>

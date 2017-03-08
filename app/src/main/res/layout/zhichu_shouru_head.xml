@@ -1,56 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="true"
-                android:fitsSystemWindows="true"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
 
-
-    <ImageView
-        android:id="@+id/imag_name"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="10dp"
-        android:src="@mipmap/icon_shouru_type_qita"/>
-
-    <TextView
-        android:id="@+id/txt_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/imag_name"
-        android:padding="3dp"
-        android:text="其他"
-        android:textSize="@dimen/txt_18"/>
-
-    <EditText
-        android:id="@+id/zhichu_name"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="20dp"
-        android:layout_toRightOf="@id/txt_name"
-        android:background="@drawable/zhichu_bg"
-        android:hint="请输入消费金额"
-        android:inputType="number"
-        android:maxLength="7"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/text_color_66"
-        android:textColorHint="@color/text_color_66"
-        android:textSize="16sp"/>
+        android:layout_height="0.5dp"
+        android:background="@color/text_color_bg"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="2dp">
+
+        <ImageView
+            android:id="@+id/imag_name"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/icon_shouru_type_qita"/>
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@id/imag_name"
+            android:text="其他"
+            android:textSize="@dimen/textSize_18"/>
+
+        <EditText
+            android:id="@+id/zhichu_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/txt_name"
+            android:background="@null"
+            android:hint="请输入金额"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="@dimen/textSize_18"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/text_color_bg"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/zhichu_name"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="7dp"
         android:text="请从下面选择一张图片作为图标"
         android:textColor="@color/text_color_66"
         android:textSize="14sp"/>
-
-
-</RelativeLayout>
+</LinearLayout>

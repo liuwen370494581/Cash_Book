@@ -40,4 +40,9 @@ public class ZhiChuModel {
     @Generated(hash = 1865233734)
     public ZhiChuModel() {
     }
+
+    public ZhiChuModel(int url, String names) {
+        this.url = url;
+        this.names = names;
+    }
 }
