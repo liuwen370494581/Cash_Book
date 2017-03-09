@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void LookAround(View view) {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 
     @Override

@@ -14,12 +14,16 @@ import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
+import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.CreditCardModel;
 import star.liuwen.com.cash_books.bean.DaoMaster;
 import star.liuwen.com.cash_books.bean.DaoSession;
 import star.liuwen.com.cash_books.bean.SaveMoneyPlanModel;
+import star.liuwen.com.cash_books.netState.NetChangeObserver;
+import star.liuwen.com.cash_books.netState.NetStateReceiver;
+import star.liuwen.com.cash_books.netState.NetworkUtils;
 
 /**
  * Created by liuwen on 2017/1/6.
@@ -41,15 +45,33 @@ public class App extends Application {
     private RefWatcher mRefWatcher;
     private static DaoSession mDaoSession;
 
+    public NetworkUtils.NetworkType mNetType;
+    private NetStateReceiver netStateReceiver;
+
     @Override
     public void onCreate() {
         super.onCreate();
         RxBus.getInstance();
         //初始化内存检测工具
         mRefWatcher = LeakCanary.install(this);
+        //插入数据
         setUpDataBase();
+        //初始化网络监察工具
+        initNetChangeReceiver();
+    }
 
+    private void initNetChangeReceiver() {
+        //获取当前网络类型
+        mNetType = NetworkUtils.getNetworkType(this);
 
+        //定义网络状态的广播接受者
+        netStateReceiver = NetStateReceiver.getReceiver();
+
+        //给广播接受者注册一个观察者
+        netStateReceiver.registerObserver(netChangeObserver);
+
+        //注册网络变化广播
+        NetworkUtils.registerNetStateReceiver(this, netStateReceiver);
     }
 
     private void setUpDataBase() {
@@ -69,6 +91,47 @@ public class App extends Application {
         return mDaoSession;
     }
 
+    private NetChangeObserver netChangeObserver = new NetChangeObserver() {
+
+        @Override
+        public void onConnect(NetworkUtils.NetworkType type) {
+            App.this.onNetConnect(type);
+        }
+
+        @Override
+        public void onDisConnect() {
+            App.this.onNetDisConnect();
+        }
+    };
+
+    protected void onNetDisConnect() {
+        ToastUtils.showToast(this, "网络已断开,请检查网络设置");
+        mNetType = NetworkUtils.NetworkType.NETWORK_NONE;
+    }
+
+    protected void onNetConnect(NetworkUtils.NetworkType type) {
+        if (type == mNetType) return; //net not change
+        switch (type) {
+            case NETWORK_WIFI:
+                ToastUtils.showToast(this, "已切换到 WIFI 网络");
+                break;
+            case NETWORK_MOBILE:
+                ToastUtils.showToast(this, "已切换到 2G/3G/4G 网络");
+                break;
+        }
+        mNetType = type;
+    }
+
+
+    //释放广播接受者(建议在 最后一个 Activity 退出前调用)
+    public void destroyReceiver() {
+        //移除里面的观察者
+        netStateReceiver.removeObserver(netChangeObserver);
+        //解注册广播接受者,
+        NetworkUtils.unRegisterNetStateReceiver(this, netStateReceiver);
+    }
+
+
     // 在自己的Application中添加如下代码
     public static RefWatcher getRefWatcher(Context context) {
 
@@ -76,4 +139,6 @@ public class App extends Application {
                 .getApplicationContext();
         return application.mRefWatcher;
     }
+
+
 }

@@ -96,7 +96,6 @@ public class EditIncomeAndCostActivity extends BaseActivity {
             model.setId(DaoZhiChuModel.getCount()+1);
             model.setUrl(url);
             model.setName(editTypeName);
-            DaoShouRuModel.insertShouRu(model);
             RxBus.getInstance().post(Config.RxToSHouRu, model);
             this.finish();
         }

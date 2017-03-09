@@ -9,10 +9,13 @@ import android.view.View;
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 
 import star.liuwen.com.cash_books.Activity.IncomeAndCostActivity;
+import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Fragment.HomeFragment;
 import star.liuwen.com.cash_books.Fragment.MyFragment;
 import star.liuwen.com.cash_books.Fragment.ReportsFragment;
 import star.liuwen.com.cash_books.Fragment.WalletFragment;
+import star.liuwen.com.cash_books.Utils.SnackBarUtil;
+import star.liuwen.com.cash_books.Utils.ToastUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,10 +49,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void onClickPublish(View v) {
         startActivity(new Intent(MainActivity.this, IncomeAndCostActivity.class));
         overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
     }
 
+
+    private long firstTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - firstTime > 2000) {
+            ToastUtils.showToast(this, getString(R.string.press_one_exit));
+            firstTime = System.currentTimeMillis();
+            return;
+        } else {
+            App app = (App) getApplication();
+            app.destroyReceiver();
+            finish();
+        }
+        super.onBackPressed();
+    }
 }

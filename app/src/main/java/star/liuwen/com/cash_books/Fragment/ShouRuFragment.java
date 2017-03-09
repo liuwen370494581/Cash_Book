@@ -130,6 +130,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             public void onRxBusResult(Object o) {
                 ShouRuModel model = (ShouRuModel) o;
                 mAdapter.addItem(mList.size() - 1, model);
+                DaoShouRuModel.insertShouRu(model);
             }
         });
     }
