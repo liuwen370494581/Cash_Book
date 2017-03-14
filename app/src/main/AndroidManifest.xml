@@ -19,6 +19,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <!-- 改变WiFi多播状态 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--震动权限-->
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".Base.App"

@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Activity.EditIncomeAndCostActivity;
@@ -39,10 +40,12 @@ import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
+import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
@@ -102,9 +105,9 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         if (DaoShouRuModel.query().size() != 0) {
             mList = DaoShouRuModel.query();
             mAdapter.setData(mList);
-            mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
+        mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
         mAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
             @Override
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
@@ -122,6 +125,34 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
 
             }
         });
+
+        mAdapter.setOnRVItemLongClickListener(new BGAOnRVItemLongClickListener() {
+            @Override
+            public boolean onRVItemLongClick(ViewGroup parent, View itemView, final int position) {
+                if (position == mList.size() - 1) {
+                    SnackBarUtil.show(itemView, "该项不能删除");
+                }
+                final TipandEditDialog dialog = new TipandEditDialog(getActivity(), "确定要删除吗");
+                dialog.show();
+                dialog.setLeftText(getString(R.string.cancel));
+                dialog.setLeftTextColor(getResources().getColor(R.color.jiechu));
+                dialog.setRightText(getString(R.string.sure));
+                dialog.setRightTextColor(getResources().getColor(R.color.blue));
+                dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
+                    @Override
+                    public void ClickLeft() {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void ClickRight() {
+                        mAdapter.removeItem(position);
+                        DaoShouRuModel.deleteShouRuByModel(DaoShouRuModel.query().get(position));
+                    }
+                });
+                return true;
+            }
+        });
     }
 
     private void initData() {
@@ -130,7 +161,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             public void onRxBusResult(Object o) {
                 ShouRuModel model = (ShouRuModel) o;
                 mAdapter.addItem(mList.size() - 1, model);
-                DaoShouRuModel.insertShouRu(model);
+
             }
         });
     }
@@ -138,7 +169,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().release();
+        RxBus.getInstance().removeObserverable(Config.RxToSHouRu);
         ToastUtils.removeToast();
     }
 

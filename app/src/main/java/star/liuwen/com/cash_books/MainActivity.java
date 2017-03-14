@@ -1,12 +1,13 @@
 package star.liuwen.com.cash_books;
 
-import android.app.Fragment;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
+import java.util.ArrayList;
+import java.util.List;
 
 import star.liuwen.com.cash_books.Activity.IncomeAndCostActivity;
 import star.liuwen.com.cash_books.Base.App;
@@ -14,46 +15,42 @@ import star.liuwen.com.cash_books.Fragment.HomeFragment;
 import star.liuwen.com.cash_books.Fragment.MyFragment;
 import star.liuwen.com.cash_books.Fragment.ReportsFragment;
 import star.liuwen.com.cash_books.Fragment.WalletFragment;
-import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
+import star.liuwen.com.cash_books.View.tab.BarEntity;
+import star.liuwen.com.cash_books.View.tab.BottomTabBar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSelectListener {
 
 
-    private static final String TAG_PAGE_HOME = "明细";
-    private static final String TAG_PAGE_CITY = "钱包";
-    private static final String TAG_PAGE_PUBLISH = "开始记账";
-    private static final String TAG_PAGE_MESSAGE = "报表";
-    private static final String TAG_PAGE_PERSON = "我的";
-    private MainNavigateTabBar mNavigateTabBar;
-    private Fragment currentFragment;
+    private BottomTabBar tb;
+    private List<BarEntity> bars;
+    private HomeFragment homeFragment;
+    private WalletFragment walletFragment;
+    private ReportsFragment reportsFragment;
+    private MyFragment myFragment;
+    private FragmentManager manager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mNavigateTabBar = (MainNavigateTabBar) findViewById(R.id.mainTabBar);
-        mNavigateTabBar.onRestoreInstanceState(savedInstanceState);
-        mNavigateTabBar.addTab(HomeFragment.class, new MainNavigateTabBar.TabParam(R.mipmap.shiguangzhou, R.mipmap.shiguangzhou_lan, TAG_PAGE_HOME));
-        mNavigateTabBar.addTab(WalletFragment.class, new MainNavigateTabBar.TabParam(R.mipmap.qianbao, R.mipmap.qianbao_lan, TAG_PAGE_CITY));
-        mNavigateTabBar.addTab(null, new MainNavigateTabBar.TabParam(0, 0, TAG_PAGE_PUBLISH));
-        mNavigateTabBar.addTab(ReportsFragment.class, new MainNavigateTabBar.TabParam(R.mipmap.baobiao, R.mipmap.baobiao_lan, TAG_PAGE_MESSAGE));
-        mNavigateTabBar.addTab(MyFragment.class, new MainNavigateTabBar.TabParam(R.mipmap.tixing, R.mipmap.tixing_lan, TAG_PAGE_PERSON));
+        initView();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mNavigateTabBar.onSaveInstanceState(outState);
+    private void initView() {
+        manager = getSupportFragmentManager();
+        tb = (BottomTabBar) findViewById(R.id.tb);
+        tb.setManager(manager);
+        tb.setOnSelectListener(this);
+        bars = new ArrayList<>();
+        bars.add(new BarEntity("明细", R.mipmap.shiguangzhou_lan, R.mipmap.shiguangzhou));
+        bars.add(new BarEntity("钱包", R.mipmap.qianbao_lan, R.mipmap.qianbao));
+        bars.add(new BarEntity("开始记账", 0, 0));
+        bars.add(new BarEntity("报表", R.mipmap.baobiao_lan, R.mipmap.baobiao));
+        bars.add(new BarEntity("我的", R.mipmap.tixing_lan, R.mipmap.tixing));
+        tb.setBars(bars);
     }
-
-
-    public void onClickPublish(View v) {
-        startActivity(new Intent(MainActivity.this, IncomeAndCostActivity.class));
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-    }
-
 
     private long firstTime = 0;
 
@@ -69,5 +66,45 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         super.onBackPressed();
+    }
+
+
+    public void onClickPublish(View v) {
+        startActivity(new Intent(MainActivity.this, IncomeAndCostActivity.class));
+        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+    }
+
+    @Override
+    public void onSelect(int position) {
+        switch (position) {
+            case 0:
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment();
+                }
+                tb.switchContent(homeFragment);
+                break;
+            case 1:
+                if (walletFragment == null) {
+                    walletFragment = new WalletFragment();
+                }
+                tb.switchContent(walletFragment);
+                break;
+            case 2:
+                break;
+            case 3:
+                if (reportsFragment == null) {
+                    reportsFragment = new ReportsFragment();
+                }
+                tb.switchContent(reportsFragment);
+                break;
+            case 4:
+                if (myFragment == null) {
+                    myFragment = new MyFragment();
+                }
+                tb.switchContent(myFragment);
+                break;
+            default:
+                break;
+        }
     }
 }

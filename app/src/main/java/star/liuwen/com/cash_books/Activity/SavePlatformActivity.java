@@ -8,8 +8,6 @@ import star.liuwen.com.cash_books.Adapter.FragmentAdapter;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Fragment.BankFragment;
 import star.liuwen.com.cash_books.Fragment.P2PFragment;
-import star.liuwen.com.cash_books.Fragment.ShouRuFragment;
-import star.liuwen.com.cash_books.Fragment.ZhiChuFragment;
 import star.liuwen.com.cash_books.R;
 
 /**
@@ -39,11 +37,10 @@ public class SavePlatformActivity extends BaseActivity implements View.OnClickLi
 
         mP2PFragment = new P2PFragment();
         mBankFragment = new BankFragment();
-        mFragmentAdapter = new FragmentAdapter(getFragmentManager());
-        mFragmentAdapter.add(mP2PFragment, "P2P");
-        mFragmentAdapter.add(mBankFragment, "银行");
+        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        mFragmentAdapter.addFragment(mP2PFragment, "P2P");
+        mFragmentAdapter.addFragment(mBankFragment, "银行");
         mViewPager.setAdapter(mFragmentAdapter);
-
         mViewPager.setOnPageChangeListener(this);
         txtP2P.setOnClickListener(this);
         txtBank.setOnClickListener(this);

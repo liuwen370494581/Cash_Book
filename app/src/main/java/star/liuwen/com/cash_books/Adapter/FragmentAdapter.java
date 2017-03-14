@@ -1,43 +1,40 @@
 package star.liuwen.com.cash_books.Adapter;
 
-
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import star.liuwen.com.cash_books.Fragment.ShouRuFragment;
-
 /**
- * Created by liuwen on 2017/1/5.
+ * Created by zhangweijun on 2016/1/13.
  */
 public class FragmentAdapter extends FragmentPagerAdapter {
-    private List<Fragment> mFragment = new ArrayList<>();
-    private List<String> mTitle = new ArrayList<>();
-
-
-    public void add(Fragment fragment, String title) {
-        mFragment.add(fragment);
-        mTitle.add(title);
-    }
+    private final List<Fragment> mFragments = new ArrayList<>();
+    private final List<String> mFragmentTitles = new ArrayList<>();
 
     public FragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 
+    public void addFragment(Fragment fragment, String title) {
+        mFragments.add(fragment);
+        mFragmentTitles.add(title);
+    }
+
     @Override
     public Fragment getItem(int position) {
-        return mFragment.get(position);
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return mFragment.size();
+        return mFragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitle.get(position);
+        return mFragmentTitles.get(position);
     }
 }

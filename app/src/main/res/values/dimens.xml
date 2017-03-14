@@ -11,5 +11,5 @@
     <dimen name="txr_13">13sp</dimen>
     <dimen name="txr_12">12sp</dimen>
     <dimen name="txr_11">11sp</dimen>
-
+    <dimen name="image_height">20dp</dimen>
 </resources>

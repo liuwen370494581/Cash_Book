@@ -118,12 +118,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.userUrl, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                userImage.setImageBitmap((Bitmap) o);
-            }
-        });
+//        RxBus.getInstance().toObserverableOnMainThread(Config.userUrl, new RxBusResult() {
+//            @Override
+//            public void onRxBusResult(Object o) {
+//                userImage.setImageBitmap((Bitmap) o);
+//            }
+//        });
     }
 
     public void addLayoutListener(final View main, final View scroll) {
@@ -153,6 +153,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().release();
+       // RxBus.getInstance().removeObserverable(Config.userUrl);
     }
 }

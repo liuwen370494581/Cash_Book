@@ -154,7 +154,7 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
         model.setStartTime(DateTimeUtil.getYearMonthDay_(startDate));
         model.setEndTime(DateTimeUtil.getYearMonthDay_(endDate));
         model.setRemark(remarks);
-        model.setId(DaoSaveMoneyPlan.getCount() + 1);
+        model.setId(DaoSaveMoneyPlan.getCount());
         mList.add(model);
         RxBus.getInstance().post(Config.ModelSaveAPen, mList);
         this.finish();

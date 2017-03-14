@@ -142,7 +142,7 @@ public class ShowSaveMoneyPlanActivity extends BaseActivity implements BGAOnRVIt
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().release();
+        RxBus.getInstance().removeObserverable(Config.ModelSaveAPen);
     }
 
     public void Save(View view) {

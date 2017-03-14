@@ -17,4 +17,11 @@
         <attr name="border_width" format="dimension"/>
         <attr name="border_color2" format="color"/>
     </declare-styleable>
+
+
+    <declare-styleable name="BottomTabBar">
+        <attr name="textColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
+        <attr name="textSelectColor" format="color"/>
+    </declare-styleable>
 </resources>

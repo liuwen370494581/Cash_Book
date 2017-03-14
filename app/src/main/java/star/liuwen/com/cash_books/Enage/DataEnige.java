@@ -213,6 +213,7 @@ public class DataEnige {
         DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.tingchefei, "停车"));
         DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.majiang, "麻将"));
         DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.dianying, "电影"));
+
     }
 
     public static List<IndexModel> getHuoBiData() {

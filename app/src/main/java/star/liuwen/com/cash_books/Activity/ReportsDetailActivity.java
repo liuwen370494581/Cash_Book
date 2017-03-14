@@ -1,29 +1,14 @@
 package star.liuwen.com.cash_books.Activity;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.transition.Visibility;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import cn.bingoogolapple.androidcommon.adapter.BGADivider;
-import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Adapter.FragmentAdapter;
 import star.liuwen.com.cash_books.Base.BaseActivity;
-import star.liuwen.com.cash_books.Enage.DataEnige;
-import star.liuwen.com.cash_books.Fragment.BankFragment;
-import star.liuwen.com.cash_books.Fragment.P2PFragment;
 import star.liuwen.com.cash_books.Fragment.ShouRuReportsFragment;
 import star.liuwen.com.cash_books.Fragment.ZhiChuReportsFragment;
-import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.Utils.DateTimeUtil;
-import star.liuwen.com.cash_books.Utils.ToastUtils;
-import star.liuwen.com.cash_books.bean.AccountModel;
-import star.liuwen.com.cash_books.bean.ReportsDetailModel;
 
 /**
  * Created by liuwen on 2017/2/7.
@@ -50,9 +35,9 @@ public class ReportsDetailActivity extends BaseActivity implements View.OnClickL
 
         mShouRuReportsFragment = new ShouRuReportsFragment();
         mZhiChuReportsFragment = new ZhiChuReportsFragment();
-        mFragmentAdapter = new FragmentAdapter(getFragmentManager());
-        mFragmentAdapter.add(mZhiChuReportsFragment, "消费明细");
-        mFragmentAdapter.add(mShouRuReportsFragment, "收入明细");
+        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        mFragmentAdapter.addFragment(mZhiChuReportsFragment, "消费明细");
+        mFragmentAdapter.addFragment(mShouRuReportsFragment, "收入明细");
         mViewPager.setAdapter(mFragmentAdapter);
 
         mViewPager.setOnPageChangeListener(this);

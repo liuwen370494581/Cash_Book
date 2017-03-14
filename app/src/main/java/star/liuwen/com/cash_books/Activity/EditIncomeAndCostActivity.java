@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
+import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
@@ -29,7 +31,7 @@ import star.liuwen.com.cash_books.bean.ZhiChuModel;
 /**
  * Created by liuwen on 2017/3/8.
  */
-public class EditIncomeAndCostActivity extends BaseActivity {
+public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVItemClickListener {
     private RecyclerView mRecyclerView;
     private EditText editName;
     private ImageView imageName;
@@ -66,15 +68,7 @@ public class EditIncomeAndCostActivity extends BaseActivity {
         mList = DataEnige.getZhiChuData();
         mAdapter.setData(mList);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
-            @Override
-            public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-                editName.setText(mList.get(position).getNames());
-                imageName.setImageResource(mList.get(position).getUrl());
-                url = mList.get(position).getUrl();
-
-            }
-        });
+        mAdapter.setOnRVItemClickListener(this);
     }
 
     private void onSure(String type) {
@@ -85,7 +79,7 @@ public class EditIncomeAndCostActivity extends BaseActivity {
         }
         if (type.equals(Config.ZHI_CHU)) {
             ZhiChuModel model = new ZhiChuModel();
-            model.setId(DaoZhiChuModel.getCount() + 1);
+            model.setId(DaoZhiChuModel.getCount());
             model.setUrl(url);
             model.setNames(editTypeName);
             DaoZhiChuModel.insertZhiChu(model);
@@ -93,13 +87,23 @@ public class EditIncomeAndCostActivity extends BaseActivity {
             this.finish();
         } else if (type.equals(Config.SHOU_RU)) {
             ShouRuModel model = new ShouRuModel();
-            model.setId(DaoZhiChuModel.getCount()+1);
+            model.setId(DaoShouRuModel.getCount());
             model.setUrl(url);
             model.setName(editTypeName);
+            DaoShouRuModel.insertShouRu(model);
             RxBus.getInstance().post(Config.RxToSHouRu, model);
             this.finish();
         }
     }
+
+    @Override
+    public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+        editName.setText(mList.get(position).getNames());
+        imageName.setImageResource(mList.get(position).getUrl());
+        url = mList.get(position).getUrl();
+    }
+
+
     private class EditCostAdapter extends BGARecyclerViewAdapter<ZhiChuModel> {
 
         public EditCostAdapter(RecyclerView recyclerView) {
@@ -112,5 +116,4 @@ public class EditIncomeAndCostActivity extends BaseActivity {
             helper.setText(R.id.item_name, model.getNames());
         }
     }
-
 }

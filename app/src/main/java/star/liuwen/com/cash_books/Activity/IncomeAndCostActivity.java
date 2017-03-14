@@ -9,6 +9,7 @@ import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Fragment.ShouRuFragment;
 import star.liuwen.com.cash_books.Fragment.ZhiChuFragment;
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.RxBus.RxBus;
 
 /**
  * Created by liuwen on 2016/12/29.
@@ -31,13 +32,11 @@ public class IncomeAndCostActivity extends BaseActivity implements View.OnClickL
         mViewPager = (ViewPager) findViewById(R.id.id_view_pager);
         txtZhiChu = (TextView) findViewById(R.id.id_zhichu_tab);
         txtShouRu = (TextView) findViewById(R.id.id_shouru_tab);
-
-
         mShouRuFragment = new ShouRuFragment();
         mZhiChuFragment = new ZhiChuFragment();
-        mFragmentAdapter = new FragmentAdapter(getFragmentManager());
-        mFragmentAdapter.add(mZhiChuFragment, "支出");
-        mFragmentAdapter.add(mShouRuFragment, "收入");
+        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        mFragmentAdapter.addFragment(mZhiChuFragment, "支出");
+        mFragmentAdapter.addFragment(mShouRuFragment, "收入");
         mViewPager.setAdapter(mFragmentAdapter);
 
         mViewPager.setOnPageChangeListener(this);
@@ -56,6 +55,12 @@ public class IncomeAndCostActivity extends BaseActivity implements View.OnClickL
 
     public void onClose(View view) {
         IncomeAndCostActivity.this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable("AccountModel");
     }
 
     @Override
