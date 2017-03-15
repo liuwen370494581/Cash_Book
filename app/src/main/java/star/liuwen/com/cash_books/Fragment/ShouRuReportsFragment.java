@@ -1,5 +1,6 @@
 package star.liuwen.com.cash_books.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +35,6 @@ public class ShouRuReportsFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.shouru_reports_fragment);
         initView();
-        initData();
         return getContentView();
     }
 
@@ -53,7 +53,4 @@ public class ShouRuReportsFragment extends BaseFragment {
         mRecyclerView.addItemDecoration(BGADivider.newShapeDivider());
     }
 
-    private void initData() {
-
-    }
 }

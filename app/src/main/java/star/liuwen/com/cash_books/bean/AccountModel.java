@@ -7,11 +7,13 @@ import star.liuwen.com.cash_books.Base.Config;
 
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * Created by liuwen on 2017/1/6.
  */
 @Entity
-public class AccountModel {
+public class AccountModel implements Serializable {
     @Id(autoincrement = true)
     private Long id;
     private String AccountType;//账户类型 (账户名)
@@ -57,7 +59,7 @@ public class AccountModel {
 
     @Generated(hash = 141009023)
     public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
-            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer) {
+                        float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer) {
         this.id = id;
         this.AccountType = AccountType;
         this.Data = Data;
@@ -191,11 +193,6 @@ public class AccountModel {
     public void setAccountYuer(double AccountYuer) {
         this.AccountYuer = AccountYuer;
     }
-
-
-
-
-   
 
 
 }

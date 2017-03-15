@@ -53,6 +53,10 @@
         <!--修改的通用界面-->
         <!--存钱和账单总结的通用页面-->
         <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"/>
+
+        <activity
             android:name=".Activity.SaveMoneyActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
@@ -139,10 +143,6 @@
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
         <!--主页-->
-        <activity
-            android:name=".MainActivity"
-            android:launchMode="standard"
-            android:screenOrientation="portrait"/>
         <!--展示存钱的页面-->
         <activity
             android:name=".Activity.ShowSaveMoneyPlanActivity"

@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 
@@ -34,14 +35,12 @@ import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Activity.EditIncomeAndCostActivity;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
-import star.liuwen.com.cash_books.Adapter.ZhiChuAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
-import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
-import star.liuwen.com.cash_books.Enage.DataEnige;
+import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
@@ -49,7 +48,6 @@ import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
-import star.liuwen.com.cash_books.bean.ShouRuModel;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
@@ -208,8 +206,13 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         }
         homListData.add(new AccountModel(AccountType, AccountData, Double.parseDouble(mEdName), AccountConsumeType, AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
         RxBus.getInstance().post("AccountModel", homListData);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra("id", 1);
+        startActivity(intent);
         getActivity().finish();
+
     }
+
 
 
     private void showZhanghu() {

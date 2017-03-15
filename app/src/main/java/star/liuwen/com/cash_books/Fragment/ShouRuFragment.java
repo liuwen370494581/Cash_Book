@@ -41,6 +41,7 @@ import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
+import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
@@ -211,6 +212,9 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
 
         homListData.add(new AccountModel(AccountType, AccountData, Double.parseDouble(mEdName), AccountConsumeType, AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.SHOU_RU));
         RxBus.getInstance().post("AccountModel", homListData);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra("id", 1);
+        startActivity(intent);
         getActivity().finish();
     }
 

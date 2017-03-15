@@ -80,7 +80,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         mDefineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getActivity(), true, true);
         //设置刷新样式
         mBGARefreshLayout.setRefreshViewHolder(mDefineBAGRefreshWithLoadView);
-
         mDefineBAGRefreshWithLoadView.setRefreshingText("同步账单中...");
         mDefineBAGRefreshWithLoadView.setPullDownRefreshText("同步账单中...");
         mDefineBAGRefreshWithLoadView.setReleaseRefreshText("下拉同步账单中...");

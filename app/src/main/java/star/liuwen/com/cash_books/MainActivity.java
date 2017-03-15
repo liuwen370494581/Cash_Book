@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        initData();
     }
 
     private void initView() {
@@ -52,8 +54,28 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
         tb.setBars(bars);
     }
 
-    private long firstTime = 0;
 
+    private void initData() {
+    }
+
+
+    /**
+     * 因为MainActivity使用了singleTask或者singleInstance的启动模式 所以只有一个实例
+     * 那么久不会重新去调用onCreate()的方法 所以便要重写onNeWIntent的方法();
+     *
+     * @param intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // TODO Auto-generated method stub
+        super.onNewIntent(intent);
+        int id = intent.getIntExtra("id", 0);
+        if (id == 1) {
+            tb.switchContent(homeFragment);
+        }
+    }
+
+    private long firstTime = 0;
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - firstTime > 2000) {
@@ -107,4 +129,5 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
                 break;
         }
     }
+
 }
