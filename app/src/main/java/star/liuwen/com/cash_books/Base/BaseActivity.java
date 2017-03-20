@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.leakcanary.RefWatcher;
 
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.ActivityKiller;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 

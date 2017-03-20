@@ -6,7 +6,7 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -17,13 +17,21 @@
             android:layout_marginTop="3dp"
             android:src="@mipmap/icon_shouru_type_qita"/>
 
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/item_cha"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="40dp"
+            android:src="@mipmap/cha"/>
+
         <TextView
-            android:layout_marginTop="3dp"
             android:id="@+id/item_name"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_imag"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="3dp"
             android:padding="7dp"
             android:text="买菜"/>
     </RelativeLayout>

@@ -18,6 +18,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+
+
     public void addFragment(Fragment fragment, String title) {
         mFragments.add(fragment);
         mFragmentTitles.add(title);

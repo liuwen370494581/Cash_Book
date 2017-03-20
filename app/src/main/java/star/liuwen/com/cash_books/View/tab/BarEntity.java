@@ -1,7 +1,8 @@
 package star.liuwen.com.cash_books.View.tab;
 
 /**
- * Created by zhihao.wen on 2016/11/4.
+ * Created by liuwen on 2017/1/20.
+ * 底部导航栏
  */
 
 public class BarEntity {

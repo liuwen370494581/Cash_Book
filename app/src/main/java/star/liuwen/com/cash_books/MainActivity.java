@@ -16,6 +16,7 @@ import star.liuwen.com.cash_books.Fragment.HomeFragment;
 import star.liuwen.com.cash_books.Fragment.MyFragment;
 import star.liuwen.com.cash_books.Fragment.ReportsFragment;
 import star.liuwen.com.cash_books.Fragment.WalletFragment;
+import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.tab.BarEntity;
 import star.liuwen.com.cash_books.View.tab.BottomTabBar;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
     }
 
     private long firstTime = 0;
+
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - firstTime > 2000) {
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
         } else {
             App app = (App) getApplication();
             app.destroyReceiver();
+            RxBus.getInstance().release();
             finish();
         }
         super.onBackPressed();

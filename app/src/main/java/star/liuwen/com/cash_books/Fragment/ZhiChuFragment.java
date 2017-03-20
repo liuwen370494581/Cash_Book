@@ -1,5 +1,6 @@
 package star.liuwen.com.cash_books.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,21 +15,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bigkoo.pickerview.TimePickerView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
@@ -39,21 +40,20 @@ import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
-import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
-import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
+import star.liuwen.com.cash_books.Utils.VibratorUtil;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
  * Created by liuwen on 2017/1/5.
  */
-public class ZhiChuFragment extends BaseFragment implements View.OnClickListener {
+public class ZhiChuFragment extends BaseFragment implements View.OnClickListener, BGAOnItemChildClickListener, BGAOnRVItemClickListener, BGAOnRVItemLongClickListener {
 
     private List<ZhiChuModel> mList;
     private RecyclerView mRecyclerView;
@@ -69,6 +69,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
+    private boolean isShowDelete = false;
 
     @Nullable
     @Override
@@ -105,53 +106,47 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
         mAdapter.addLastItem(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_add, "编辑"));
-        mAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
-            @Override
-            public void onRVItemClick(ViewGroup parent, View itemView, int position) {
 
-                if (mAdapter.getItemCount() - 1 == position) {
-                    Intent intent = new Intent(getActivity(), EditIncomeAndCostActivity.class);
-                    intent.putExtra(Config.OTHER, Config.ZHI_CHU);
-                    startActivity(intent);
-                } else {
-                    txtName.setText(mList.get(position).getNames());
-                    imageName.setImageResource(mList.get(position).getUrl());
-                    AccountConsumeType = mList.get(position).getNames();
-                    AccountUrl = mList.get(position).getUrl();
-                }
-            }
-        });
-
-
-        mAdapter.setOnRVItemLongClickListener(new BGAOnRVItemLongClickListener() {
-            @Override
-            public boolean onRVItemLongClick(ViewGroup parent, View itemView, final int position) {
-                if (position == mList.size() - 1) {
-                    SnackBarUtil.show(itemView, "该项不能删除");
-                    return false;
-                }
-                final TipandEditDialog dialog = new TipandEditDialog(getActivity(), "确定要删除吗");
-                dialog.show();
-                dialog.setLeftText(getString(R.string.cancel));
-                dialog.setLeftTextColor(getResources().getColor(R.color.jiechu));
-                dialog.setRightText(getString(R.string.sure));
-                dialog.setRightTextColor(getResources().getColor(R.color.blue));
-                dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
-                    @Override
-                    public void ClickLeft() {
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void ClickRight() {
-                        mAdapter.removeItem(position);
-                        DaoZhiChuModel.deleteZhiChuByModel(DaoZhiChuModel.query().get(position));
-                    }
-                });
-                return true;
-            }
-        });
+        mAdapter.setOnRVItemClickListener(this);
+        mAdapter.setOnRVItemLongClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
     }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.item_cha) {
+            mAdapter.removeItem(position);
+            DaoZhiChuModel.deleteZhiChuByModel(DaoZhiChuModel.query().get(position));
+        }
+    }
+
+    @Override
+    public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+        if (mAdapter.getItemCount() - 1 == position) {
+            Intent intent = new Intent(getActivity(), EditIncomeAndCostActivity.class);
+            intent.putExtra(Config.OTHER, Config.ZHI_CHU);
+            startActivity(intent);
+        } else {
+            txtName.setText(mList.get(position).getNames());
+            imageName.setImageResource(mList.get(position).getUrl());
+            AccountConsumeType = mList.get(position).getNames();
+            AccountUrl = mList.get(position).getUrl();
+        }
+    }
+
+    @Override
+    public boolean onRVItemLongClick(ViewGroup parent, View itemView, int position) {
+        if (isShowDelete) {
+            isShowDelete = false;
+        } else {
+            isShowDelete = true;
+        }
+        VibratorUtil.Vibrate(getActivity(), 70);
+        mAdapter.setShowDelete(isShowDelete);
+        mAdapter.setClickItemIndex(position);
+        return true;
+    }
+
 
     private void initData() {
         RxBus.getInstance().toObserverableOnMainThread(Config.RxToZhiChu, new RxBusResult() {
@@ -212,7 +207,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         getActivity().finish();
 
     }
-
 
 
     private void showZhanghu() {
@@ -287,18 +281,54 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         pvTime.show();
     }
 
+
     private class ZhiChuAdapter extends BGARecyclerViewAdapter<ZhiChuModel> {
+        private boolean isShowDelete;//根据这个变量来判断是否显示删除图标，true是显示，false是不显示
+        private int clickItemIndex = -1;//根据这个变量来辨识选中的current值
 
         public ZhiChuAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_zhichu_fragment);
         }
 
+        protected void setShowDelete(boolean isShowDelete) {
+            this.isShowDelete = isShowDelete;
+            mAdapter.notifyDataSetChangedWrapper();
+        }
+
+        protected boolean getShowDelete() {
+            return isShowDelete;
+        }
+
+        protected void setClickItemIndex(int postion) {
+            this.clickItemIndex = postion;
+        }
+
+        @Override
+        protected void setItemChildListener(BGAViewHolderHelper helper, int viewType) {
+            super.setItemChildListener(helper, viewType);
+            helper.setItemChildClickListener(R.id.item_cha);
+        }
+
         @Override
         protected void fillData(BGAViewHolderHelper helper, int position, ZhiChuModel model) {
+            TranslateAnimation animation = new TranslateAnimation(1, 4, 1, 2);
+            animation.setInterpolator(new OvershootInterpolator());
+            animation.setDuration(100);
+            animation.setRepeatCount(Animation.INFINITE);
+            animation.setRepeatMode(Animation.REVERSE);
             helper.setImageResource(R.id.item_imag, model.getUrl());
             helper.setText(R.id.item_name, model.getNames());
+            if (position == mList.size() - 1) {
+                helper.setVisibility(R.id.item_cha, View.GONE);
+            } else {
+                helper.setVisibility(R.id.item_cha, isShowDelete ? View.VISIBLE : View.GONE);
+                if (isShowDelete) {
+                    helper.getImageView(R.id.item_imag).startAnimation(animation);
+                }
+            }
         }
     }
+
 
 //    private void showData() {
 //        final AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
