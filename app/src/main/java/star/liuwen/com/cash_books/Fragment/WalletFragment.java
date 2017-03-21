@@ -24,6 +24,7 @@ import star.liuwen.com.cash_books.Activity.PayShowActivity;
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.Dao.DaoAccount;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
@@ -34,6 +35,7 @@ import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.CustomPopWindow;
+import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
@@ -50,6 +52,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private int position;
     private DrawerLayout mDrawerLayout;
     private List<ChoiceAccount> mList;
+    private double totalYue, yuer;
 
     @Nullable
     @Override
@@ -86,8 +89,11 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             mList = DaoChoiceAccount.query();
             mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter);
+            for (int i = 0; i < mList.size(); i++) {
+                totalYue = totalYue + mList.get(i).getMoney();
+            }
+            tvYuer.setText(String.format("%.2f", totalYue));
         }
-
         mAdapter.setOnRVItemClickListener(this);
 
         if (SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null) != null) {
@@ -98,7 +104,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
 
 
     private void initData() {
-
 
         RxBus.getInstance().toObserverableOnMainThread(Config.isBgCash, new RxBusResult() {
             @Override
@@ -115,9 +120,16 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                     mList = DaoChoiceAccount.query();
                     mAdapter.setData(mList);
                     mRecyclerView.setAdapter(mAdapter);
+                    for (int i = 0; i < mList.size(); i++) {
+                        yuer = yuer + mList.get(i).getMoney();
+                    }
+                    tvYuer.setText(String.format("%.2f", yuer));
+                    //因为余额的数值会添加要设为0重新开始算
+                    yuer = 0;
                 }
             }
         });
+
 
     }
 

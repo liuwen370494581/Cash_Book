@@ -47,6 +47,7 @@ public class LoadingActivity extends AppCompatActivity {
             setContentView(R.layout.loading_activity);
         } else {
             setContentView(R.layout.lauach_activity);
+
         }
         initView();
     }
@@ -103,9 +104,19 @@ public class LoadingActivity extends AppCompatActivity {
             String paw = SharedPreferencesUtil.getStringPreferences(LoadingActivity.this, Config.UserPassWord, "");
             Intent intent = null;
             if (isFirstStar && !TextUtils.isEmpty(paw)) {
-                intent = new Intent(LoadingActivity.this, MainActivity.class);
+                //判断是否开启了锁
+                if (SharedPreferencesUtil.getBooleanPreferences(LoadingActivity.this, Config.isOpenCodedLock, false)) {
+                    intent = new Intent(LoadingActivity.this, LoginLockActivity.class);
+                } else {
+                    intent = new Intent(LoadingActivity.this, MainActivity.class);
+                }
             } else {
-                intent = new Intent(LoadingActivity.this, LoginActivity.class);
+                //判断是否开启了锁
+                if (SharedPreferencesUtil.getBooleanPreferences(LoadingActivity.this, Config.isOpenCodedLock, false)) {
+                    intent = new Intent(LoadingActivity.this, LoginLockActivity.class);
+                } else {
+                    intent = new Intent(LoadingActivity.this, LoginActivity.class);
+                }
             }
             startActivity(intent);
             LoadingActivity.this.finish();

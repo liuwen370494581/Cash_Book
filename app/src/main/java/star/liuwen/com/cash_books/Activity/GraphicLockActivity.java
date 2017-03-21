@@ -81,7 +81,7 @@ public class GraphicLockActivity extends BaseActivity implements GraphicLockView
     @Override
     public void setPwdFailure() {
         if (type == 0) {
-            txtGraphicInfo.setText(getString(R.string.lock_login_error));
+            txtGraphicInfo.setText(getString(R.string.lock_password_short));
             ToastUtils.showToast(this, getString(R.string.lock_password_short));
         } else {
             txtGraphicInfo.setText(getString(R.string.lock_can_login));

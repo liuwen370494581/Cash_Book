@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class PayShowActivity extends BaseActivity {
     private PaySHowAdapter mAdapter;
     private View headView;
     private double zhiChu, liuRu;
+    private ViewStub mViewStub;
 
 
     @Override
@@ -79,8 +81,9 @@ public class PayShowActivity extends BaseActivity {
         txtMonth.setText(DateTimeUtil.getCurrentYearMonth());
 
         mRecyclerView = (RecyclerView) findViewById(R.id.pay_show_recycler_view);
-
-
+        mViewStub = (ViewStub) findViewById(R.id.view_stub);
+        mViewStub.inflate();
+        mViewStub.setVisibility(View.GONE);
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
         mAdapter = new PaySHowAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
@@ -104,7 +107,11 @@ public class PayShowActivity extends BaseActivity {
     private void setAdapter(String data) {
         if (model.getMAccountType().equals(Config.CASH)) {
             mList = DaoAccount.queryByAccountType("现金");
-            mAdapter.setData(mList);
+            if (mList.size() == 0 || null == mList) {
+                mViewStub.setVisibility(View.VISIBLE);
+            } else {
+                mAdapter.setData(mList);
+            }
             for (AccountModel model : mList) {
                 if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                     zhiChu = zhiChu + model.getMoney();
@@ -117,7 +124,11 @@ public class PayShowActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         } else if (model.getMAccountType().equals(Config.CXK)) {
             mList = DaoAccount.queryByAccountType("储蓄卡");
-            mAdapter.setData(mList);
+            if(mList.size()==0||null==mList){
+                mViewStub.setVisibility(View.VISIBLE);
+            }else {
+                mAdapter.setData(mList);
+            }
             for (AccountModel model : mList) {
                 if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                     zhiChu = zhiChu + model.getMoney();
@@ -130,7 +141,11 @@ public class PayShowActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         } else if (model.getMAccountType().equals(Config.XYK)) {
             mList = DaoAccount.queryByAccountType("信用卡");
-            mAdapter.setData(mList);
+            if(mList.size()==0||null==mList){
+                mViewStub.setVisibility(View.VISIBLE);
+            }else {
+                mAdapter.setData(mList);
+            }
             for (AccountModel model : mList) {
                 if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                     zhiChu = zhiChu + model.getMoney();
@@ -143,7 +158,11 @@ public class PayShowActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         } else if (model.getMAccountType().equals(Config.ZFB)) {
             mList = DaoAccount.queryByAccountType("支付宝");
-            mAdapter.setData(mList);
+            if(mList.size()==0||null==mList){
+                mViewStub.setVisibility(View.VISIBLE);
+            }else {
+                mAdapter.setData(mList);
+            }
             for (AccountModel model : mList) {
                 if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                     zhiChu = zhiChu + model.getMoney();
@@ -234,8 +253,6 @@ public class PayShowActivity extends BaseActivity {
             }
         }
     }
-
-
     private class PaySHowAdapter extends BGARecyclerViewAdapter<AccountModel> {
 
         public PaySHowAdapter(RecyclerView recyclerView) {

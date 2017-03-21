@@ -2,39 +2,25 @@ package star.liuwen.com.cash_books.Fragment;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import star.liuwen.com.cash_books.Activity.ReportsDetailActivity;
-import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
-import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.PieChart.OnDateChangedLinstener;
 import star.liuwen.com.cash_books.PieChart.StatisticsView;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
-import star.liuwen.com.cash_books.Utils.BitMapUtils;
-import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
 
 /**
@@ -96,22 +82,25 @@ public class ReportsFragment extends Fragment implements OnDateChangedLinstener,
         RxBus.getInstance().toObserverableOnMainThread("AccountModel", new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
-                mView.setReVisible(true);
-                mView.setViewStubVisible(true);
+                mView.upDateView();
             }
         });
     }
 
     @Override
     public void onDateChanged(String startDate, String endDate) {
-        ToastUtils.showToast(getActivity(), "点击了日期" + startDate + "--" + endDate);
+        if (DaoAccount.queryByDate(startDate, endDate).size() == 0) {
+            mView.setReVisible(false);
+            mView.setViewStubVisible(false);
+        } else {
+            mView.upDateView();
+        }
     }
 
     @Override
     public void showDetail() {
         startActivity(new Intent(getActivity(), ReportsDetailActivity.class));
     }
-
 
     @Override
     public void onDestroy() {
@@ -120,22 +109,4 @@ public class ReportsFragment extends Fragment implements OnDateChangedLinstener,
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.i("TAG", "onPause");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.i("TAG", "onStart");
-        Log.i("TAG", "onNext");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.v("MainActivity", "onstop");
-    }
 }

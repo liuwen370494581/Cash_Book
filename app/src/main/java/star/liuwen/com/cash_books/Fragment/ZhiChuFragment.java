@@ -2,16 +2,22 @@ package star.liuwen.com.cash_books.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -24,15 +30,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.bigkoo.pickerview.TimePickerView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemChildTouchListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
+import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewHolder;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Activity.EditIncomeAndCostActivity;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
@@ -45,6 +56,7 @@ import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.Utils.VibratorUtil;
 import star.liuwen.com.cash_books.bean.AccountModel;
@@ -65,7 +77,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private PopupWindow window;
     private List<AccountModel> homListData;
 
-    private String AccountType, AccountData, AccountConsumeType;
+    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate;
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
@@ -90,6 +102,11 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         tvData.setOnClickListener(this);
         tvZhanghu.setOnClickListener(this);
         tvSure.setOnClickListener(this);
+
+        choiceAccount = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccount, "");
+        choiceAccountDate = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccountDate, "");
+        tvZhanghu.setText(choiceAccount.isEmpty() ? "账户" : choiceAccount);
+        tvData.setText(choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate);
 
         View headView = View.inflate(getActivity(), R.layout.zhichu_shouru_head, null);
         edName = (EditText) headView.findViewById(R.id.zhichu_name);
@@ -147,7 +164,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         return true;
     }
 
-
     private void initData() {
         RxBus.getInstance().toObserverableOnMainThread(Config.RxToZhiChu, new RxBusResult() {
             @Override
@@ -199,7 +215,9 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         if (tvData.getText().toString().equals("日期")) {
             ToastUtils.showToast(getActivity(), "请选择日期");
         }
-        homListData.add(new AccountModel(AccountType, AccountData, Double.parseDouble(mEdName), AccountConsumeType, AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
+        homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
+                , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
+                Double.parseDouble(mEdName), AccountConsumeType, AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
         RxBus.getInstance().post("AccountModel", homListData);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
@@ -231,6 +249,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 window.dismiss();
                 AccountType = mPopWindowAdapter.getItem(position).getAccountName();
                 tvZhanghu.setText(AccountType);
+                SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccount, AccountType);
             }
         });
 
@@ -275,6 +294,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             public void onTimeSelect(Date date) {
                 tvData.setText(DateTimeUtil.getYearMonthDay_(date));
                 AccountData = DateTimeUtil.getYearMonthDay_(date);
+                SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccountDate, AccountData);
             }
         });
         //显示
@@ -307,6 +327,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         protected void setItemChildListener(BGAViewHolderHelper helper, int viewType) {
             super.setItemChildListener(helper, viewType);
             helper.setItemChildClickListener(R.id.item_cha);
+            helper.setRVItemChildTouchListener(R.id.item_imag);
         }
 
         @Override

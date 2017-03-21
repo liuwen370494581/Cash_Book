@@ -94,6 +94,18 @@ public class DaoAccount {
         return list;
     }
 
+    public static List<AccountModel> queryByDate(String startData, String endData) {
+        List<AccountModel> list = new ArrayList<>();
+        list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.Data.between(startData, endData)).build().list();
+        Collections.sort(list, new Comparator<AccountModel>() {
+            @Override
+            public int compare(AccountModel model1, AccountModel model2) {
+                return model2.getData().compareTo(model1.getData());
+            }
+        });
+        return list;
+    }
+
 
     /**
      * 支出或者是收入类型

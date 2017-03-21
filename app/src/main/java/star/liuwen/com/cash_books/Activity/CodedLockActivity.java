@@ -33,6 +33,7 @@ public class CodedLockActivity extends BaseActivity implements View.OnClickListe
         reSettingCodeClock = (RelativeLayout) findViewById(R.id.reSetting_code_clock);
         boolean isOpen = SharedPreferencesUtil.getBooleanPreferences(this, Config.isOpenCodedLock, false);
         mImageView.setImageResource(isOpen ? R.mipmap.more_push_on : R.mipmap.more_push_off);
+        SharedPreferencesUtil.cleanSharePreferences(this, isOpen ? "" : Config.isOpenCodedLock);
         reSettingCodeClock.setVisibility(isOpen ? View.VISIBLE : View.GONE);
 
         reSettingCodeClock.setOnClickListener(this);
@@ -75,7 +76,8 @@ public class CodedLockActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == reSettingCodeClock) {
-            startActivity(new Intent(this, LoginLockActivity.class));
+            Intent intent = new Intent(this, GraphicLockActivity.class);
+            startActivityForResult(intent, isOpenLock);
         }
     }
 }

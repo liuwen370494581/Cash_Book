@@ -51,6 +51,7 @@ import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
@@ -71,7 +72,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private int position, AccountUrl;
     private PopupWindow window;
     private List<AccountModel> homListData;
-    private String AccountType, AccountData, AccountConsumeType;
+    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate;
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
@@ -97,6 +98,10 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         tvZhanghu.setOnClickListener(this);
         tvSure.setOnClickListener(this);
 
+        choiceAccount = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccount, "");
+        choiceAccountDate = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccountDate, "");
+        tvZhanghu.setText(choiceAccount.isEmpty() ? "账户" : choiceAccount);
+        tvData.setText(choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate);
 
         View headView = View.inflate(getActivity(), R.layout.zhichu_shouru_head, null);
         edName = (EditText) headView.findViewById(R.id.zhichu_name);
@@ -209,7 +214,9 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             ToastUtils.showToast(getActivity(), "请选择日期");
         }
 
-        homListData.add(new AccountModel(AccountType, AccountData, Double.parseDouble(mEdName), AccountConsumeType, AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.SHOU_RU));
+        homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
+                , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
+                Double.parseDouble(mEdName), AccountConsumeType, AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.SHOU_RU));
         RxBus.getInstance().post("AccountModel", homListData);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
@@ -240,6 +247,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
                 window.dismiss();
                 AccountType = mPopWindowAdapter.getItem(position).getAccountName();
                 tvZhanghu.setText(AccountType);
+                SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccount, AccountType);
             }
         });
 
@@ -284,6 +292,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             public void onTimeSelect(Date date) {
                 tvData.setText(DateTimeUtil.getYearMonthDay_(date));
                 AccountData = DateTimeUtil.getYearMonthDay_(date);
+                SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccountDate, AccountData);
             }
         });
         //显示

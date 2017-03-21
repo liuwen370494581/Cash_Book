@@ -360,6 +360,10 @@ public class StatisticsView extends ViewGroup implements OnClickListener {
     }
 
 
+    public void upDateView() {
+        view.invalidate();
+    }
+
     public void setDateChangedListener(
             OnDateChangedLinstener mDateChangedListener) {
         this.mDateChangedListener = mDateChangedListener;

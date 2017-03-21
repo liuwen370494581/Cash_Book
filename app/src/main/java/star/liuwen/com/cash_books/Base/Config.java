@@ -100,6 +100,8 @@ public class Config {
     public static final String TxtPlanRemark = "TxtPlanRemark";
     public static final String TxtNickName = "TxtNickName";
     public static final String TxtSigNature = "TxtSigNature";
+    public static final String TxtChoiceAccount = "TxtChoiceAccount";
+    public static final String TxtChoiceAccountDate = "TxtChoiceAccountDate";
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";
