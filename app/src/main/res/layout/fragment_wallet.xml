@@ -15,9 +15,6 @@
         <include layout="@layout/common_toolbar"/>
     </FrameLayout>
 
-    <star.liuwen.com.cash_books.View.DampView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,5 +68,4 @@
                 tools:listitem="@layout/item_fragment_wallet">
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
-    </star.liuwen.com.cash_books.View.DampView>
 </android.support.v4.widget.DrawerLayout>

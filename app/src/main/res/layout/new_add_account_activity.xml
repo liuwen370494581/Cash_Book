@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+
+    <include layout="@layout/common_toolbar"/>
+
+
+    <RelativeLayout
+        android:id="@+id/re_setting_account"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="账户名称"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/setting_txt_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:text="现金"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_bank"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="发卡行"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/setting_txt_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:text="广发银行"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/re_setting_tyoe"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="账户类型"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/setting_txt_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:text="现金"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_money"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="金额"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/setting_txt_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:text=""
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_Credit_limit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="信用额度"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/setting_txt_Credit_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:text="0.00"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_debt"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="欠款"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/setting_txt_debt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:text="0.00"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_debt_date"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="欠款日"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/setting_txt_debt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:text="4号"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+</LinearLayout>

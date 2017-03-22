@@ -27,9 +27,18 @@ public class DaoAccount {
         App.getDaoInstant().getAccountModelDao().insert(model);
     }
 
-
+    /**
+     * 删除对象数据
+     * 删除对象为AccountModel
+     *
+     * @param model
+     */
     public static void deleteAccountByModel(AccountModel model) {
         App.getDaoInstant().getAccountModelDao().delete(model);
+    }
+
+    public static void deleteAccountById(long id) {
+        App.getDaoInstant().getAccountModelDao().deleteByKey(id);
     }
 
     /**

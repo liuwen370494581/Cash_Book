@@ -20,23 +20,27 @@ import java.util.List;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import star.liuwen.com.cash_books.Activity.ChoiceAccountTypeActivity;
 import star.liuwen.com.cash_books.Activity.PayShowActivity;
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
+import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
+import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.CustomPopWindow;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
+import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
  * Created by liuwen on 2017/2/16.
@@ -94,6 +98,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             }
             tvYuer.setText(String.format("%.2f", totalYue));
         }
+        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
         mAdapter.setOnRVItemClickListener(this);
 
         if (SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null) != null) {
@@ -130,17 +135,18 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             }
         });
 
-
     }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-
-        ChoiceAccount model = mList.get(position);
-        Intent intent = new Intent(getActivity(), PayShowActivity.class);
-        intent.putExtra(Config.ModelWallet, model);
-        startActivity(intent);
-
+        if (mAdapter.getItemCount() - 1 == position) {
+            startActivity(new Intent(getActivity(), ChoiceAccountTypeActivity.class));
+        } else {
+            ChoiceAccount model = mList.get(position);
+            Intent intent = new Intent(getActivity(), PayShowActivity.class);
+            intent.putExtra(Config.ModelWallet, model);
+            startActivity(intent);
+        }
     }
 
 
@@ -280,7 +286,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 helper.setText(R.id.xinyka_jia, String.format("%.2f", model.getMoney()));
             } else {
                 helper.setText(R.id.qb_txt_xinyka, model.getAccountName()).setImageResource(R.id.qb_image_xinyka, model.getUrl());
-                helper.setText(R.id.qb_txt_xinyka_yuer, model.getAccountName() + "额度");
+                helper.setText(R.id.qb_txt_xinyka_yuer, model.getMAccountType() + "额度");
                 helper.setText(R.id.xinyka_jia, String.format("%.2f", model.getMoney()));
             }
         }

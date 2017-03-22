@@ -8,8 +8,8 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="5dp">
 
         <RelativeLayout
@@ -34,7 +34,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/qb_image_xinyka"
                 android:text="@string/qianbao_xinyka"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color_bg"
                 android:textSize="@dimen/txt_15"/>
 
             <TextView

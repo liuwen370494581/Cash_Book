@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,7 +147,8 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     if (mList.get(i).getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                         zhiChuAdd = zhiChuAdd + mList.get(i).getMoney() + totalZhiChuAdd;
                         model = new AccountModel();
-                        model.setId(DaoAccount.getCount() + 1);
+                        int y = 1 + (int) (Math.random() * 10000000);
+                        model.setId(DaoAccount.getCount() + y);
                         model.setAccountType(mList.get(i).getAccountType());
                         model.setData(mList.get(i).getData());
                         model.setMoney(mList.get(i).getMoney());
@@ -162,7 +164,9 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     } else {
                         shouRuAdd = shouRuAdd + mList.get(i).getMoney() + totalShouRuAdd;
                         model = new AccountModel();
-                        model.setId(DaoAccount.getCount() + 1);
+                        //为了解决ID的唯一性产生的bug 当删除一个item的时候 id依然存在数据库中 在插入的时候 会插入同样的数据 所以使用了随机数
+                        int y = 1 + (int) (Math.random() * 10000000);
+                        model.setId(DaoAccount.getCount() + y);
                         model.setAccountType(mList.get(i).getAccountType());
                         model.setData(mList.get(i).getData());
                         model.setMoney(mList.get(i).getMoney());
@@ -248,7 +252,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
             @Override
             public void ClickRight() {
                 mAdapter.removeItem(position);
-                DaoAccount.deleteAccountByModel(DaoAccount.query().get(position));
+                DaoAccount.deleteAccountById(DaoAccount.query().get(position).getId());
                 if (DaoAccount.query().size() == 0) {
                     headView.setVisibility(View.GONE);
                     mBGARefreshLayout.setVisibility(View.GONE);

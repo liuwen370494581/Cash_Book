@@ -51,28 +51,21 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        RxBus.getInstance();
         //初始化内存检测工具
         mRefWatcher = LeakCanary.install(this);
-        //插入数据
+        //插入greenDao数据
         setUpDataBase();
         //初始化网络监察工具
         initNetChangeReceiver();
     }
 
-    private void initNetChangeReceiver() {
-        //获取当前网络类型
-        mNetType = NetworkUtils.getNetworkType(this);
-
-        //定义网络状态的广播接受者
-        netStateReceiver = NetStateReceiver.getReceiver();
-
-        //给广播接受者注册一个观察者
-        netStateReceiver.registerObserver(netChangeObserver);
-
-        //注册网络变化广播
-        NetworkUtils.registerNetStateReceiver(this, netStateReceiver);
+    // 检测内存工具
+    public static RefWatcher getRefWatcher(Context context) {
+        App application = (App) context
+                .getApplicationContext();
+        return application.mRefWatcher;
     }
+
 
     private void setUpDataBase() {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "Cash_book", null);
@@ -86,9 +79,23 @@ public class App extends Application {
         }
     }
 
-
     public static DaoSession getDaoInstant() {
         return mDaoSession;
+    }
+
+
+    private void initNetChangeReceiver() {
+        //获取当前网络类型
+        mNetType = NetworkUtils.getNetworkType(this);
+
+        //定义网络状态的广播接受者
+        netStateReceiver = NetStateReceiver.getReceiver();
+
+        //给广播接受者注册一个观察者
+        netStateReceiver.registerObserver(netChangeObserver);
+
+        //注册网络变化广播
+        NetworkUtils.registerNetStateReceiver(this, netStateReceiver);
     }
 
     private NetChangeObserver netChangeObserver = new NetChangeObserver() {
@@ -122,22 +129,12 @@ public class App extends Application {
         mNetType = type;
     }
 
-
     //释放广播接受者(建议在 最后一个 Activity 退出前调用)
     public void destroyReceiver() {
         //移除里面的观察者
         netStateReceiver.removeObserver(netChangeObserver);
         //解注册广播接受者,
         NetworkUtils.unRegisterNetStateReceiver(this, netStateReceiver);
-    }
-
-
-    // 在自己的Application中添加如下代码
-    public static RefWatcher getRefWatcher(Context context) {
-
-        App application = (App) context
-                .getApplicationContext();
-        return application.mRefWatcher;
     }
 
 

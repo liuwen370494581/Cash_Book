@@ -79,7 +79,12 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
         }
         if (type.equals(Config.ZHI_CHU)) {
             ZhiChuModel model = new ZhiChuModel();
-            model.setId(DaoZhiChuModel.getCount());
+            //解决了id的唯一性产生的bug 可以测试一下 当没有这个随机数
+            //删除一个item的时候 在添加一个item的时候 会报id唯一性的错误
+            //这是因为你删除一个item的时候 增加一个item生成的id是相同的 因为你插入的是相同的 所以
+            //加入了随机数
+            int y = 1 + (int) (Math.random() * 10000000);
+            model.setId(DaoZhiChuModel.getCount() + y);
             model.setUrl(url);
             model.setNames(editTypeName);
             DaoZhiChuModel.insertZhiChu(model);
@@ -87,7 +92,8 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             this.finish();
         } else if (type.equals(Config.SHOU_RU)) {
             ShouRuModel model = new ShouRuModel();
-            model.setId(DaoShouRuModel.getCount());
+            int y = 1 + (int) (Math.random() * 10000000);
+            model.setId(DaoShouRuModel.getCount() + y);
             model.setUrl(url);
             model.setName(editTypeName);
             DaoShouRuModel.insertShouRu(model);

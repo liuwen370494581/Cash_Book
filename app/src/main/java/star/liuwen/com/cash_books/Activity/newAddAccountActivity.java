@@ -7,32 +7,36 @@ import android.widget.TextView;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
+import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.bean.ChoiceAccount;
+import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
 
 /**
- * Created by liuwen on 2017/2/17.
+ * Created by liuwen on 2017/3/22.
  */
-public class PaySettingsActivity extends BaseActivity implements View.OnClickListener {
+public class newAddAccountActivity extends BaseActivity implements View.OnClickListener {
+
     private RelativeLayout reBank, reAccount, reType, reMoney, reCreditLimit, reDebt, reDebtData;
     private TextView txtBank, txtAccount, txtType, txtMoney, txtCreditLimit, txtDebt, txtDebtData;
-    private ChoiceAccount model;
+    private PlanSaveMoneyModel model;
 
     @Override
     public int activityLayoutRes() {
-        return R.layout.pay_settings_activity;
+        return R.layout.new_add_account_activity;
     }
 
     @Override
     public void initView() {
-        setTitle(getString(R.string.pay_setting));
         setBackView();
         setLeftText(getString(R.string.back));
         setLeftImage(R.mipmap.fanhui_lan);
+        setRightText(getString(R.string.sure), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doSure();
+            }
+        });
 
         reBank = (RelativeLayout) findViewById(R.id.re_setting_bank);
         reAccount = (RelativeLayout) findViewById(R.id.re_setting_account);
@@ -58,36 +62,72 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         reDebt.setOnClickListener(this);
         reDebtData.setOnClickListener(this);
 
-        model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
+        model = (PlanSaveMoneyModel) getIntent().getExtras().getSerializable(Config.ModelChoiceAccount);
         if (model != null) {
-            txtType.setText(model.getMAccountType());
-            txtMoney.setText(model.getMoney() + "");
-            if (model.mAccountType.equals(Config.XYK)) {
+            txtType.setText(model.getPlanName());
+            if (model.getPlanName().equals(Config.XYK)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
                 reMoney.setVisibility(View.GONE);
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
                 txtBank.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
                 txtCreditLimit.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtCreditLimit, "").isEmpty() ? getString(R.string.ling) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtCreditLimit, ""));
                 txtDebt.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtDebt, "").isEmpty() ? getString(R.string.ling) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtDebt, ""));
-            } else if (model.mAccountType.equals(Config.CXK)) {
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+            } else if (model.getPlanName().equals(Config.CXK)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
                 txtBank.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
                 setAccountVisible();
-            } else if (model.mAccountType.equals(Config.ZFB)) {
+            } else if (model.getPlanName().equals(Config.ZFB)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
                 reBank.setVisibility(View.GONE);
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
                 setAccountVisible();
-            } else if (model.mAccountType.equals(Config.CASH)) {
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+            } else if (model.getPlanName().equals(Config.CASH)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
                 reBank.setVisibility(View.GONE);
                 setAccountVisible();
-            } else if (model.mAccountType.equals(Config.JC)) {
+            } else if (model.getPlanName().equals(Config.JC)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
                 reBank.setVisibility(View.GONE);
                 setAccountVisible();
-            } else if (model.mAccountType.equals(Config.JR)) {
+            } else if (model.getPlanName().equals(Config.JR)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
+                reBank.setVisibility(View.GONE);
+                setAccountVisible();
+            } else if (model.getPlanName().equals(Config.WEIXIN)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                reBank.setVisibility(View.GONE);
+                setAccountVisible();
+            } else if (model.getPlanName().equals(Config.CZK)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                reBank.setVisibility(View.GONE);
+                setAccountVisible();
+            } else if (model.getPlanName().equals(Config.TOUZI)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                reBank.setVisibility(View.GONE);
+                setAccountVisible();
+            } else if (model.getPlanName().equals(Config.INTENTACCOUNT)) {
+                setTitle(String.format(getString(R.string.new_built), model.getAdd()));
+                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getPlanName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
                 reBank.setVisibility(View.GONE);
                 setAccountVisible();
             }
         }
+    }
+
+    private void doSure() {
+        String tvMoney = txtMoney.getText().toString();
+        String tvBank = txtBank.getText().toString();
+        String tvCreditLimit = txtCreditLimit.getText().toString();
+        String tvDebt=txtDebt.getText().toString();
+
+        Intent intent = new Intent(newAddAccountActivity.this, MainActivity.class);
+        intent.putExtra("id", 2);
+        startActivity(intent);
     }
 
     /**
@@ -102,9 +142,9 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(PaySettingsActivity.this, UpdateCommonKeyBoardActivity.class);
+        Intent intent = new Intent(newAddAccountActivity.this, UpdateCommonKeyBoardActivity.class);
         if (v == reBank) {
-            startActivityForResult(new Intent(PaySettingsActivity.this, ChoiceIssuingBankActivity.class), ChoiceIssuingBank);
+            startActivityForResult(new Intent(newAddAccountActivity.this, ChoiceIssuingBankActivity.class), ChoiceIssuingBank);
         } else if (v == reAccount) {
             intent.putExtra(Config.SaveAPenPlatform, "AccountName");
             startActivityForResult(intent, ACCOUNT);
@@ -122,6 +162,7 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+
     private static final int ACCOUNT = 101;
     private static final int MONEY = 102;
     private static final int CreditLimit = 103;
@@ -137,37 +178,6 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         switch (requestCode) {
             case ACCOUNT:
                 txtAccount.setText(data.getExtras().getString(Config.TextInPut));
-                if (model.getMAccountType().equals(Config.CASH)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(0);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
-                } else if (model.getMAccountType().equals(Config.CXK)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(1);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
-                } else if (model.getMAccountType().equals(Config.XYK)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(2);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
-                } else if (model.getMAccountType().equals(Config.ZFB)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(3);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
-                } else if (model.getMAccountType().equals(Config.JC)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(4);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
-                } else if (model.getMAccountType().equals(Config.JR)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(5);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
-                }
                 break;
             case MONEY:
                 txtMoney.setText(data.getExtras().getString(Config.TextInPut));

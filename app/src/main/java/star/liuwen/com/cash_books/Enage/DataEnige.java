@@ -14,6 +14,7 @@ import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.IndexModel;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
+import star.liuwen.com.cash_books.bean.SaveMoneyPlanModel;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 import star.liuwen.com.cash_books.widget.CharacterParser;
@@ -178,6 +179,21 @@ public class DataEnige {
         DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借入", 0.00, 0.00, "", "", R.color.jieru, Config.JR, 0.00, 0.00, DateTimeUtil.getCurrentYear()));
     }
 
+    public static List<PlanSaveMoneyModel> getAddChoiceAccount() {
+        List<PlanSaveMoneyModel> list = new ArrayList<>();
+        list.add(new PlanSaveMoneyModel(R.mipmap.zongxiaofei, "现金", "", Config.CASH));
+        list.add(new PlanSaveMoneyModel(R.mipmap.icon_add_1, "储蓄卡", "", Config.CXK));
+        list.add(new PlanSaveMoneyModel(R.mipmap.huankuan, "信用卡", "(蚂蚁花呗,京东白条)", Config.XYK));
+        list.add(new PlanSaveMoneyModel(R.mipmap.zhifubao, "支付宝", "", Config.ZFB));
+        list.add(new PlanSaveMoneyModel(R.mipmap.config_share_weixin, "微信钱包", "", Config.WEIXIN));
+        list.add(new PlanSaveMoneyModel(R.mipmap.fanka, "储值卡", "(饭卡,公交卡)", Config.CZK));
+        list.add(new PlanSaveMoneyModel(R.mipmap.touzilicai, "投资理财", "", Config.TOUZI));
+        list.add(new PlanSaveMoneyModel(R.mipmap.lixishouru, "网络账户", "", Config.INTENTACCOUNT));
+        list.add(new PlanSaveMoneyModel(R.mipmap.zhuanzhang, "借出", "(别人欠我的钱)", Config.JC));
+        list.add(new PlanSaveMoneyModel(R.mipmap.tuikuan, "借入", "(我欠别人钱)", Config.JR));
+        return list;
+    }
+
     public static void InsertShouRuData() {
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_gongzi, "工资"));
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_shenghuofei, "生活费"));
@@ -215,6 +231,7 @@ public class DataEnige {
         DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.dianying, "电影"));
 
     }
+
 
     public static List<IndexModel> getHuoBiData() {
         List<IndexModel> list = new ArrayList<>();
@@ -347,5 +364,6 @@ public class DataEnige {
         Collections.sort(data, pinyinComparator);
         return data;
     }
+
 
 }

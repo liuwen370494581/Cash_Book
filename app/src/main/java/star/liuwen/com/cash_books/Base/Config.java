@@ -47,6 +47,10 @@ public class Config {
     public final static String JC = "借出";
     public final static String JR = "借入";
     public final static String OTHER = "OTHER";
+    public final static String WEIXIN = "微信";
+    public final static String CZK = "储值卡";
+    public final static String TOUZI = "投资账户";
+    public final static String INTENTACCOUNT = "网络账户";
 
 
     public final static String TarGetUrl = "TarGetUrl";
@@ -105,6 +109,7 @@ public class Config {
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";
+    public static final String ModelChoiceAccount = "ModelChoiceAccount";
 
     public static final String RxToReports = "RxToReports";
     public static final String RxToZhiChu = "RxToZhiChu";

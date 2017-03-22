@@ -122,6 +122,10 @@
 
     <string name="save_a_pen">存一笔</string>
     <string name="ling">0.00</string>
+    <string name="empty_string"></string>
     <string name="edit_category">编辑类别</string>
     <string name="press_one_exit">在按一次返回键退出</string>
+    <string name="choice_account_type">选择账户类型</string>
+    <string name="new_built">新建%s账户</string>
+
 </resources>

@@ -26,6 +26,13 @@ public class PlanSaveMoneyModel implements Serializable {
         this.message = message;
     }
 
+    public PlanSaveMoneyModel(int url, String add, String message, String planName) {
+        this.url = url;
+        this.add = add;
+        this.message = message;
+        this.planName = planName;
+    }
+
     public long getId() {
         return id;
     }

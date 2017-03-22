@@ -181,6 +181,16 @@
             android:name=".Activity.EditIncomeAndCostActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--添加选择账户类型页面-->
+        <activity
+            android:name=".Activity.ChoiceAccountTypeActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--新建选择账户-->
+        <activity
+            android:name=".Activity.newAddAccountActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
     </application>
 
 
