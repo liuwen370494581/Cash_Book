@@ -12,6 +12,7 @@ import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
+import star.liuwen.com.cash_books.View.DatePickerDialog;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
@@ -21,6 +22,7 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
     private RelativeLayout reBank, reAccount, reType, reMoney, reCreditLimit, reDebt, reDebtData;
     private TextView txtBank, txtAccount, txtType, txtMoney, txtCreditLimit, txtDebt, txtDebtData;
     private ChoiceAccount model;
+    private DatePickerDialog dialog;
 
     @Override
     public int activityLayoutRes() {
@@ -49,6 +51,20 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         txtCreditLimit = (TextView) findViewById(R.id.setting_txt_Credit_limit);
         txtDebt = (TextView) findViewById(R.id.setting_txt_debt);
         txtDebtData = (TextView) findViewById(R.id.setting_txt_debt_date);
+
+        dialog = new DatePickerDialog(this);
+        dialog.setCallback(new DatePickerDialog.OnClickCallback() {
+            @Override
+            public void onCancel() {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSure(String data) {
+                txtDebtData.setText(data);
+                dialog.dismiss();
+            }
+        });
 
         reBank.setOnClickListener(this);
         reAccount.setOnClickListener(this);
@@ -118,7 +134,7 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
             intent.putExtra(Config.SaveAPenPlatform, "Debt");
             startActivityForResult(intent, Debt);
         } else if (v == reDebtData) {
-
+            dialog.show();
         }
     }
 

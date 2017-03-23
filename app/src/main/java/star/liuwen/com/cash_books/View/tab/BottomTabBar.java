@@ -24,7 +24,6 @@ import star.liuwen.com.cash_books.R;
  * Created by liuwen on 2017/1/20.
  * 底部导航栏
  */
-
 public class BottomTabBar extends LinearLayout {
     private FragmentManager manager;
     /**

@@ -4,7 +4,6 @@ package star.liuwen.com.cash_books.View.tab;
  * Created by liuwen on 2017/1/20.
  * 底部导航栏
  */
-
 public class BarEntity {
     private String tabText;
     private int tabSelectedResId ;

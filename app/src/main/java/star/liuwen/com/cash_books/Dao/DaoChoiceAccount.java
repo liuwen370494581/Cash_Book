@@ -1,5 +1,8 @@
 package star.liuwen.com.cash_books.Dao;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
@@ -23,6 +26,11 @@ public class DaoChoiceAccount {
     }
 
 
+    /**
+     * 删除对象为
+     *
+     * @param model
+     */
     public static void deleteChoiceAccountByModel(ChoiceAccount model) {
         App.getDaoInstant().getChoiceAccountDao().delete(model);
     }
@@ -50,7 +58,15 @@ public class DaoChoiceAccount {
      * @return
      */
     public static List<ChoiceAccount> query() {
-        return App.getDaoInstant().getChoiceAccountDao().queryBuilder().list();
+        List<ChoiceAccount> list = new ArrayList<>();
+        list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().list();
+        Collections.sort(list, new Comparator<ChoiceAccount>() {
+            @Override
+            public int compare(ChoiceAccount model1, ChoiceAccount model2) {
+                return model1.getTimeMinSec().compareTo(model2.getTimeMinSec());
+            }
+        });
+        return list;
     }
 
 

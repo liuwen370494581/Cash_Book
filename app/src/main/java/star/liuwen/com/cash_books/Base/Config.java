@@ -115,4 +115,6 @@ public class Config {
     public static final String RxToZhiChu = "RxToZhiChu";
     public static final String RxToSHouRu = "RxToSHouRu";
 
+    public static final String RxListToWalletFragment = "RxListToWalletFragment";
+
 }

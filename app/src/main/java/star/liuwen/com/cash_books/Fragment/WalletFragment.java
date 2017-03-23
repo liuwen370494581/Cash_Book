@@ -135,6 +135,15 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             }
         });
 
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxListToWalletFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                ChoiceAccount account = (ChoiceAccount) o;
+                mAdapter.addItem(mList.size() - 1, account);
+
+            }
+        });
+
     }
 
     @Override

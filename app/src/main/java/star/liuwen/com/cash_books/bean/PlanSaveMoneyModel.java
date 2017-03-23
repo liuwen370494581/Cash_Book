@@ -13,6 +13,8 @@ public class PlanSaveMoneyModel implements Serializable {
     private int url;
     private String add;
     private String message;
+    private int color;//为了重用model 在这里加了一个和本身无关的字段 颜色字段
+    private int walletUrl;//增加的这个字段为了显示在钱包页面的图片不一致
 
 
     public PlanSaveMoneyModel() {
@@ -26,11 +28,13 @@ public class PlanSaveMoneyModel implements Serializable {
         this.message = message;
     }
 
-    public PlanSaveMoneyModel(int url, String add, String message, String planName) {
+    public PlanSaveMoneyModel(int url, String add, String message, String planName, int color, int walletUrl) {
         this.url = url;
         this.add = add;
         this.message = message;
         this.planName = planName;
+        this.color = color;
+        this.walletUrl = walletUrl;
     }
 
     public long getId() {
@@ -79,5 +83,22 @@ public class PlanSaveMoneyModel implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public int getWalletUrl() {
+        return walletUrl;
+    }
+
+    public void setWalletUrl(int walletUrl) {
+        this.walletUrl = walletUrl;
     }
 }

@@ -30,21 +30,29 @@ public class ChoiceAccount implements Serializable {
     private String timeMinSec;// 消费和支出日期
 
 
-    public ChoiceAccount(int url, String accountName, double money, double debt, String account, int color) {
+    public ChoiceAccount(int url, String accountName, double money, double debt, String accountType, int color) {
         this.url = url;
         this.accountName = accountName;
         this.money = money;
         Debt = debt;
-        mAccountType = account;
+        mAccountType = accountType;
         this.color = color;
     }
 
-
-
+    public ChoiceAccount(int url, String accountName, double money, double debt, String debtDate, String issuingBank, int color, String accountType) {
+        this.url = url;
+        this.accountName = accountName;
+        this.money = money;
+        Debt = debt;
+        DebtDate = debtDate;
+        IssuingBank = issuingBank;
+        this.color = color;
+        mAccountType = accountType;
+    }
 
     @Generated(hash = 659872583)
     public ChoiceAccount(Long id, int url, String accountName, double money, double Debt, String DebtDate,
-            String IssuingBank, int color, String mAccountType, double liuChu, double liuRu, String timeMinSec) {
+                         String IssuingBank, int color, String mAccountType, double liuChu, double liuRu, String timeMinSec) {
         this.id = id;
         this.url = url;
         this.accountName = accountName;
@@ -60,13 +68,9 @@ public class ChoiceAccount implements Serializable {
     }
 
 
-
-
     @Generated(hash = 1743186768)
     public ChoiceAccount() {
     }
-
-
 
 
     public String getData() {
@@ -187,19 +191,14 @@ public class ChoiceAccount implements Serializable {
     }
 
 
-
-
     public String getTimeMinSec() {
         return this.timeMinSec;
     }
 
 
-
-
     public void setTimeMinSec(String timeMinSec) {
         this.timeMinSec = timeMinSec;
     }
-    
-   
+
 
 }

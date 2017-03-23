@@ -21,6 +21,7 @@ import star.liuwen.com.cash_books.R;
 
 /**
  * Created by liuwen on 2017/2/27.
+ * 可以设置图片为圆形
  */
 public class CircleImageView extends ImageView {
     private static final String TAG = "CircleImageView";
