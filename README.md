@@ -1,6 +1,6 @@
 # Cash_Book
-
-![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1256_%E5%89%AF%E6%9C%AC.jpg)                                 ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1257_%E5%89%AF%E6%9C%AC.jpg)                                    ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1258_%E5%89%AF%E6%9C%AC.jpg)                                    ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1259_%E5%89%AF%E6%9C%AC.jpg)   
+以greenDao3为基础打造的记账类型的APP，类似于口袋记账。
+![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1256_%E5%89%AF%E6%9C%AC.jpg)                     ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1257_%E5%89%AF%E6%9C%AC.jpg)                        ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1258_%E5%89%AF%E6%9C%AC.jpg)                        ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1259_%E5%89%AF%E6%9C%AC.jpg)   
 
 本项目是业务时间编写，纯粹是享受编写代码的乐趣，由于本身工作也是十分繁重 
 所以修改的bug和增加的新功能 每天也都只增加一点点 
