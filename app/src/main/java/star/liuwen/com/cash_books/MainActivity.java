@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
         super.onNewIntent(intent);
         int id = intent.getIntExtra("id", 0);
         if (id == 1) {
-            tb.switchContent(homeFragment);
+           onSelect(0);
         } else if (id == 2) {
-            tb.switchContent(walletFragment);
+            onSelect(1);
         }
     }
 

@@ -69,7 +69,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="广发银行"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 
@@ -133,7 +133,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="6000"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 
@@ -165,7 +165,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="0.00"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 
@@ -197,7 +197,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="0.00"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 
@@ -229,7 +229,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="4号"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 </LinearLayout>

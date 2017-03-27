@@ -263,6 +263,8 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         });
         return true;
     }
+
+
 }
 
 

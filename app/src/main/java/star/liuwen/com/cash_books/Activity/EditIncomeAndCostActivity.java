@@ -88,7 +88,7 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             model.setUrl(url);
             model.setNames(editTypeName);
             DaoZhiChuModel.insertZhiChu(model);
-            RxBus.getInstance().post(Config.RxToZhiChu, model);
+            RxBus.getInstance().post(Config.RxToZhiChuFragment, model);
             this.finish();
         } else if (type.equals(Config.SHOU_RU)) {
             ShouRuModel model = new ShouRuModel();
@@ -97,9 +97,15 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             model.setUrl(url);
             model.setName(editTypeName);
             DaoShouRuModel.insertShouRu(model);
-            RxBus.getInstance().post(Config.RxToSHouRu, model);
+            RxBus.getInstance().post(Config.RxToSHouRuFragment, model);
             this.finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable(Config.RxToSHouRuFragment);
     }
 
     @Override

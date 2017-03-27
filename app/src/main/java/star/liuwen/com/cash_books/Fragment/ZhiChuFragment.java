@@ -60,6 +60,7 @@ import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.Utils.VibratorUtil;
 import star.liuwen.com.cash_books.bean.AccountModel;
+import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
@@ -74,14 +75,15 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private ImageView imageName;
     private TextView txtName, tvData, tvZhanghu, tvSure;
     private int position, AccountUrl;
-    private PopupWindow window;
     private List<AccountModel> homListData;
 
     private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate;
+    private PopupWindow window;
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
     private boolean isShowDelete = false;
+    private ChoiceAccount model;
 
     @Nullable
     @Override
@@ -117,6 +119,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         final GridLayoutManager manager = new GridLayoutManager(getActivity(), 5, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         mList = new ArrayList<>();
+        model = new ChoiceAccount();
         if (DaoZhiChuModel.query().size() != 0) {
             mList = DaoZhiChuModel.query();
             mAdapter.setData(mList);
@@ -165,7 +168,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxToZhiChu, new RxBusResult() {
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxToZhiChuFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
                 ZhiChuModel model = (ZhiChuModel) o;
@@ -177,7 +180,8 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxToZhiChu);
+        RxBus.getInstance().removeObserverable(Config.RxToZhiChuFragment);
+        RxBus.getInstance().removeObserverable("AccountModel");
         ToastUtils.removeToast();
     }
 
@@ -237,8 +241,14 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             mPopWindowAdapter.setData(DaoChoiceAccount.query());
         }
         mListView.setAdapter(mPopWindowAdapter);
-        mPopWindowAdapter.removeItem(mPopWindowAdapter.getLastItem());
-        mPopWindowAdapter.removeItem(mPopWindowAdapter.getItem(4));
+        for (int i = 0; i < DaoChoiceAccount.query().size(); i++) {
+            model = DaoChoiceAccount.query().get(i);
+            if (model.getMAccountType().equals(Config.JC)) {
+                mPopWindowAdapter.removeItem(model);
+            } else if (model.getMAccountType().equals(Config.JR)) {
+                mPopWindowAdapter.removeItem(model);
+            }
+        }
         window.setFocusable(true);
         window.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

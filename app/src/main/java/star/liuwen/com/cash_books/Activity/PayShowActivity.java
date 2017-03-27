@@ -13,6 +13,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGADivider;
@@ -45,6 +46,8 @@ public class PayShowActivity extends BaseActivity {
     private View headView;
     private double zhiChu, liuRu;
     private ViewStub mViewStub;
+    private int position;
+
 
 
     @Override
@@ -65,6 +68,7 @@ public class PayShowActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PayShowActivity.this, PaySettingsActivity.class);
                 intent.putExtra(Config.ModelWallet, model);
+                intent.putExtra(Config.Position, position);
                 startActivity(intent);
             }
         });
@@ -83,6 +87,7 @@ public class PayShowActivity extends BaseActivity {
         mViewStub.inflate();
         mViewStub.setVisibility(View.GONE);
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
+        position = getIntent().getIntExtra(Config.Position, 0);
         mAdapter = new PaySHowAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -122,9 +127,9 @@ public class PayShowActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         } else if (model.getMAccountType().equals(Config.CXK)) {
             mList = DaoAccount.queryByAccountType("储蓄卡");
-            if(mList.size()==0||null==mList){
+            if (mList.size() == 0 || null == mList) {
                 mViewStub.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mAdapter.setData(mList);
             }
             for (AccountModel model : mList) {
@@ -139,9 +144,9 @@ public class PayShowActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         } else if (model.getMAccountType().equals(Config.XYK)) {
             mList = DaoAccount.queryByAccountType("信用卡");
-            if(mList.size()==0||null==mList){
+            if (mList.size() == 0 || null == mList) {
                 mViewStub.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mAdapter.setData(mList);
             }
             for (AccountModel model : mList) {
@@ -156,9 +161,77 @@ public class PayShowActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         } else if (model.getMAccountType().equals(Config.ZFB)) {
             mList = DaoAccount.queryByAccountType("支付宝");
-            if(mList.size()==0||null==mList){
+            if (mList.size() == 0 || null == mList) {
                 mViewStub.setVisibility(View.VISIBLE);
-            }else {
+            } else {
+                mAdapter.setData(mList);
+            }
+            for (AccountModel model : mList) {
+                if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                    zhiChu = zhiChu + model.getMoney();
+                    txtLiuChu.setText(String.format("%.2f", zhiChu));
+                } else {
+                    liuRu = liuRu + model.getMoney();
+                    txtLiuRu.setText(String.format("%.2f", liuRu));
+                }
+            }
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        } else if (model.getMAccountType().equals(Config.WEIXIN)) {
+            mList = DaoAccount.queryByAccountType(Config.WEIXIN);
+            if (mList.size() == 0 || null == mList) {
+                mViewStub.setVisibility(View.VISIBLE);
+            } else {
+                mAdapter.setData(mList);
+            }
+            for (AccountModel model : mList) {
+                if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                    zhiChu = zhiChu + model.getMoney();
+                    txtLiuChu.setText(String.format("%.2f", zhiChu));
+                } else {
+                    liuRu = liuRu + model.getMoney();
+                    txtLiuRu.setText(String.format("%.2f", liuRu));
+                }
+            }
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        } else if (model.getMAccountType().equals(Config.CZK)) {
+            mList = DaoAccount.queryByAccountType(Config.CZK);
+            if (mList.size() == 0 || null == mList) {
+                mViewStub.setVisibility(View.VISIBLE);
+            } else {
+                mAdapter.setData(mList);
+            }
+            for (AccountModel model : mList) {
+                if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                    zhiChu = zhiChu + model.getMoney();
+                    txtLiuChu.setText(String.format("%.2f", zhiChu));
+                } else {
+                    liuRu = liuRu + model.getMoney();
+                    txtLiuRu.setText(String.format("%.2f", liuRu));
+                }
+            }
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        } else if (model.getMAccountType().equals(Config.TOUZI)) {
+            mList = DaoAccount.queryByAccountType(Config.TOUZI);
+            if (mList.size() == 0 || null == mList) {
+                mViewStub.setVisibility(View.VISIBLE);
+            } else {
+                mAdapter.setData(mList);
+            }
+            for (AccountModel model : mList) {
+                if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                    zhiChu = zhiChu + model.getMoney();
+                    txtLiuChu.setText(String.format("%.2f", zhiChu));
+                } else {
+                    liuRu = liuRu + model.getMoney();
+                    txtLiuRu.setText(String.format("%.2f", liuRu));
+                }
+            }
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        } else if (model.getMAccountType().equals(Config.INTENTACCOUNT)) {
+            mList = DaoAccount.queryByAccountType(Config.INTENTACCOUNT);
+            if (mList.size() == 0 || null == mList) {
+                mViewStub.setVisibility(View.VISIBLE);
+            } else {
                 mAdapter.setData(mList);
             }
             for (AccountModel model : mList) {
@@ -217,40 +290,38 @@ public class PayShowActivity extends BaseActivity {
                 case YuER:
                     tvAccount.setNumberString(String.format("%.2f", Double.parseDouble(data.getExtras().getString(Config.TextInPut))));
                     if (model.getMAccountType().equals(Config.CASH)) {
-                        ChoiceAccount model = DaoChoiceAccount.query().get(0);
-                        model.setMoney(Double.parseDouble(data.getExtras().getString(Config.TextInPut)));
-                        DaoChoiceAccount.updateAccount(model);
-                        RxBus.getInstance().post(Config.CASH, true);
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
                     } else if (model.getMAccountType().equals(Config.CXK)) {
-                        ChoiceAccount model = DaoChoiceAccount.query().get(1);
-                        model.setMoney(Double.parseDouble(data.getExtras().getString(Config.TextInPut)));
-                        DaoChoiceAccount.updateAccount(model);
-                        RxBus.getInstance().post(Config.CASH, true);
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
                     } else if (model.getMAccountType().equals(Config.XYK)) {
-                        ChoiceAccount model = DaoChoiceAccount.query().get(2);
-                        model.setMoney(Double.parseDouble(data.getExtras().getString(Config.TextInPut)));
-                        DaoChoiceAccount.updateAccount(model);
-                        RxBus.getInstance().post(Config.CASH, true);
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
                     } else if (model.getMAccountType().equals(Config.ZFB)) {
-                        ChoiceAccount model = DaoChoiceAccount.query().get(3);
-                        model.setMoney(Double.parseDouble(data.getExtras().getString(Config.TextInPut)));
-                        DaoChoiceAccount.updateAccount(model);
-                        RxBus.getInstance().post(Config.CASH, true);
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
                     } else if (model.getMAccountType().equals(Config.JC)) {
-                        ChoiceAccount model = DaoChoiceAccount.query().get(4);
-                        model.setMoney(Double.parseDouble(data.getExtras().getString(Config.TextInPut)));
-                        DaoChoiceAccount.updateAccount(model);
-                        RxBus.getInstance().post(Config.CASH, true);
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
                     } else if (model.getMAccountType().equals(Config.JR)) {
-                        ChoiceAccount model = DaoChoiceAccount.query().get(5);
-                        model.setMoney(Double.parseDouble(data.getExtras().getString(Config.TextInPut)));
-                        DaoChoiceAccount.updateAccount(model);
-                        RxBus.getInstance().post(Config.CASH, true);
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
+                    } else if (model.getMAccountType().equals(Config.WEIXIN)) {
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
+                    } else if (model.getMAccountType().equals(Config.CZK)) {
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
+                    } else if (model.getMAccountType().equals(Config.TOUZI)) {
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
+                    } else if (model.getMAccountType().equals(Config.INTENTACCOUNT)) {
+                        updateAccountYuer(data.getExtras().getString(Config.TextInPut));
                     }
                     break;
             }
         }
+
     }
+
+    private void updateAccountYuer(String data) {
+        model.setMoney(Double.parseDouble(data));
+        DaoChoiceAccount.updateAccount(model);
+        RxBus.getInstance().post(Config.RxPayShowActivityToWalletFragment, position);
+    }
+
     private class PaySHowAdapter extends BGARecyclerViewAdapter<AccountModel> {
 
         public PaySHowAdapter(RecyclerView recyclerView) {

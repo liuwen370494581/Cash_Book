@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import star.liuwen.com.cash_books.Adapter.FragmentAdapter;
 import star.liuwen.com.cash_books.Base.BaseActivity;
+import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Fragment.ShouRuFragment;
 import star.liuwen.com.cash_books.Fragment.ZhiChuFragment;
 import star.liuwen.com.cash_books.R;
@@ -61,6 +62,7 @@ public class IncomeAndCostActivity extends BaseActivity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         RxBus.getInstance().removeObserverable("AccountModel");
+        RxBus.getInstance().removeObserverable(Config.RxToZhiChuFragment);
     }
 
     @Override

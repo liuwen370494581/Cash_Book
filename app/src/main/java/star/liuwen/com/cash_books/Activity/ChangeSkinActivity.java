@@ -91,4 +91,9 @@ public class ChangeSkinActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable(Config.isBgCash);
+    }
 }

@@ -110,11 +110,15 @@ public class Config {
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";
     public static final String ModelChoiceAccount = "ModelChoiceAccount";
+    public static final String Position = "Position";
 
     public static final String RxToReports = "RxToReports";
-    public static final String RxToZhiChu = "RxToZhiChu";
-    public static final String RxToSHouRu = "RxToSHouRu";
+    public static final String RxToZhiChuFragment = "RxToZhiChu";
+    public static final String RxToSHouRuFragment = "RxToSHouRu";
+    public static final String RxPayShowActivityToWalletFragment = "RxPayShowActivityToWalletFragment";
 
-    public static final String RxListToWalletFragment = "RxListToWalletFragment";
+    public static final String RxModelToWalletFragment = "RxModelToWalletFragment";
+    public static final String RxPaySettingToWalletFragment = "RxPaySettingToWalletFragment";
+
 
 }

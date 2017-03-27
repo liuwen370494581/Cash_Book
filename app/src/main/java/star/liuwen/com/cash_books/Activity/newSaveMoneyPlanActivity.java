@@ -316,4 +316,11 @@ public class newSaveMoneyPlanActivity extends BaseActivity implements View.OnCli
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable(Config.TarGetUrl);
+        RxBus.getInstance().removeObserverable(Config.PlanSaveMoneyModel);
+        RxBus.getInstance().removeObserverable(Config.Game);
+    }
 }

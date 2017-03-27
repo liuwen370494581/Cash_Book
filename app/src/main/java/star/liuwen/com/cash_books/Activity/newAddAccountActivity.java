@@ -7,7 +7,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
@@ -25,6 +24,7 @@ import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
 
 /**
  * Created by liuwen on 2017/3/22.
+ * 添加账户页面
  */
 public class newAddAccountActivity extends BaseActivity implements View.OnClickListener {
 
@@ -206,7 +206,7 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
                 TextUtils.isEmpty(tvBank.trim()) ? "" : tvBank,
                 model.getColor(), model.getPlanName(), 0.00, 0.00, DateTimeUtil.getCurrentTime_Today());
         DaoChoiceAccount.insertChoiceAccount(account);
-        RxBus.getInstance().post(Config.RxListToWalletFragment, account);
+        RxBus.getInstance().post(Config.RxModelToWalletFragment, account);
         Intent intent = new Intent(newAddAccountActivity.this, MainActivity.class);
         intent.putExtra("id", 2);
         startActivity(intent);
@@ -221,6 +221,11 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
         reDebtData.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable(Config.RxModelToWalletFragment);
+    }
 
     @Override
     public void onClick(View v) {

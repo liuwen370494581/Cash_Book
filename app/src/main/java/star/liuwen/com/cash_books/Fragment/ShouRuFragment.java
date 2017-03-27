@@ -55,6 +55,7 @@ import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
+import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
@@ -77,6 +78,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
     private boolean isShowDelete = false;
+    private ChoiceAccount model;
 
 
     @Nullable
@@ -114,6 +116,8 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         final GridLayoutManager manager = new GridLayoutManager(getActivity(), 5, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         mList = new ArrayList<>();
+        model = new ChoiceAccount();
+
         if (DaoShouRuModel.query().size() != 0) {
             mList = DaoShouRuModel.query();
             mAdapter.setData(mList);
@@ -161,7 +165,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxToSHouRu, new RxBusResult() {
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxToSHouRuFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
                 ShouRuModel model = (ShouRuModel) o;
@@ -174,7 +178,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxToSHouRu);
+        RxBus.getInstance().removeObserverable("AccountModel");
         ToastUtils.removeToast();
     }
 
@@ -235,8 +239,16 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             mPopWindowAdapter.setData(DaoChoiceAccount.query());
         }
         mListView.setAdapter(mPopWindowAdapter);
-        mPopWindowAdapter.removeItem(mPopWindowAdapter.getLastItem());
-        mPopWindowAdapter.removeItem(mPopWindowAdapter.getItem(4));
+
+        for (int i = 0; i < DaoChoiceAccount.query().size(); i++) {
+
+            model = DaoChoiceAccount.query().get(i);
+            if (model.getMAccountType().equals(Config.JC)) {
+                mPopWindowAdapter.removeItem(model);
+            } else if (model.getMAccountType().equals(Config.JR)) {
+                mPopWindowAdapter.removeItem(model);
+            }
+        }
         window.setFocusable(true);
         window.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

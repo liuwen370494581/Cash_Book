@@ -191,6 +191,11 @@
             android:name=".Activity.newAddAccountActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--转账页面-->
+        <activity
+            android:name=".Activity.TransferActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
     </application>
 
 

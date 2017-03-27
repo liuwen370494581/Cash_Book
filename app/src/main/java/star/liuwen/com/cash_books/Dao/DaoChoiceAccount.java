@@ -35,6 +35,8 @@ public class DaoChoiceAccount {
         App.getDaoInstant().getChoiceAccountDao().delete(model);
     }
 
+
+
     /**
      * 删除所有
      */
