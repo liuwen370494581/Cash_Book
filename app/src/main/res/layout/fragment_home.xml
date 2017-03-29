@@ -3,13 +3,13 @@
              android:id="@+id/f_content"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/background"
+             android:background="@color/white"
              android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
+        android:background="@color/white"
         android:fitsSystemWindows="true">
 
 
@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:scrollbars="none"
-                tools:listitem="@layout/item_home">
+                tools:listitem="@layout/item_homefragment">
             </android.support.v7.widget.RecyclerView>
         </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 

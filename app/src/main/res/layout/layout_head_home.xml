@@ -7,7 +7,7 @@
 
     <View
         android:id="@+id/view_1"
-        android:layout_width="1dp"
+        android:layout_width="0.5dp"
         android:layout_height="25dp"
         android:layout_centerHorizontal="true"
         android:background="#A6A6A6"/>
@@ -40,8 +40,8 @@
 
         <ImageView
             android:id="@+id/f_h_image"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:layout_centerInParent="true"
             android:src="@mipmap/yundongjianshen"/>
 

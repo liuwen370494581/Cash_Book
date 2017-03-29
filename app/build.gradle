@@ -10,12 +10,13 @@ android {
         applicationId "star.liuwen.com.cash_books"
         minSdkVersion 22
         targetSdkVersion 23
-        versionCode 47
-        versionName "1.4.7"
+        versionCode 48
+        versionName "1.4.8"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            //zipAlignEnabled true //这个在打包时需要设置为true，能优化我们的java字节码，提高运行效率；
+            minifyEnabled false //开启混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -42,7 +43,6 @@ dependencies {
     compile 'cn.aigestudio.datepicker:DatePicker:2.2.0'
     //时间选择器
     compile 'com.bigkoo:pickerview:2.1.1'
-    //滚轮控件
     //rxBus;
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'

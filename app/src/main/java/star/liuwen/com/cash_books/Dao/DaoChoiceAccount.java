@@ -25,7 +25,6 @@ public class DaoChoiceAccount {
         App.getDaoInstant().getChoiceAccountDao().insert(model);
     }
 
-
     /**
      * 删除对象为
      *

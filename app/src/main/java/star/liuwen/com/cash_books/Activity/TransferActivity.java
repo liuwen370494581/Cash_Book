@@ -19,11 +19,17 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.KeyboardUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -38,13 +44,14 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
     private KeyboardUtil mKeyboardUtil;
     private EditText edMoneyjian, edMoneyJia;
     private TextView tvDate, tvZhuanChu, tvZhuanRu;
-    private RelativeLayout reZhuanChu, reZhuanRu;
+    private RelativeLayout reZhuanChu, reZhuanRu, reShowDate;
     private boolean isZhuanChuORZhuanRu = false;
 
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private PopupWindow window;
     private ChoiceAccount model;
+    private TimePickerView pvTime;
 
 
     @Override
@@ -64,6 +71,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         tvZhuanRu = (TextView) findViewById(R.id.zhuanru);
         reZhuanChu = (RelativeLayout) findViewById(R.id.transfer_zhuanchu);
         reZhuanRu = (RelativeLayout) findViewById(R.id.transfer_zhuanru);
+        reShowDate = (RelativeLayout) findViewById(R.id.choice_date);
 
         mKeyBoardView = (KeyboardView) findViewById(R.id.keyboard_view);
         mKeyboardUtil = new KeyboardUtil(TransferActivity.this, TransferActivity.this, edMoneyJia);
@@ -81,6 +89,16 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 edMoneyJia.setInputType(InputType.TYPE_NULL);
                 mKeyboardUtil.showKeyboard();
                 edMoneyJia.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER);
+                return true;
+            }
+        });
+
+        edMoneyjian.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                edMoneyJia.setInputType(InputType.TYPE_NULL);
+                mKeyboardUtil.showKeyboard();
+                edMoneyjian.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER);
                 return true;
             }
         });
@@ -131,7 +149,8 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
         mKeyboardUtil.setOnEnterListener(new KeyboardUtil.EnterListener() {
             @Override
             public void enter() {
-                ToastUtils.showToast(TransferActivity.this, "点击了确定");
+                TransferActivity.this.finish();
+                reShowDate.setVisibility(View.GONE);
             }
         });
     }
@@ -148,7 +167,7 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 backgroundAlpha(0.5f);
             }
         } else if (v == tvDate) {
-            ToastUtils.showToast(this, "点击了日期");
+            showDate();
         } else if (v == reZhuanRu) {
             isZhuanChuORZhuanRu = false;
             showAccount(isZhuanChuORZhuanRu);
@@ -159,6 +178,31 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
                 backgroundAlpha(0.5f);
             }
         }
+    }
+
+
+    private void showDate() {
+        //时间选择器
+        pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH);
+        //设置标题
+        pvTime.setTitle("选择日期");
+        //控制时间范围
+        Calendar calendar = Calendar.getInstance();
+        pvTime.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 30);
+        pvTime.setTime(new Date());
+        //设置是否循环
+        pvTime.setCyclic(false);
+        //设置是否可以关闭
+        pvTime.setCancelable(true);
+        //设置选择监听
+        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                tvDate.setText(DateTimeUtil.getTime(date));
+            }
+        });
+        //显示
+        pvTime.show();
     }
 
     private void showAccount(final boolean iszhuanoRchu) {

@@ -57,20 +57,12 @@ public class AccountModel implements Serializable {
     }
 
 
-    @Generated(hash = 141009023)
-    public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
-                        float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer) {
-        this.id = id;
-        this.AccountType = AccountType;
-        this.Data = Data;
-        this.Money = Money;
-        this.ConsumeType = ConsumeType;
-        this.url = url;
-        this.timeMinSec = timeMinSec;
-        this.zhiChuShouRuType = zhiChuShouRuType;
-        this.consumePercent = consumePercent;
-        this.zhiCHuAdd = zhiCHuAdd;
-        this.sHouRuAdd = sHouRuAdd;
+    public double getAccountYuer() {
+        return this.AccountYuer;
+    }
+
+
+    public void setAccountYuer(double AccountYuer) {
         this.AccountYuer = AccountYuer;
     }
 
@@ -185,12 +177,20 @@ public class AccountModel implements Serializable {
     }
 
 
-    public double getAccountYuer() {
-        return this.AccountYuer;
-    }
-
-
-    public void setAccountYuer(double AccountYuer) {
+    @Generated(hash = 141009023)
+    public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
+            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer) {
+        this.id = id;
+        this.AccountType = AccountType;
+        this.Data = Data;
+        this.Money = Money;
+        this.ConsumeType = ConsumeType;
+        this.url = url;
+        this.timeMinSec = timeMinSec;
+        this.zhiChuShouRuType = zhiChuShouRuType;
+        this.consumePercent = consumePercent;
+        this.zhiCHuAdd = zhiCHuAdd;
+        this.sHouRuAdd = sHouRuAdd;
         this.AccountYuer = AccountYuer;
     }
 

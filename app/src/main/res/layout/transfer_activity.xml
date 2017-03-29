@@ -38,6 +38,18 @@
                     android:text="转出账户"
                     android:textSize="@dimen/textSize_16"/>
 
+                <TextView
+                    android:id="@+id/zhuanchu_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/zhuanchu"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:text="(转出账户)"
+                    android:textSize="@dimen/textSize_16"
+                    android:visibility="gone"/>
+
                 <EditText
                     android:id="@+id/yuer_jian"
                     android:layout_width="wrap_content"
@@ -49,7 +61,7 @@
                     android:background="@null"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
-                    android:maxLength="8"
+                    android:maxLength="10"
                     android:padding="10dp"
                     android:text="@string/calendar_jia"
                     android:textColor="@color/blue"
@@ -79,6 +91,18 @@
                     android:text="转入账户"
                     android:textSize="@dimen/textSize_16"/>
 
+                <TextView
+                    android:id="@+id/zhuanru_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/zhuanru"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:text="(转入账户)"
+                    android:textSize="@dimen/textSize_16"
+                    android:visibility="gone"/>
+
                 <EditText
                     android:id="@+id/yuer_jia"
                     android:layout_width="wrap_content"
@@ -100,6 +124,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/choice_date"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_above="@+id/keyboard_view"

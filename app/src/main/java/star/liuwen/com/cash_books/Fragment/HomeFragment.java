@@ -18,13 +18,13 @@ import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
+import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
+import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import star.liuwen.com.cash_books.Activity.CalendarActivity;
-import star.liuwen.com.cash_books.Adapter.HomeAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
-import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
@@ -33,14 +33,13 @@ import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.bean.AccountModel;
-import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
  * 明细
  */
 public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener, BGAOnRVItemLongClickListener {
     private RecyclerView mRecyclerView;
-    private HomeAdapter mAdapter;
+    private HomesAdapter mAdapter;
 
     private List<AccountModel> mList;
     private TextView tvShouRuMonth, tvZhiChuMonth;
@@ -96,7 +95,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     }
 
     private void initView() {
-
         mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
         mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_h_recycler);
         mBGARefreshLayout = (BGARefreshLayout) getContentView().findViewById(R.id.define_bga_refresh_with_load);   //设置刷新和加载监听
@@ -111,7 +109,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         tvZhiChuMonth.setText(String.format("%s支出", DateTimeUtil.getCurrentMonth()));
 
         mList = new ArrayList<>();
-        mAdapter = new HomeAdapter(mRecyclerView);
+        mAdapter = new HomesAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -134,7 +132,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         }
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
-
     }
 
     private void initData() {
@@ -158,7 +155,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setZhiChuShouRuType(Config.ZHI_CHU);
                         model.setZhiCHuAdd(mList.get(i).getMoney());
                         model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
-                        insertAccountYuer(mList.get(i).getAccountType());
                         DaoAccount.insertAccount(model);
                         tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
                     } else {
@@ -176,7 +172,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setZhiChuShouRuType(Config.SHOU_RU);
                         model.setSHouRuAdd(mList.get(i).getMoney());
                         model.setConsumePercent((float) (model.getMoney() / shouRuAdd) * 100);
-                        insertAccountYuer(mList.get(i).getAccountType());
                         DaoAccount.insertAccount(model);
                         tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
                     }
@@ -188,28 +183,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
             }
         });
 
-    }
-
-    private void insertAccountYuer(String type) {
-        if (type.equals(Config.CASH)) {
-            ChoiceAccount account = DaoChoiceAccount.query().get(0);
-            model.setAccountYuer(account.getMoney());
-        } else if (type.equals(Config.CXK)) {
-            ChoiceAccount account = DaoChoiceAccount.query().get(1);
-            model.setAccountYuer(account.getMoney());
-        } else if (type.equals(Config.XYK)) {
-            ChoiceAccount account = DaoChoiceAccount.query().get(2);
-            model.setAccountYuer(account.getMoney());
-        } else if (type.equals(Config.ZFB)) {
-            ChoiceAccount account = DaoChoiceAccount.query().get(3);
-            model.setAccountYuer(account.getMoney());
-        } else if (type.equals(Config.JC)) {
-            ChoiceAccount account = DaoChoiceAccount.query().get(4);
-            model.setAccountYuer(account.getMoney());
-        } else if (type.equals(Config.JR)) {
-            ChoiceAccount account = DaoChoiceAccount.query().get(5);
-            model.setAccountYuer(account.getMoney());
-        }
     }
 
 
@@ -244,27 +217,71 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         dialog.setRightText(getString(R.string.sure));
         dialog.setRightTextColor(getResources().getColor(R.color.blue));
         dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
-            @Override
-            public void ClickLeft() {
-                dialog.dismiss();
-            }
+                               @Override
+                               public void ClickLeft() {
+                                   dialog.dismiss();
+                               }
 
-            @Override
-            public void ClickRight() {
-                mAdapter.removeItem(position);
-                DaoAccount.deleteAccountById(DaoAccount.query().get(position).getId());
-                if (DaoAccount.query().size() == 0) {
-                    headView.setVisibility(View.GONE);
-                    mBGARefreshLayout.setVisibility(View.GONE);
-                    mViewStub.setVisibility(View.VISIBLE);
-                    RxBus.getInstance().post(Config.RxToReports, false);
-                }
-            }
-        });
+                               @Override
+                               public void ClickRight() {
+                                   mAdapter.removeItem(position);
+                                   DaoAccount.deleteAccountById(DaoAccount.query().get(position).getId());
+                                   mList = DaoAccount.query();
+                                   if (DaoAccount.query().size() == 0) {
+                                       totalShouRuAdd = 0;
+                                       totalZhiChuAdd = 0;
+                                       headView.setVisibility(View.GONE);
+                                       mBGARefreshLayout.setVisibility(View.GONE);
+                                       mViewStub.setVisibility(View.VISIBLE);
+                                       RxBus.getInstance().post(Config.RxToReports, false);
+                                   } else {
+                                       totalShouRuAdd = 0;
+                                       totalZhiChuAdd = 0;
+                                       for (int i = 0; i < mList.size(); i++) {
+                                           totalZhiChuAdd = totalZhiChuAdd + mList.get(i).getZhiCHuAdd();
+                                           totalShouRuAdd = totalShouRuAdd + mList.get(i).getSHouRuAdd();
+                                       }
+                                       tvZhiChuData.setText(String.format("%.2f", totalZhiChuAdd));
+                                       tvShouRuData.setText(String.format("%.2f", totalShouRuAdd));
+                                   }
+                               }
+                           }
+
+        );
         return true;
     }
 
 
+    public class HomesAdapter extends BGARecyclerViewAdapter<AccountModel> {
+        private boolean isFirstShow;
+
+        public HomesAdapter(RecyclerView recyclerView) {
+            super(recyclerView, R.layout.item_homefragment);
+
+        }
+
+        public void setFirstShow(boolean isFirstShow) {
+            this.isFirstShow = isFirstShow;
+            mAdapter.notifyDataSetChangedWrapper();
+        }
+
+        @Override
+        protected void fillData(BGAViewHolderHelper helper, int position, AccountModel model) {
+            if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                helper.setVisibility(R.id.item_home_rezhichu, View.VISIBLE);
+                helper.setImageResource(R.id.item_home_url, model.getUrl());
+                helper.setText(R.id.item_home_txtzhichuname, model.getConsumeType());
+                helper.setText(R.id.item_home_txtzhichumoney, String.format("%.2f", model.getMoney()));
+                helper.setText(R.id.item_home_txtzhiRemark, model.getAccountType());
+            } else {
+                helper.setVisibility(R.id.item_home_reshouru, View.VISIBLE);
+                helper.setImageResource(R.id.item_home_url, model.getUrl());
+                helper.setText(R.id.item_home_txtshouruname, model.getConsumeType());
+                helper.setText(R.id.item_home_txtshourumoney, String.format("%.2f", model.getMoney()));
+                helper.setText(R.id.item_home_txtshouruRemark, model.getAccountType());
+            }
+        }
+    }
 }
 
 

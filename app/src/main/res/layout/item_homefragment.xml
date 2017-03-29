@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="0.5dp"
+        android:layout_height="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="#A6A6A6"/>
+
+    <ImageView
+        android:id="@+id/item_home_url"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_below="@id/view_1"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/icon_zhichu_type_taobao"/>
+
+    <RelativeLayout
+        android:id="@+id/item_home_rezhichu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_1"
+        android:layout_toRightOf="@id/item_home_url"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/item_home_txtzhichuname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:padding="4dp"
+            android:text="淘宝dddddddd"
+            android:textColor="@color/text_color_33"/>
+
+        <TextView
+            android:id="@+id/item_home_txtzhichumoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/item_home_txtzhichuname"
+            android:padding="4dp"
+            android:text="30.00"
+            android:textColor="@color/text_color_99"
+            android:textSize="@dimen/textSize_12"/>
+
+        <TextView
+            android:id="@+id/item_home_txtzhiRemark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_home_txtzhichuname"
+            android:layout_marginLeft="10dp"
+            android:text="这个月又要吃土了"
+            android:textColor="@color/text_color_99"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/item_home_reshouru"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_1"
+        android:layout_toLeftOf="@id/item_home_url"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/item_ly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_home_txtshourumoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:padding="4dp"
+                android:text="淘宝dddd"
+                android:textColor="@color/text_color_99"
+                android:textSize="@dimen/textSize_12"/>
+
+            <TextView
+                android:id="@+id/item_home_txtshouruname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:padding="4dp"
+                android:text="淘宝ddd"
+                android:textColor="@color/text_color_33"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_home_txtshouruRemark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/item_ly"
+            android:layout_marginRight="9dp"
+            android:text="这个月又要吃土了dddddddd"
+            android:textColor="@color/text_color_99"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_3"
+        android:layout_width="0.5dp"
+        android:layout_height="13dp"
+        android:layout_below="@id/item_home_url"
+        android:layout_centerHorizontal="true"
+        android:background="#A6A6A6"/>
+
+
+    <ImageView
+        android:id="@+id/item_home_show"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_below="@id/view_3"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/hi"
+        android:visibility="gone"/>
+</RelativeLayout>
