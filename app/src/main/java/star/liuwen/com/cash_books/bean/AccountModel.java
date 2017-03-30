@@ -27,6 +27,7 @@ public class AccountModel implements Serializable {
     private double zhiCHuAdd; //总支出
     private double sHouRuAdd; //总收入
     private double AccountYuer;//账户余额
+    private String color;
 
     public AccountModel() {
     }
@@ -46,7 +47,7 @@ public class AccountModel implements Serializable {
         this.url = url;
     }
 
-    public AccountModel(String accountType, String data, double money, String consumeType, int url, String timeMinSec, String zhiChuShouRuType) {
+    public AccountModel(String accountType, String data, double money, String consumeType, int url, String timeMinSec, String zhiChuShouRuType, String color) {
         AccountType = accountType;
         Data = data;
         Money = money;
@@ -54,6 +55,26 @@ public class AccountModel implements Serializable {
         this.url = url;
         this.timeMinSec = timeMinSec;
         this.zhiChuShouRuType = zhiChuShouRuType;
+        this.color = color;
+    }
+
+
+    @Generated(hash = 1595493360)
+    public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
+                        float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String color) {
+        this.id = id;
+        this.AccountType = AccountType;
+        this.Data = Data;
+        this.Money = Money;
+        this.ConsumeType = ConsumeType;
+        this.url = url;
+        this.timeMinSec = timeMinSec;
+        this.zhiChuShouRuType = zhiChuShouRuType;
+        this.consumePercent = consumePercent;
+        this.zhiCHuAdd = zhiCHuAdd;
+        this.sHouRuAdd = sHouRuAdd;
+        this.AccountYuer = AccountYuer;
+        this.color = color;
     }
 
 
@@ -177,21 +198,13 @@ public class AccountModel implements Serializable {
     }
 
 
-    @Generated(hash = 141009023)
-    public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
-            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer) {
-        this.id = id;
-        this.AccountType = AccountType;
-        this.Data = Data;
-        this.Money = Money;
-        this.ConsumeType = ConsumeType;
-        this.url = url;
-        this.timeMinSec = timeMinSec;
-        this.zhiChuShouRuType = zhiChuShouRuType;
-        this.consumePercent = consumePercent;
-        this.zhiCHuAdd = zhiCHuAdd;
-        this.sHouRuAdd = sHouRuAdd;
-        this.AccountYuer = AccountYuer;
+    public String getColor() {
+        return this.color;
+    }
+
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
 

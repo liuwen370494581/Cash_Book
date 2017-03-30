@@ -13,6 +13,13 @@ public class ZhiChuModel {
     private long id;
     private int url;
     private String names;
+    private String color;//增加一个颜色的字段
+    public String getColor() {
+        return this.color;
+    }
+    public void setColor(String color) {
+        this.color = color;
+    }
     public String getNames() {
         return this.names;
     }
@@ -31,18 +38,20 @@ public class ZhiChuModel {
     public void setId(long id) {
         this.id = id;
     }
-    @Generated(hash = 196369667)
-    public ZhiChuModel(long id, int url, String names) {
+    @Generated(hash = 1066235166)
+    public ZhiChuModel(long id, int url, String names, String color) {
         this.id = id;
         this.url = url;
         this.names = names;
+        this.color = color;
     }
     @Generated(hash = 1865233734)
     public ZhiChuModel() {
     }
 
-    public ZhiChuModel(int url, String names) {
+    public ZhiChuModel(int url, String names, String color) {
         this.url = url;
         this.names = names;
+        this.color = color;
     }
 }

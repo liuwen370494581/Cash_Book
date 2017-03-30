@@ -38,4 +38,47 @@
     <color name="wheel_unselect_text">#9e9492</color>
     <color name="wheel_select_text_bg">#66cbff</color>
 
+    <color name="yiban">#3FA7D6</color>
+    <color name="dapai">#FE673E</color>
+    <color name="dianfei">#E0A904</color>
+    <color name="dianying">#936651</color>
+    <color name="fangdai">#A688C4</color>
+    <color name="fangzu">#AD254C</color>
+    <color name="fanka">#9DD2E6</color>
+    <color name="feijipiao">#344860</color>
+    <color name="gouwu">#80AF1D</color>
+    <color name="jiaotongchuxing">#D18B38</color>
+    <color name="liwu">#E96297</color>
+    <color name="lingshixiaochi">#B9975F</color>
+    <color name="haowan">#3C5A99</color>
+    <color name="youfei">#105B3B</color>
+    <color name="maicai">#5EBF93</color>
+    <color name="zaocan">#FCB578</color>
+    <color name="zhongfan">#E0A904</color>
+    <color name="wanfan">#CF0E13</color>
+    <color name="xiaochi">#4D7003</color>
+    <color name="wanggou">#5D9C8D</color>
+    <color name="naifen">#4A79D0</color>
+    <color name="jiushui">#B42914</color>
+    <color name="lingshi">#EF427B</color>
+    <color name="shenghuoping">#0BACE9</color>
+    <color name="xiezi">#975AAE</color>
+    <color name="yiyaofei">#D53163</color>
+    <color name="yifu">#FD567E</color>
+    <color name="taobao">#DD6133</color>
+    <color name="tingche">#FE473E</color>
+    <color name="majiang">#076E4F</color>
+    <color name="xi">#DF3D3D</color>
+    <color name="gongzi">#6C84B7</color>
+    <color name="shenghuofei">#D1B95E</color>
+    <color name="hongbao">#E05C29</color>
+    <color name="linghuaqian">#899275</color>
+    <color name="waikuaijianzhi">#899275</color>
+    <color name="touzi">#CC6705</color>
+    <color name="jiangjin">#ED9342</color>
+    <color name="baoxiao">#6767AA</color>
+    <color name="tuikuan">#BE7777</color>
+
+
+
 </resources>

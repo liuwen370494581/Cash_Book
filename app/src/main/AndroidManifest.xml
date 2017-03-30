@@ -122,10 +122,6 @@
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
         <!--报表明细页面-->
-        <activity
-            android:name=".Activity.ReportsDetailActivity"
-            android:launchMode="standard"
-            android:screenOrientation="portrait"/>
         <!--登陆界面-->
         <activity
             android:name=".Activity.LoginActivity"

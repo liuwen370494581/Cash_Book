@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import star.liuwen.com.cash_books.Activity.IncomeAndCostActivity;
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Fragment.HomeFragment;
 import star.liuwen.com.cash_books.Fragment.MyFragment;
-import star.liuwen.com.cash_books.Fragment.ReportsFragment;
+import star.liuwen.com.cash_books.Fragment.ReportFragment;
 import star.liuwen.com.cash_books.Fragment.WalletFragment;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
     private List<BarEntity> bars;
     private HomeFragment homeFragment;
     private WalletFragment walletFragment;
-    private ReportsFragment reportsFragment;
+    private ReportFragment reportFragment;
     private MyFragment myFragment;
     private FragmentManager manager;
 
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
         super.onNewIntent(intent);
         int id = intent.getIntExtra("id", 0);
         if (id == 1) {
-           onSelect(0);
+            onSelect(0);
         } else if (id == 2) {
             onSelect(1);
         }
@@ -119,10 +118,10 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
             case 2:
                 break;
             case 3:
-                if (reportsFragment == null) {
-                    reportsFragment = new ReportsFragment();
+                if (reportFragment == null) {
+                    reportFragment = new ReportFragment();
                 }
-                tb.switchContent(reportsFragment);
+                tb.switchContent(reportFragment);
                 break;
             case 4:
                 if (myFragment == null) {

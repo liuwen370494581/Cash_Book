@@ -127,5 +127,6 @@
     <string name="press_one_exit">在按一次返回键退出</string>
     <string name="choice_account_type">选择账户类型</string>
     <string name="new_built">新建%s账户</string>
-
+    <string name="yiban">一般</string>
+    <string name="other">其他</string>
 </resources>
