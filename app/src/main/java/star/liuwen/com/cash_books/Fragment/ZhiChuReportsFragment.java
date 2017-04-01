@@ -20,18 +20,14 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGADivider;
-import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Adapter.ReportsDetailAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
-import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
-import star.liuwen.com.cash_books.View.PieChart.IPieElement;
+import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.PieChart.PieChart;
-import star.liuwen.com.cash_books.View.PieChart.TestEntity;
 import star.liuwen.com.cash_books.bean.AccountModel;
 
 /**
@@ -46,9 +42,8 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
     private RelativeLayout reChoiceDate;
     private TextView txtChoiceDate;
     private TimePickerView pvTime;
-    private double sum;
-    private String color;
-    private float part;
+    private float[] money;
+
 
     @Nullable
     @Override
@@ -75,26 +70,22 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
         reChoiceDate.setOnClickListener(this);
         txtChoiceDate.setText(DateTimeUtil.getCurrentYearMonth());
 
-//        TestEntity entity = new TestEntity(10000, "#FF7F50");
-//        TestEntity entity1 = new TestEntity(38, "#DC143C");
-//        TestEntity entity2 = new TestEntity(79, "#00008B");
-//        TestEntity entity3 = new TestEntity(20, "#A9A9A9");
-//        TestEntity entity4 = new TestEntity(105, "#8B0000");
-//        TestEntity entity5 = new TestEntity(53, "#9400D3");
-//        TestEntity entity6 = new TestEntity(800, "#FFD700");
-        List<IPieElement> list = new ArrayList<>();
         mList = DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU);
+        money = new float[mList.size()];
         for (int i = 0; i < mList.size(); i++) {
-            sum += mList.get(i).getMoney();
-            part = (float) mList.get(i).getMoney();
-            color = mList.get(i).getColor();
-            list.add(new TestEntity(part, "#E96297"));
+            money[i] = (float) mList.get(i).getMoney();
         }
 
+        mPieChart.setRadius(230);
+        mPieChart.setDescr("总支出");
+        mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
 
+            @Override
+            public void click(int position) {
+                ToastUtils.showToast(getActivity(), "你点击了");
+            }
+        });
 
-        mPieChart.setData(list);
-        mPieChart.setTitleText("总支出" + String.format("%.2f", sum));
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
@@ -102,10 +93,11 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
         mAdapter.addHeaderView(headView);
         if (DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU).size() != 0) {
             mList = DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU);
-            mAdapter.setData(DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU));
+            mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
             mViewStub.setVisibility(View.GONE);
         } else {
+            headView.setVisibility(View.GONE);
             mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
             mViewStub.setVisibility(View.VISIBLE);

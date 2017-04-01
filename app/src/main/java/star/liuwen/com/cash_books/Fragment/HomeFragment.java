@@ -154,7 +154,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setTimeMinSec(DateTimeUtil.getCurrentTime_Today());
                         model.setZhiChuShouRuType(Config.ZHI_CHU);
                         model.setZhiCHuAdd(mList.get(i).getMoney());
-                        model.setColor(mList.get(i).getColor());
                         model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
                         DaoAccount.insertAccount(model);
                         tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
@@ -172,7 +171,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setTimeMinSec(DateTimeUtil.getCurrentTime_Today());
                         model.setZhiChuShouRuType(Config.SHOU_RU);
                         model.setSHouRuAdd(mList.get(i).getMoney());
-                        model.setColor(mList.get(i).getColor());
                         model.setConsumePercent((float) (model.getMoney() / shouRuAdd) * 100);
                         DaoAccount.insertAccount(model);
                         tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));

@@ -27,48 +27,48 @@ public class DataEnige {
 
     public static List<ZhiChuModel> getZhiChuData() {
         List<ZhiChuModel> list = new ArrayList<>();
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_qita, "一般", "#3FA7D6"));
-        list.add(new ZhiChuModel(R.mipmap.dapai, "打牌", "#FE673E"));
-        list.add(new ZhiChuModel(R.mipmap.dianfei, "电费", "#E0A904"));
-        list.add(new ZhiChuModel(R.mipmap.dianying, "电影", "#936651"));
-        list.add(new ZhiChuModel(R.mipmap.fangdai, "房贷", "#A688C4"));
-        list.add(new ZhiChuModel(R.mipmap.fangzu, "房租", "#AD254C"));
-        list.add(new ZhiChuModel(R.mipmap.fanka, "饭卡", "#9DD2E6"));
-        list.add(new ZhiChuModel(R.mipmap.feijipiao, "飞机票", "#344860"));
-        list.add(new ZhiChuModel(R.mipmap.icon_gouwu, "购物", "#80AF1D"));
-        list.add(new ZhiChuModel(R.mipmap.icon_jaotongyunshu, "交通出行", "#80AF1D"));
-        list.add(new ZhiChuModel(R.mipmap.icon_jinianpin, "礼物", "#E96297"));
-        list.add(new ZhiChuModel(R.mipmap.icon_lingshixiaochi, "零食小吃", "#B9975F"));
-        list.add(new ZhiChuModel(R.mipmap.icon_jiudianzhusu, "好玩", "#3C5A99"));
-        list.add(new ZhiChuModel(R.mipmap.youfei, "邮费", "#105B3B"));
-        list.add(new ZhiChuModel(R.mipmap.maicai, "买菜", "#5EBF93"));
-        list.add(new ZhiChuModel(R.mipmap.zaocan, "早餐", "#FCB578"));
-        list.add(new ZhiChuModel(R.mipmap.zhongfan, "中饭", "#E0A904"));
-        list.add(new ZhiChuModel(R.mipmap.wanfan, "晚饭", "#CF0E13"));
-        list.add(new ZhiChuModel(R.mipmap.xiaochi, "小吃", "#4D7003"));
-        list.add(new ZhiChuModel(R.mipmap.wanggou, "网购", "#5D9C8D"));
-        list.add(new ZhiChuModel(R.mipmap.naifen, "奶粉", "#4A79D0"));
-        list.add(new ZhiChuModel(R.mipmap.jiushui, "酒水", "#B42914"));
-        list.add(new ZhiChuModel(R.mipmap.lingshi, "零食", "#EF427B"));
-        list.add(new ZhiChuModel(R.mipmap.richangyongpin, "生活品", "#0BACE9"));
-        list.add(new ZhiChuModel(R.mipmap.xiezi, "鞋子", "#975AAE"));
-        list.add(new ZhiChuModel(R.mipmap.yaopinfei, "医药费", "#D53163"));
-        list.add(new ZhiChuModel(R.mipmap.yifu, "衣服", "#FD567E"));
-        list.add(new ZhiChuModel(R.mipmap.icon_zhichu_type_taobao, "淘宝", "#DD6133"));
-        list.add(new ZhiChuModel(R.mipmap.tingchefei, "停车", "#FE473E"));
-        list.add(new ZhiChuModel(R.mipmap.majiang, "麻将", "#076E4F"));
-        list.add(new ZhiChuModel(R.mipmap.icon_add_12, "结婚礼金", "#DF3D3D"));
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_gongzi, "工资", "#6C84B7"));
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_shenghuofei, "生活费", "#D1B95E"));
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_hongbao, "红包", "#E05C29"));
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_linghuaqian, "零花钱", "#899275"));
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jianzhiwaikuai, "外快兼职", "#899275"));
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_touzishouru, "投资收入", "#2b2b8c"));
-        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jiangjin, "奖金", "#ED9342"));
-        list.add(new ZhiChuModel(R.mipmap.icon_zhichu_type_baoxiaozhang, "报销", "#6767AA"));
-        list.add(new ZhiChuModel(R.mipmap.xianjin, "现金", "#229973"));
-        list.add(new ZhiChuModel(R.mipmap.tuikuan, "退款", "#BE7777"));
-        list.add(new ZhiChuModel(R.mipmap.zhifubao, "支付宝", "#15a4df"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_qita, "一般"));
+        list.add(new ZhiChuModel(R.mipmap.dapai, "打牌"));
+        list.add(new ZhiChuModel(R.mipmap.dianfei, "电费"));
+        list.add(new ZhiChuModel(R.mipmap.dianying, "电影"));
+        list.add(new ZhiChuModel(R.mipmap.fangdai, "房贷"));
+        list.add(new ZhiChuModel(R.mipmap.fangzu, "房租"));
+        list.add(new ZhiChuModel(R.mipmap.fanka, "饭卡"));
+        list.add(new ZhiChuModel(R.mipmap.feijipiao, "飞机票"));
+        list.add(new ZhiChuModel(R.mipmap.icon_gouwu, "购物"));
+        list.add(new ZhiChuModel(R.mipmap.icon_jaotongyunshu, "交通出行"));
+        list.add(new ZhiChuModel(R.mipmap.icon_jinianpin, "礼物"));
+        list.add(new ZhiChuModel(R.mipmap.icon_lingshixiaochi, "零食小吃"));
+        list.add(new ZhiChuModel(R.mipmap.icon_jiudianzhusu, "好玩"));
+        list.add(new ZhiChuModel(R.mipmap.youfei, "邮费"));
+        list.add(new ZhiChuModel(R.mipmap.maicai, "买菜"));
+        list.add(new ZhiChuModel(R.mipmap.zaocan, "早餐"));
+        list.add(new ZhiChuModel(R.mipmap.zhongfan, "中饭"));
+        list.add(new ZhiChuModel(R.mipmap.wanfan, "晚饭"));
+        list.add(new ZhiChuModel(R.mipmap.xiaochi, "小吃"));
+        list.add(new ZhiChuModel(R.mipmap.wanggou, "网购"));
+        list.add(new ZhiChuModel(R.mipmap.naifen, "奶粉"));
+        list.add(new ZhiChuModel(R.mipmap.jiushui, "酒水"));
+        list.add(new ZhiChuModel(R.mipmap.lingshi, "零食"));
+        list.add(new ZhiChuModel(R.mipmap.richangyongpin, "生活品"));
+        list.add(new ZhiChuModel(R.mipmap.xiezi, "鞋子"));
+        list.add(new ZhiChuModel(R.mipmap.yaopinfei, "医药费"));
+        list.add(new ZhiChuModel(R.mipmap.yifu, "衣服"));
+        list.add(new ZhiChuModel(R.mipmap.icon_zhichu_type_taobao, "淘宝"));
+        list.add(new ZhiChuModel(R.mipmap.tingchefei, "停车"));
+        list.add(new ZhiChuModel(R.mipmap.majiang, "麻将"));
+        list.add(new ZhiChuModel(R.mipmap.icon_add_12, "结婚礼金"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_gongzi, "工资"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_shenghuofei, "生活费"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_hongbao, "红包"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_linghuaqian, "零花钱"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jianzhiwaikuai, "外快兼职"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_touzishouru, "投资收入"));
+        list.add(new ZhiChuModel(R.mipmap.icon_shouru_type_jiangjin, "奖金"));
+        list.add(new ZhiChuModel(R.mipmap.icon_zhichu_type_baoxiaozhang, "报销"));
+        list.add(new ZhiChuModel(R.mipmap.xianjin, "现金"));
+        list.add(new ZhiChuModel(R.mipmap.tuikuan, "退款"));
+        list.add(new ZhiChuModel(R.mipmap.zhifubao, "支付宝"));
         return list;
     }
 
@@ -210,40 +210,40 @@ public class DataEnige {
     }
 
     public static void InsertShouRuData() {
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_gongzi, "工资", "#6C84B7"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_shenghuofei, "生活费", "#D1B95E"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_hongbao, "红包", "#E05C29"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_linghuaqian, "零花钱", "#899275"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_jianzhiwaikuai, "外快兼职", "#899275"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_touzishouru, "投资收入", "#2b2b8c"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_jiangjin, "奖金", "#ED9342"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_zhichu_type_baoxiaozhang, "报销", "#6767AA"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.xianjin, "现金", "#229973"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.tuikuan, "退款", "#BE7777"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.zhifubao, "支付宝", "#15a4df"));
-        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_qita, "其他", "#3FA7D6"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_gongzi, "工资"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_shenghuofei, "生活费"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_hongbao, "红包"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_linghuaqian, "零花钱"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_jianzhiwaikuai, "外快兼职"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_touzishouru, "投资收入"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_jiangjin, "奖金"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_zhichu_type_baoxiaozhang, "报销"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.xianjin, "现金"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.tuikuan, "退款"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.zhifubao, "支付宝"));
+        DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_qita, "其他"));
     }
 
 
     public static void InsertZHiCHuData() {
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_shouru_type_qita, "一般", "#3FA7D6"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.maicai, "买菜", "#5EBF93"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.zaocan, "早餐", "#FCB578"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.zhongfan, "中饭", "#E0A904"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.wanfan, "晚饭", "#CF0E13"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.xiaochi, "小吃", "#4D7003"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.wanggou, "网购", "#5D9C8D"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.naifen, "奶粉", "#4A79D0"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.jiushui, "酒水", "#B42914"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.lingshi, "零食", "#EF427B"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.richangyongpin, "生活品", "#0BACE9"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.xiezi, "鞋子", "#975AAE"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.yaopinfei, "医药费", "#D53163"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.yifu, "衣服", "#FD567E"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_zhichu_type_taobao, "淘宝", "#DD6133"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.tingchefei, "停车", "#FE473E"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.majiang, "麻将", "#076E4F"));
-        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.dianying, "电影", "#936651"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_shouru_type_qita, "一般"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.maicai, "买菜"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.zaocan, "早餐"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.zhongfan, "中饭"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.wanfan, "晚饭"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.xiaochi, "小吃"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.wanggou, "网购"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.naifen, "奶粉"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.jiushui, "酒水"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.lingshi, "零食"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.richangyongpin, "生活品"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.xiezi, "鞋子"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.yaopinfei, "医药费"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.yifu, "衣服"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_zhichu_type_taobao, "淘宝"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.tingchefei, "停车"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.majiang, "麻将"));
+        DaoZhiChuModel.insertZhiChu(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.dianying, "电影"));
     }
 
 

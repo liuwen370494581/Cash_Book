@@ -73,7 +73,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private Integer AccountUrl;
     private PopupWindow window;
     private List<AccountModel> homListData;
-    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate, color;
+    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate;
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
@@ -123,7 +123,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
-        mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑", ""));
+        mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
 
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
@@ -149,7 +149,6 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             imageName.setImageResource(mList.get(position).getUrl());
             AccountConsumeType = mList.get(position).getName();
             AccountUrl = mList.get(position).getUrl();
-            color = mList.get(position).getColor();
         }
     }
 
@@ -222,7 +221,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
                 , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.other) : AccountConsumeType,
-                AccountUrl == null ? R.mipmap.icon_shouru_type_qita : AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.SHOU_RU, color.isEmpty() ? "#3FA7D6" : color));
+                AccountUrl == null ? R.mipmap.icon_shouru_type_qita : AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.SHOU_RU));
         RxBus.getInstance().post("AccountModel", homListData);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);

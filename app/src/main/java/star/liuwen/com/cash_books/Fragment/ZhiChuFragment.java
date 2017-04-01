@@ -77,7 +77,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private List<AccountModel> homListData;
     private Integer AccountUrl;
 
-    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate,color;
+    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate;
     private PopupWindow window;
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
@@ -126,7 +126,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
-        mAdapter.addLastItem(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_add, "编辑", ""));
+        mAdapter.addLastItem(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_add, "编辑"));
 
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
@@ -152,7 +152,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             imageName.setImageResource(mList.get(position).getUrl());
             AccountConsumeType = mList.get(position).getNames();
             AccountUrl = mList.get(position).getUrl();
-            color = mList.get(position).getColor();
         }
     }
 
@@ -224,7 +223,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
                 , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
-                AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU,color.isEmpty()?"#3FA7D6":color));
+                AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
         RxBus.getInstance().post("AccountModel", homListData);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);

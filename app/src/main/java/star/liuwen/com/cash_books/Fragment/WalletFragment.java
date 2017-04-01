@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,11 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import star.liuwen.com.cash_books.Activity.ChoiceAccountTypeActivity;
 import star.liuwen.com.cash_books.Activity.PayShowActivity;
 import star.liuwen.com.cash_books.Activity.TransferActivity;
@@ -89,18 +95,37 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (DaoChoiceAccount.query() != null) {
-            mList = DaoChoiceAccount.query();
-            mAdapter.setData(mList);
-            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-            for (int i = 0; i < mList.size(); i++) {
-                totalYue = totalYue + mList.get(i).getMoney();
-            }
-            tvYuer.setText(String.format("%.2f", totalYue));
+            Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+                @Override
+                public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                    mList = DaoChoiceAccount.query();
+                    subscriber.onNext(mList);
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<List<ChoiceAccount>>() {
+                        @Override
+                        public void onCompleted() {
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                        }
+
+                        @Override
+                        public void onNext(List<ChoiceAccount> list) {
+                            mAdapter.setData(list);
+                            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                            for (int i = 0; i < list.size(); i++) {
+                                totalYue = totalYue + list.get(i).getMoney();
+                            }
+                            tvYuer.setText(String.format("%.2f", totalYue));
+                            mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                        }
+                    });
         }
-        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+
         mAdapter.setOnRVItemClickListener(this);
-
-
         if (SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null) != null) {
             Bitmap bitmap = BitMapUtils.getBitmapByPath(getActivity(), SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null), false);
             mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));

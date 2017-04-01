@@ -9,6 +9,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
@@ -197,7 +202,7 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
             }
         }
         int y = 1 + (int) (Math.random() * 10000000);
-        ChoiceAccount account = new ChoiceAccount(DaoChoiceAccount.getCount() + y,
+        final ChoiceAccount account = new ChoiceAccount(DaoChoiceAccount.getCount() + y,
                 model.getWalletUrl(),
                 isAccountName ? TextUtils.isEmpty(tvAccount.trim()) ? "" : tvAccount : model.getPlanName(),
                 isMoneyOrCredit ? TextUtils.isEmpty(tvMoney) ? 0.00 : Double.parseDouble(tvMoney) : Double.parseDouble(tvCreditLimit),
@@ -205,11 +210,33 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
                 TextUtils.isEmpty(tvDebtDate) ? "" : tvDebtDate,
                 TextUtils.isEmpty(tvBank.trim()) ? "" : tvBank,
                 model.getColor(), model.getPlanName(), 0.00, 0.00, DateTimeUtil.getCurrentTime_Today());
-        DaoChoiceAccount.insertChoiceAccount(account);
-        RxBus.getInstance().post(Config.RxModelToWalletFragment, account);
-        Intent intent = new Intent(newAddAccountActivity.this, MainActivity.class);
-        intent.putExtra("id", 2);
-        startActivity(intent);
+        //RxJava链式调用
+        Observable.create(new Observable.OnSubscribe<ChoiceAccount>() {
+            @Override
+            public void call(Subscriber<? super ChoiceAccount> subscriber) {
+                DaoChoiceAccount.insertChoiceAccount(account);
+                subscriber.onNext(account);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ChoiceAccount>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showToast(newAddAccountActivity.this, "插入数据错误");
+                    }
+
+                    @Override
+                    public void onNext(ChoiceAccount account) {
+                        RxBus.getInstance().post(Config.RxModelToWalletFragment, account);
+                        Intent intent = new Intent(newAddAccountActivity.this, MainActivity.class);
+                        intent.putExtra("id", 2);
+                        startActivity(intent);
+                    }
+                });
     }
 
     /**

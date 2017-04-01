@@ -13,13 +13,6 @@ public class ShouRuModel {
     private long id;
     private int url;
     private String name;
-    private String color;
-    public String getColor() {
-        return this.color;
-    }
-    public void setColor(String color) {
-        this.color = color;
-    }
     public String getName() {
         return this.name;
     }
@@ -38,21 +31,14 @@ public class ShouRuModel {
     public void setId(long id) {
         this.id = id;
     }
-    @Generated(hash = 748550041)
-    public ShouRuModel(long id, int url, String name, String color) {
+    @Generated(hash = 1005587625)
+    public ShouRuModel(long id, int url, String name) {
         this.id = id;
         this.url = url;
         this.name = name;
-        this.color = color;
     }
     @Generated(hash = 835496406)
     public ShouRuModel() {
     }
 
-
-    public ShouRuModel(int url, String name, String color) {
-        this.url = url;
-        this.name = name;
-        this.color = color;
-    }
 }

@@ -37,7 +37,7 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
     private ImageView imageName;
     private EditCostAdapter mAdapter;
     private List<ZhiChuModel> mList;
-    private String type, color;
+    private String type;
     private int url;
 
     @Override
@@ -86,7 +86,6 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             int y = 1 + (int) (Math.random() * 10000000);
             model.setId(DaoZhiChuModel.getCount() + y);
             model.setUrl(url);
-            model.setColor(color);
             model.setNames(editTypeName);
             DaoZhiChuModel.insertZhiChu(model);
             RxBus.getInstance().post(Config.RxToZhiChuFragment, model);
@@ -96,7 +95,6 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             int y = 1 + (int) (Math.random() * 10000000);
             model.setId(DaoShouRuModel.getCount() + y);
             model.setUrl(url);
-            model.setColor(color);
             model.setName(editTypeName);
             DaoShouRuModel.insertShouRu(model);
             RxBus.getInstance().post(Config.RxToSHouRuFragment, model);
@@ -115,7 +113,6 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
         editName.setText(mList.get(position).getNames());
         imageName.setImageResource(mList.get(position).getUrl());
         url = mList.get(position).getUrl();
-        color = mList.get(position).getColor();
     }
 
 
