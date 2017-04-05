@@ -13,6 +13,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
@@ -21,6 +22,7 @@ import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.DatePickerDialog;
@@ -217,26 +219,15 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
                 DaoChoiceAccount.insertChoiceAccount(account);
                 subscriber.onNext(account);
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ChoiceAccount>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.showToast(newAddAccountActivity.this, "插入数据错误");
-                    }
-
-                    @Override
-                    public void onNext(ChoiceAccount account) {
-                        RxBus.getInstance().post(Config.RxModelToWalletFragment, account);
-                        Intent intent = new Intent(newAddAccountActivity.this, MainActivity.class);
-                        intent.putExtra("id", 2);
-                        startActivity(intent);
-                    }
-                });
+        }).compose(RxUtil.<ChoiceAccount>applySchedulers()).subscribe(new Action1<ChoiceAccount>() {
+            @Override
+            public void call(ChoiceAccount account) {
+                RxBus.getInstance().post(Config.RxModelToWalletFragment, account);
+                Intent intent = new Intent(newAddAccountActivity.this, MainActivity.class);
+                intent.putExtra("id", 2);
+                startActivity(intent);
+            }
+        });
     }
 
     /**

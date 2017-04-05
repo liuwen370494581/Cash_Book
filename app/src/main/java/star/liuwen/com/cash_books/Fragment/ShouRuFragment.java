@@ -37,6 +37,9 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import star.liuwen.com.cash_books.Activity.EditIncomeAndCostActivity;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Adapter.ZhiChuAdapter;
@@ -51,6 +54,7 @@ import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -119,12 +123,21 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         model = new ChoiceAccount();
 
         if (DaoShouRuModel.query().size() != 0) {
-            mList = DaoShouRuModel.query();
-            mAdapter.setData(mList);
-            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+            Observable.create(new Observable.OnSubscribe<List<ShouRuModel>>() {
+                @Override
+                public void call(Subscriber<? super List<ShouRuModel>> subscriber) {
+                    mList = DaoShouRuModel.query();
+                    subscriber.onNext(mList);
+                }
+            }).compose(RxUtil.<List<ShouRuModel>>applySchedulers()).subscribe(new Action1<List<ShouRuModel>>() {
+                @Override
+                public void call(List<ShouRuModel> models) {
+                    mAdapter.setData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
+                }
+            });
         }
-        mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
-
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnRVItemClickListener(this);

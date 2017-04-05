@@ -30,6 +30,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import star.liuwen.com.cash_books.Activity.ChoiceAccountTypeActivity;
 import star.liuwen.com.cash_books.Activity.PayShowActivity;
@@ -44,6 +45,7 @@ import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -101,28 +103,18 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                     mList = DaoChoiceAccount.query();
                     subscriber.onNext(mList);
                 }
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<List<ChoiceAccount>>() {
-                        @Override
-                        public void onCompleted() {
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                        }
-
-                        @Override
-                        public void onNext(List<ChoiceAccount> list) {
-                            mAdapter.setData(list);
-                            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                            for (int i = 0; i < list.size(); i++) {
-                                totalYue = totalYue + list.get(i).getMoney();
-                            }
-                            tvYuer.setText(String.format("%.2f", totalYue));
-                            mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
-                        }
-                    });
+            }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+                @Override
+                public void call(List<ChoiceAccount> list) {
+                    mAdapter.setData(list);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    for (int i = 0; i < list.size(); i++) {
+                        totalYue = totalYue + list.get(i).getMoney();
+                    }
+                    tvYuer.setText(String.format("%.2f", totalYue));
+                    mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                }
+            });
         }
 
         mAdapter.setOnRVItemClickListener(this);

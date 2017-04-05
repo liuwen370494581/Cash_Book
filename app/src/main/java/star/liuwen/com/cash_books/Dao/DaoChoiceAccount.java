@@ -35,7 +35,6 @@ public class DaoChoiceAccount {
     }
 
 
-
     /**
      * 删除所有
      */
@@ -54,7 +53,7 @@ public class DaoChoiceAccount {
     }
 
     /**
-     * 查询 SaveMoneyPlanModel的集合对象
+     * 查询 ChoiceAccount集合的对象
      *
      * @return
      */

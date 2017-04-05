@@ -10,7 +10,6 @@ import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
-import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.IndexModel;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
@@ -194,20 +193,6 @@ public class DataEnige {
     }
 
 
-    public static List<Integer> getAddChoiceAccountUrl() {
-        List<Integer> list = new ArrayList<>();
-        list.add(R.mipmap.icon_account_xianjin);
-        list.add(R.mipmap.icon_account_yinhangka);
-        list.add(R.mipmap.icon_account_xinyongka);
-        list.add(R.mipmap.icon_account_zhifubao);
-        list.add(R.mipmap.icon_login_wechat);
-        list.add(R.mipmap.icon_account_chuzhika);
-        list.add(R.mipmap.icon_account_gupiao);
-        list.add(R.mipmap.wangluozhanghu);
-        list.add(R.mipmap.jiedai);
-        list.add(R.mipmap.jiedai);
-        return list;
-    }
 
     public static void InsertShouRuData() {
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_gongzi, "工资"));
@@ -290,15 +275,6 @@ public class DataEnige {
         return list;
     }
 
-    public static List<AccountModel> getReportsData() {
-        List<AccountModel> list = new ArrayList<>();
-        list.add(new AccountModel("淘宝", R.mipmap.icon_zhichu_type_taobao, 1200.00, (float) ((1200 / 3870.3) * 100), "2017-2-14"));
-        list.add(new AccountModel("医药教育", R.mipmap.icon_zhichu_type_yiliaojiaoyu, 220.00, (float) ((220 / 3870.3) * 100), "2017-2-13"));
-        list.add(new AccountModel("餐饮", R.mipmap.xiaochi, 57.00, (float) ((57 / 3870.3) * 100), "2017-2-13"));
-        list.add(new AccountModel("酒水", R.mipmap.jiushui, 101.00, (float) ((101 / 3870.3) * 100), "2017-2-13"));
-        list.add(new AccountModel("衣服", R.mipmap.yifu, 210.00, (float) ((210 / 3870.3) * 100), "2017-2-12"));
-        return list;
-    }
 
 
     public static List<IndexModel> getP2PData() {

@@ -21,6 +21,9 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import star.liuwen.com.cash_books.Activity.CalendarActivity;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
@@ -30,6 +33,7 @@ import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.bean.AccountModel;
@@ -114,15 +118,25 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (DaoAccount.query().size() != 0) {
-            mList = DaoAccount.query();
-            for (int i = 0; i < mList.size(); i++) {
-                totalZhiChuAdd = totalZhiChuAdd + mList.get(i).getZhiCHuAdd();
-                totalShouRuAdd = totalShouRuAdd + mList.get(i).getSHouRuAdd();
-            }
-            tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
-            tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
-            mAdapter.addNewData(mList);
-            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+            Observable.create(new Observable.OnSubscribe<List<AccountModel>>() {
+                @Override
+                public void call(Subscriber<? super List<AccountModel>> subscriber) {
+                    mList = DaoAccount.query();
+                    subscriber.onNext(mList);
+                }
+            }).compose(RxUtil.<List<AccountModel>>applySchedulers()).subscribe(new Action1<List<AccountModel>>() {
+                @Override
+                public void call(List<AccountModel> models) {
+                    for (int i = 0; i < mList.size(); i++) {
+                        totalZhiChuAdd = totalZhiChuAdd + mList.get(i).getZhiCHuAdd();
+                        totalShouRuAdd = totalShouRuAdd + mList.get(i).getSHouRuAdd();
+                    }
+                    tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
+                    tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
+                    mAdapter.addNewData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                }
+            });
         } else {
             mViewStub.inflate();
             headView.setVisibility(View.GONE);
@@ -143,6 +157,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 for (int i = 0; i < mList.size(); i++) {
                     if (mList.get(i).getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                         zhiChuAdd = zhiChuAdd + mList.get(i).getMoney() + totalZhiChuAdd;
+                        tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
                         model = new AccountModel();
                         int y = 1 + (int) (Math.random() * 10000000);
                         model.setId(DaoAccount.getCount() + y);
@@ -155,10 +170,23 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setZhiChuShouRuType(Config.ZHI_CHU);
                         model.setZhiCHuAdd(mList.get(i).getMoney());
                         model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
-                        DaoAccount.insertAccount(model);
-                        tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
+                        Observable.create(new Observable.OnSubscribe<AccountModel>() {
+                            @Override
+                            public void call(Subscriber<? super AccountModel> subscriber) {
+                                DaoAccount.insertAccount(model);
+                                subscriber.onNext(model);
+                            }
+                        }).compose(RxUtil.<AccountModel>applySchedulers()).subscribe(new Action1<AccountModel>() {
+                            @Override
+                            public void call(AccountModel model) {
+
+                            }
+                        });
+
+
                     } else {
                         shouRuAdd = shouRuAdd + mList.get(i).getMoney() + totalShouRuAdd;
+                        tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
                         model = new AccountModel();
                         //为了解决ID的唯一性产生的bug 当删除一个item的时候 id依然存在数据库中 在插入的时候 会插入同样的数据 所以使用了随机数
                         int y = 1 + (int) (Math.random() * 10000000);
@@ -172,8 +200,18 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                         model.setZhiChuShouRuType(Config.SHOU_RU);
                         model.setSHouRuAdd(mList.get(i).getMoney());
                         model.setConsumePercent((float) (model.getMoney() / shouRuAdd) * 100);
-                        DaoAccount.insertAccount(model);
-                        tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
+                        Observable.create(new Observable.OnSubscribe<AccountModel>() {
+                            @Override
+                            public void call(Subscriber<? super AccountModel> subscriber) {
+                                DaoAccount.insertAccount(model);
+                                subscriber.onNext(model);
+                            }
+                        }).compose(RxUtil.<AccountModel>applySchedulers()).subscribe(new Action1<AccountModel>() {
+                            @Override
+                            public void call(AccountModel model) {
+
+                            }
+                        });
                     }
                 }
                 mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
@@ -269,12 +307,14 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         protected void fillData(BGAViewHolderHelper helper, int position, AccountModel model) {
             if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                 helper.setVisibility(R.id.item_home_rezhichu, View.VISIBLE);
+                helper.setVisibility(R.id.item_home_reshouru, View.GONE);
                 helper.setImageResource(R.id.item_home_url, model.getUrl());
                 helper.setText(R.id.item_home_txtzhichuname, model.getConsumeType());
                 helper.setText(R.id.item_home_txtzhichumoney, String.format("%.2f", model.getMoney()));
                 helper.setText(R.id.item_home_txtzhiRemark, model.getAccountType());
             } else {
                 helper.setVisibility(R.id.item_home_reshouru, View.VISIBLE);
+                helper.setVisibility(R.id.item_home_rezhichu, View.GONE);
                 helper.setImageResource(R.id.item_home_url, model.getUrl());
                 helper.setText(R.id.item_home_txtshouruname, model.getConsumeType());
                 helper.setText(R.id.item_home_txtshourumoney, String.format("%.2f", model.getMoney()));

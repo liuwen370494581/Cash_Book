@@ -19,6 +19,9 @@ import java.util.List;
 import cn.bingoogolapple.androidcommon.adapter.BGADivider;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
@@ -26,10 +29,12 @@ import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.StatusBarUtils;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
+import star.liuwen.com.cash_books.bean.TreeNode;
 
 /**
  * Created by liuwen on 2017/2/17.
@@ -42,12 +47,14 @@ public class PayShowActivity extends BaseActivity {
     private ChoiceAccount model;
     private RecyclerView mRecyclerView;
     private List<AccountModel> mList = new ArrayList<>();
+    private List<ChoiceAccount> choiceList = new ArrayList<>();
     private PaySHowAdapter mAdapter;
     private View headView;
     private double zhiChu, liuRu;
     private ViewStub mViewStub;
     private int position;
-
+    private List<TreeNode> mTreeNodeList = new ArrayList<>();
+    private TreeNode node = new TreeNode();
 
 
     @Override
@@ -92,6 +99,16 @@ public class PayShowActivity extends BaseActivity {
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (model != null) {
+            Observable.create(new Observable.OnSubscribe<List<TreeNode>>() {
+                @Override
+                public void call(Subscriber<? super List<TreeNode>> subscriber) {
+                    getChoiceAccountAndAccountModel();
+                }
+            }).compose(RxUtil.<List<TreeNode>>applySchedulers()).subscribe(new Action1<List<TreeNode>>() {
+                @Override
+                public void call(List<TreeNode> nodes) {
+                }
+            });
             if (DaoAccount.queryByAccountType(model.getMAccountType()) != null || DaoAccount.queryByAccountType(model.getMAccountType()).size() != 0) {
                 setAdapter(DateTimeUtil.getCurrentYearMonth());
             } else {
@@ -105,6 +122,11 @@ public class PayShowActivity extends BaseActivity {
             setTitleBg(model.getColor());
             setTitle(model.getAccountName());
         }
+    }
+
+    private void getChoiceAccountAndAccountModel() {
+        mList = DaoAccount.queryByAccountType("现金");
+        choiceList = DaoChoiceAccount.query();
     }
 
     private void setAdapter(String data) {
