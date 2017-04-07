@@ -14,27 +14,50 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/white"
         android:padding="8dp">
 
 
         <ImageView
-            android:layout_marginLeft="5dp"
             android:id="@+id/item_rd_image"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
             android:src="@mipmap/maicai"/>
 
         <TextView
-            android:id="@+id/item_rd_txtName"
+            android:id="@+id/item_rd_txtType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/item_rd_image"
             android:text="淘宝"
-            android:textSize="@dimen/textSize_16"/>
+            android:textSize="@dimen/textSize_16"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/item_rd_txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/item_rd_image"
+            android:text="余额变更"
+            android:textSize="@dimen/textSize_16"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/item_rd_txtpingzhang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_toRightOf="@+id/item_rd_image"
+            android:text="平账收入"
+            android:textSize="10sp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/item_rd_percent"

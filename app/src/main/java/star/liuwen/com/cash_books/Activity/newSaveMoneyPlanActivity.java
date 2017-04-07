@@ -110,9 +110,9 @@ public class newSaveMoneyPlanActivity extends BaseActivity implements View.OnCli
     }
 
     private void putSaveMoneyPlan() {
-        String money = txtMoney.getText().toString();
-        String planTime = txtTime.getText().toString();
-        String remark = txtReMark.getText().toString();
+        String money = txtMoney.getText().toString().trim();
+        String planTime = txtTime.getText().toString().trim();
+        String remark = txtReMark.getText().toString().trim();
         if (TextUtils.isEmpty(money)) {
             ToastUtils.showToast(this, "目标金额不能为空");
             return;

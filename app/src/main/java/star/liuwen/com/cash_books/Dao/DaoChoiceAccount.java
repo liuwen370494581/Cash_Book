@@ -6,8 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
+import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.bean.AccountModel;
+import star.liuwen.com.cash_books.bean.AccountModelDao;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
+import star.liuwen.com.cash_books.bean.ChoiceAccountDao;
 
 /**
  * Created by liuwen on 2017/2/27.
@@ -27,7 +30,7 @@ public class DaoChoiceAccount {
 
     /**
      * 删除对象为
-     *
+     *ChoiceAccount
      * @param model
      */
     public static void deleteChoiceAccountByModel(ChoiceAccount model) {
@@ -54,7 +57,6 @@ public class DaoChoiceAccount {
 
     /**
      * 查询 ChoiceAccount集合的对象
-     *
      * @return
      */
     public static List<ChoiceAccount> query() {
@@ -69,6 +71,34 @@ public class DaoChoiceAccount {
         return list;
     }
 
+     public static List<ChoiceAccount> queryByAccountType(String accountType){
+          List<ChoiceAccount> list=new ArrayList<>();
+         if (accountType.equals(Config.XYK)) {
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         } else if (accountType.equals(Config.CXK)) {
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         } else if (accountType.equals(Config.CASH)) {
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         } else if (accountType.equals(Config.ZFB)) {
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         } else if (accountType.equals(Config.WEIXIN)) {
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         }else if(accountType.equals(Config.TOUZI)){
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         }else if(accountType.equals(Config.CZK)){
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         }else if(accountType.equals(Config.INTENTACCOUNT)){
+             list = App.getDaoInstant().getChoiceAccountDao().queryBuilder().where(ChoiceAccountDao.Properties.MAccountType.eq(accountType)).build().list();
+         }
+
+         Collections.sort(list, new Comparator<ChoiceAccount>() {
+             @Override
+             public int compare(ChoiceAccount model1, ChoiceAccount model2) {
+                 return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
+             }
+         });
+         return list;
+     }
 
     /**
      * 获取总数

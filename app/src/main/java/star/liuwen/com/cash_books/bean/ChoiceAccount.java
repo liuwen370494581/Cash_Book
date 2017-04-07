@@ -27,7 +27,7 @@ public class ChoiceAccount implements Serializable {
     public String mAccountType; //账户类型
     private double liuChu; //账户流出
     private double liuRu; //账户流入
-    private String timeMinSec;// 消费和支出日期
+    private String timeMinSec;// 消费和支出日期  2017-2-28-12-30-31
 
 
     public ChoiceAccount(int url, String accountName, double money, double debt, String accountType, int color) {

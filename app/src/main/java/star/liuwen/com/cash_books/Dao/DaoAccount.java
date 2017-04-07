@@ -60,6 +60,7 @@ public class DaoAccount {
 
     /**
      * 查询 SaveMoneyPlanModel的集合对象
+     * 都可以按timeMinSecond来排序
      *
      * @return
      */
@@ -83,21 +84,28 @@ public class DaoAccount {
      */
     public static List<AccountModel> queryByAccountType(String accountType) {
         List<AccountModel> list = new ArrayList<>();
-        if (accountType.equals("信用卡")) {
+        if (accountType.equals(Config.XYK)) {
             // list=App.getDaoInstant().getAccountModelDao().queryBuilder().whereOr(AccountModelDao.Properties.AccountType.eq(accountType),AccountModelDao.Properties.Data.eq())
             list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals("储蓄卡")) {
+        } else if (accountType.equals(Config.CXK)) {
             list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals("现金")) {
+        } else if (accountType.equals(Config.CASH)) {
             list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals("支付宝")) {
+        } else if (accountType.equals(Config.ZFB)) {
+            list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
+        } else if (accountType.equals(Config.WEIXIN)) {
+            list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
+        } else if (accountType.equals(Config.TOUZI)) {
+            list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
+        } else if (accountType.equals(Config.CZK)) {
+            list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
+        } else if (accountType.equals(Config.INTENTACCOUNT)) {
             list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.AccountType.eq(accountType)).build().list();
         }
-
         Collections.sort(list, new Comparator<AccountModel>() {
             @Override
             public int compare(AccountModel model1, AccountModel model2) {
-                return model2.getData().compareTo(model1.getData());
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
             }
         });
         return list;

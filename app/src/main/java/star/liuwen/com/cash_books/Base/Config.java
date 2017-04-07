@@ -17,10 +17,10 @@ public class Config {
     }
 
 
-    public static String[] reportsColor = new String[]{"#EF427B", "#5EBF93","#3FA7D6","#80AF1D", "#BE7777", "#6767AA", "#ED9342", "#CC6705",
+    public static String[] reportsColor = new String[]{"#EF427B", "#5EBF93", "#3FA7D6", "#80AF1D", "#BE7777", "#6767AA", "#ED9342", "#CC6705",
             "#899275", "#E05C29", "#D1B95E", "#6C84B7", "#DF3D3D", "#076E4F", "#FE473E", "#DD6133", "#FD567E", "#D53163",
             "#975AAE", "#0BACE9", "#B42914", "#4A79D0", "#5D9C8D", "#4D7003", "#CF0E13", "#E0A904", "#FCB578",
-             "#105B3B", "#3C5A99", "#B9975F", "#E96297", "#D18B38", "#80AF1D", "#344860", "#9DD2E6",
+            "#105B3B", "#3C5A99", "#B9975F", "#E96297", "#D18B38", "#80AF1D", "#344860", "#9DD2E6",
             "#AD254C", "#A688C4", "#936651", "#936651", "#E0A904", "#FE673E"};
 
 
@@ -40,6 +40,7 @@ public class Config {
         zhiChu, shouRu;
     }
 
+
     public enum Account {
         Cash, Cxk, Xyk, Zfb, Jc, Jr, other
     }
@@ -58,6 +59,8 @@ public class Config {
     public final static String CZK = "储值卡";
     public final static String TOUZI = "投资账户";
     public final static String INTENTACCOUNT = "网络账户";
+    public final static String ChoiceAccount = "ChoiceAccount";
+    public final static String AccountModel = "AccountModel";
 
 
     public final static String TarGetUrl = "TarGetUrl";

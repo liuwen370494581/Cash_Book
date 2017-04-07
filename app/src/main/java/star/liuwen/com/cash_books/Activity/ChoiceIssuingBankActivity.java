@@ -67,7 +67,6 @@ public class ChoiceIssuingBankActivity extends BaseActivity {
         mHeadBankAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
             @Override
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-                //  App.cardModel.setBank(mAdapter.getItem(position).name);
                 Intent intent = new Intent();
                 intent.putExtra("bank", mHeadBankAdapter.getItem(position).name);
                 setResult(0, intent);
@@ -80,7 +79,6 @@ public class ChoiceIssuingBankActivity extends BaseActivity {
         mAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
             @Override
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-                //  App.cardModel.setBank(mAdapter.getItem(position).name);
                 Intent intent = new Intent();
                 intent.putExtra("bank", mAdapter.getItem(position).name);
                 setResult(0, intent);

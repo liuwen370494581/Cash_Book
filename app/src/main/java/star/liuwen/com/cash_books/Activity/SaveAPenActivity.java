@@ -100,13 +100,13 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void doSure() {
-        String savePlatform = txtSavePlatform.getText().toString();
-        String money = txtMoney.getText().toString();
-        String yield = txtYield.getText().toString();
-        String account = txtAccount.getText().toString();
-        String startTime = txtStartTime.getText().toString();
-        String endTime = txtEndTime.getText().toString();
-        String remark = txtRemark.getText().toString();
+        String savePlatform = txtSavePlatform.getText().toString().trim();
+        String money = txtMoney.getText().toString().trim();
+        String yield = txtYield.getText().toString().trim();
+        String account = txtAccount.getText().toString().trim();
+        String startTime = txtStartTime.getText().toString().trim();
+        String endTime = txtEndTime.getText().toString().trim();
+        String remark = txtRemark.getText().toString().trim();
         if (savePlatform.isEmpty()) {
             ToastUtils.showToast(this, "存款平台不能为空");
             return;

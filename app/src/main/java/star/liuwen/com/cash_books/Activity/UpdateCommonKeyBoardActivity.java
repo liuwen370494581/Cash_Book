@@ -190,7 +190,7 @@ public class UpdateCommonKeyBoardActivity extends BaseActivity {
     }
 
     private void onSure(int position) {
-        String textInput = edMoney.getText().toString();
+        String textInput = edMoney.getText().toString().trim();
         if (TextUtils.isEmpty(textInput)) {
             ToastUtils.showToast(this, "亲，输入的不能为空哟");
             return;

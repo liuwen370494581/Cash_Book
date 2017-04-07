@@ -21,7 +21,7 @@ public class AccountModel implements Serializable {
     private double Money; //消费或者支出金额
     private String ConsumeType; //消费类型 （信用卡还是储蓄卡）
     private int url; //图片(消费的图片或者是收入的图片)
-    private String timeMinSec;//时分秒  精确到到时分秒消费
+    private String timeMinSec;//时分秒  精确到到时分秒消费  2017-2-28-12-30-31
     private String zhiChuShouRuType; //是否是支出或者是收入
     private float consumePercent;//百分比
     private double zhiCHuAdd; //总支出
@@ -193,8 +193,4 @@ public class AccountModel implements Serializable {
         this.sHouRuAdd = sHouRuAdd;
         this.AccountYuer = AccountYuer;
     }
-
-
-
-
 }

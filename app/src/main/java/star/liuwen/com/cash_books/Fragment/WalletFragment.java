@@ -85,7 +85,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
 
     private void initView() {
         View headView = View.inflate(getActivity(), R.layout.head_walletfragment, null);
-
         mRyYuer = (RelativeLayout) headView.findViewById(R.id.qb_ry_yuer);
         tvYuer = (TextView) headView.findViewById(R.id.yuer_jia);
         mDrawerLayout = (DrawerLayout) getContentView().findViewById(R.id.drawer_layout);

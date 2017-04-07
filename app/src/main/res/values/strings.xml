@@ -129,4 +129,6 @@
     <string name="new_built">新建%s账户</string>
     <string name="yiban">一般</string>
     <string name="other">其他</string>
+    <string name="Balance_change">余额变更</string>
+    <string name="pingzhang">平账支出</string>
 </resources>
