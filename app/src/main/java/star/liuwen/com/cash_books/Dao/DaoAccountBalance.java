@@ -101,7 +101,10 @@ public class DaoAccountBalance {
         App.getDaoInstant().getBaseModelDao().deleteByKey(id);
     }
 
-
+    /**
+     * 根据model来删除
+     * @param model
+     */
     public static void deleteByModel(BaseModel model) {
         App.getDaoInstant().getBaseModelDao().delete(model);
     }

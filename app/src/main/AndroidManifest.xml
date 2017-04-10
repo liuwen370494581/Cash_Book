@@ -192,6 +192,10 @@
             android:name=".Activity.TransferActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activity.PayShowDetailActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
     </application>
 
 

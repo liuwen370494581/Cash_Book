@@ -77,13 +77,15 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private List<AccountModel> homListData;
     private Integer AccountUrl;
 
-    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate;
+    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate, mEdName;
     private PopupWindow window;
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
     private boolean isShowDelete = false;
     private ChoiceAccount model;
+
+    private double accountMoney;
 
     @Nullable
     @Override
@@ -207,7 +209,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
 
     private void doSure() {
         homListData = new ArrayList<>();
-        String mEdName = edName.getText().toString();
+        mEdName = edName.getText().toString();
         if (TextUtils.isEmpty(mEdName.trim())) {
             ToastUtils.showToast(getActivity(), "请输入金额");
             return;
@@ -225,11 +227,17 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
                 AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
         RxBus.getInstance().post("AccountModel", homListData);
+     // updateChoiceAccountYuer();
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);
         getActivity().finish();
 
+    }
+
+    private void updateChoiceAccountYuer() {
+        model.setMoney(accountMoney - Double.parseDouble(mEdName));
+        DaoChoiceAccount.updateAccount(model);
     }
 
 
@@ -239,7 +247,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         window = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         mPopWindowAdapter = new PopWindowAdapter(getActivity(), R.layout.item_pop_account);
-        if (DaoChoiceAccount.query().size() != 0 || DaoChoiceAccount.query() != null) {
+        if (DaoChoiceAccount.query().size() != 0) {
             mPopWindowAdapter.setData(DaoChoiceAccount.query());
         }
         mListView.setAdapter(mPopWindowAdapter);
@@ -261,6 +269,8 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 window.dismiss();
                 AccountType = mPopWindowAdapter.getItem(position).getAccountName();
                 tvZhanghu.setText(AccountType);
+                //选择账户余额，方便计算
+                choiceAccountYuer(AccountType);
                 SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccount, AccountType);
             }
         });
@@ -273,6 +283,14 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 backgroundAlpha(1f);
             }
         });
+    }
+
+    //选择账户余额
+    private void choiceAccountYuer(String type) {
+        for (int i = 0; i < DaoChoiceAccount.queryByAccountType(type).size(); i++) {
+            accountMoney = DaoChoiceAccount.queryByAccountType(type).get(i).getMoney();
+        }
+
     }
 
     /**

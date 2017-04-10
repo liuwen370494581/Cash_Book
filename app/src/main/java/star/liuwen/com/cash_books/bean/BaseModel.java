@@ -4,12 +4,14 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * Created by liuwen on 2017/4/6.
  * 用于payShow的页面数据展示
  */
 @Entity
-public class BaseModel {
+public class BaseModel implements Serializable {
     @Id(autoincrement = true)
     private Long id; //ID
     private int url; //图标

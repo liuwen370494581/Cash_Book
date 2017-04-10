@@ -49,6 +49,7 @@ import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
+import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
@@ -154,7 +155,9 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             public void onRxBusResult(Object o) {
                 ChoiceAccount account = (ChoiceAccount) o;
                 mList = DaoChoiceAccount.query();
+                mAdapter.updateWallet(mList);
                 mAdapter.addItem(mList.size() - 1, account);
+
                 for (int i = 0; i < mList.size(); i++) {
                     yuer = yuer + mList.get(i).getMoney();
                 }
@@ -206,9 +209,17 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
 
 
     public class WalletAdapter extends BGARecyclerViewAdapter<ChoiceAccount> {
+        private List<ChoiceAccount> list;
 
         public WalletAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_fragment_wallet);
+        }
+
+        protected void updateWallet(List<ChoiceAccount> accounts) {
+            if (null != accounts) {
+                list = accounts;
+                mAdapter.notifyDataSetChangedWrapper();
+            }
         }
 
         @Override

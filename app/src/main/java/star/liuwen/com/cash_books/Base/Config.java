@@ -61,6 +61,7 @@ public class Config {
     public final static String INTENTACCOUNT = "网络账户";
     public final static String ChoiceAccount = "ChoiceAccount";
     public final static String AccountModel = "AccountModel";
+    public final static String PayShowDetailModel = "PayShowDetailModel";
 
 
     public final static String TarGetUrl = "TarGetUrl";
@@ -129,6 +130,7 @@ public class Config {
 
     public static final String RxModelToWalletFragment = "RxModelToWalletFragment";
     public static final String RxPaySettingToWalletFragment = "RxPaySettingToWalletFragment";
+    public static final String RxPayShowDetailToPayShowActivity = "RxPayShowDetailToPayShowActivity";
 
 
 }

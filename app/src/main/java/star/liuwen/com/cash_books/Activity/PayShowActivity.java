@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,9 +16,13 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import cn.bingoogolapple.androidcommon.adapter.BGADivider;
+import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import rx.Observable;
@@ -30,6 +35,7 @@ import star.liuwen.com.cash_books.Dao.DaoAccountBalance;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
+import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.StatusBarUtils;
@@ -42,7 +48,7 @@ import star.liuwen.com.cash_books.bean.ChoiceAccount;
 /**
  * Created by liuwen on 2017/2/17.
  */
-public class PayShowActivity extends BaseActivity {
+public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickListener {
     private NumberAnimTextView tvAccount;
     private TextView txtMonth, txtLiuChu, txtLiuRu;
     private RelativeLayout ryBg;
@@ -116,6 +122,42 @@ public class PayShowActivity extends BaseActivity {
             setTitleBg(model.getColor());
             setTitle(model.getAccountName());
         }
+        mAdapter.setOnRVItemClickListener(this);
+        initData();
+    }
+
+    private void initData() {
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxPayShowDetailToPayShowActivity, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                HashMap<Integer, BaseModel> hashMap = (HashMap<Integer, BaseModel>) o;
+                Set<Map.Entry<Integer, BaseModel>> maps = hashMap.entrySet();
+                String accountType = "";
+                for (Map.Entry<Integer, BaseModel> entry : maps) {
+                    DaoAccountBalance.deleteByModel(entry.getValue());
+                    mAdapter.removeItem(entry.getKey());
+                    accountType = entry.getValue().getAccountType();
+                }
+                baseList = DaoAccountBalance.queryByType(accountType);
+                if (baseList.size() == 0) {
+                    txtLiuChu.setText("0");
+                    txtLiuRu.setText("0");
+                    tvAccount.setText("0");
+                    mViewStub.setVisibility(View.VISIBLE);
+                } else {
+                    for (BaseModel model : baseList) {
+                        if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                            zhiChu += model.getMoney();
+                            txtLiuChu.setText(String.format("%.2f", zhiChu));
+                        } else {
+                            liuRu += model.getMoney();
+                            txtLiuRu.setText(String.format("%.2f", liuRu));
+                        }
+                    }
+                }
+
+            }
+        });
     }
 
     private void PayShowList() {
@@ -148,6 +190,7 @@ public class PayShowActivity extends BaseActivity {
             baseModel.setType(Config.AccountModel);
             baseModel.setZhiChuShouRuType(mList.get(i).getZhiChuShouRuType());
             baseModel.setTimeMinSec(mList.get(i).getTimeMinSec());
+            baseModel.setAccountType(accountType);
             baseList.add(baseModel);
         }
         choiceList = DaoAccountBalance.queryByType(accountType);
@@ -252,6 +295,11 @@ public class PayShowActivity extends BaseActivity {
         model.setMoney(Double.parseDouble(data));
         DaoChoiceAccount.updateAccount(model);
         RxBus.getInstance().post(Config.RxPayShowActivityToWalletFragment, position);
+
+        //循环baseList的第一个数据来和插入的数据来比较
+        for (int i = 0; i < baseList.size(); i++) {
+            tvAccountValue = baseList.get(0).getMoney();
+        }
         int s = 1 + (int) (Math.random() * 10000000);
         final BaseModel baseModel = new BaseModel(DaoChoiceAccount.getCount() + s, R.mipmap.yuebiangeng
                 , getString(R.string.Balance_change), getString(R.string.pingzhang), Double.parseDouble(data),
@@ -267,13 +315,41 @@ public class PayShowActivity extends BaseActivity {
         }).compose(RxUtil.<BaseModel>applySchedulers()).subscribe(new Action1<BaseModel>() {
             @Override
             public void call(BaseModel model) {
-                ToastUtils.showToast(PayShowActivity.this, "插入数数据成功" + model.getMoney());
+                //如果不插入首位 则会在末端显示数据
+                baseList.add(0, model);
+                mAdapter.setData(baseList);
+                mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                mViewStub.setVisibility(View.GONE);
+                //更新页面数据
+                for (BaseModel bm : baseList) {
+                    if (bm.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                        zhiChu += bm.getMoney();
+                        txtLiuChu.setText(String.format("%.2f", zhiChu));
+                    } else {
+                        liuRu += bm.getMoney();
+                        txtLiuRu.setText(String.format("%.2f", liuRu));
+                    }
+                }
             }
         });
     }
 
-    private class PaySHowAdapter extends BGARecyclerViewAdapter<BaseModel> {
+    @Override
+    public void onRVItemClick(ViewGroup parent, View itemView, int position) {
+        Intent intent = new Intent(PayShowActivity.this, PayShowDetailActivity.class);
+        intent.putExtra(Config.PayShowDetailModel, baseList.get(position));
+        intent.putExtra(Config.Position, position);
+        startActivity(intent);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable(Config.RxPayShowDetailToPayShowActivity);
+    }
+
+    private class PaySHowAdapter extends BGARecyclerViewAdapter<BaseModel> {
         public PaySHowAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_pay_show);
         }
@@ -330,12 +406,12 @@ public class PayShowActivity extends BaseActivity {
             String currentData = currentDatas[0] + "-" + currentDatas[1] + "-" + currentDatas[2];
             String previousDatas[] = previousModel.getTimeMinSec().split("-");
             String previousData = previousDatas[0] + "-" + previousDatas[1] + "-" + previousDatas[2];
-
             if (currentData.equals(previousData)) {
                 return false;
             }
             return true;
         }
     }
+
 
 }
