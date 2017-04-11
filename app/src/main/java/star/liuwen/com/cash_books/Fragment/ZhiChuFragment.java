@@ -127,9 +127,12 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             mList = DaoZhiChuModel.query();
             mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        } else {
+            mAdapter.setData(mList);
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
-        mAdapter.addLastItem(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_add, "编辑"));
 
+        mAdapter.addLastItem(new ZhiChuModel(DaoZhiChuModel.getCount(), R.mipmap.icon_add, "编辑"));
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
@@ -227,7 +230,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
                 AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
         RxBus.getInstance().post("AccountModel", homListData);
-     // updateChoiceAccountYuer();
+       // updateChoiceAccountYuer();
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);
@@ -362,7 +365,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
 
         @Override
         protected void fillData(BGAViewHolderHelper helper, int position, ZhiChuModel model) {
-            TranslateAnimation animation = new TranslateAnimation(1, 4, 1, 2);
+            TranslateAnimation animation = new TranslateAnimation(-2, -5, 0, 0);
             animation.setInterpolator(new OvershootInterpolator());
             animation.setDuration(100);
             animation.setRepeatCount(Animation.INFINITE);

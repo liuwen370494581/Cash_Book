@@ -123,21 +123,14 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         model = new ChoiceAccount();
 
         if (DaoShouRuModel.query().size() != 0) {
-            Observable.create(new Observable.OnSubscribe<List<ShouRuModel>>() {
-                @Override
-                public void call(Subscriber<? super List<ShouRuModel>> subscriber) {
-                    mList = DaoShouRuModel.query();
-                    subscriber.onNext(mList);
-                }
-            }).compose(RxUtil.<List<ShouRuModel>>applySchedulers()).subscribe(new Action1<List<ShouRuModel>>() {
-                @Override
-                public void call(List<ShouRuModel> models) {
-                    mAdapter.setData(mList);
-                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                    mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
-                }
-            });
+            mList = DaoShouRuModel.query();
+            mAdapter.setData(mList);
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+        } else {
+            mAdapter.setData(mList);
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
+        mAdapter.addLastItem(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_add, "编辑"));
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnRVItemClickListener(this);

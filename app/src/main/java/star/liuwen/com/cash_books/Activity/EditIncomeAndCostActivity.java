@@ -16,6 +16,9 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
@@ -24,6 +27,7 @@ import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
@@ -78,7 +82,7 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             return;
         }
         if (type.equals(Config.ZHI_CHU)) {
-            ZhiChuModel model = new ZhiChuModel();
+            final ZhiChuModel model = new ZhiChuModel();
             //解决了id的唯一性产生的bug 可以测试一下 当没有这个随机数
             //删除一个item的时候 在添加一个item的时候 会报id唯一性的错误
             //这是因为你删除一个item的时候 增加一个item生成的id是相同的 因为你插入的是相同的 所以
@@ -87,18 +91,39 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             model.setId(DaoZhiChuModel.getCount() + y);
             model.setUrl(url);
             model.setNames(editTypeName);
-            DaoZhiChuModel.insertZhiChu(model);
-            RxBus.getInstance().post(Config.RxToZhiChuFragment, model);
-            this.finish();
+            Observable.create(new Observable.OnSubscribe<ZhiChuModel>() {
+                @Override
+                public void call(Subscriber<? super ZhiChuModel> subscriber) {
+                    DaoZhiChuModel.insertZhiChu(model);
+                    subscriber.onNext(model);
+                }
+            }).compose(RxUtil.<ZhiChuModel>applySchedulers()).subscribe(new Action1<ZhiChuModel>() {
+                @Override
+                public void call(ZhiChuModel zhichuModel) {
+                    RxBus.getInstance().post(Config.RxToZhiChuFragment, zhichuModel);
+                    finish();
+                }
+            });
         } else if (type.equals(Config.SHOU_RU)) {
-            ShouRuModel model = new ShouRuModel();
+            final ShouRuModel model = new ShouRuModel();
             int y = 1 + (int) (Math.random() * 10000000);
             model.setId(DaoShouRuModel.getCount() + y);
             model.setUrl(url);
             model.setName(editTypeName);
-            DaoShouRuModel.insertShouRu(model);
-            RxBus.getInstance().post(Config.RxToSHouRuFragment, model);
-            this.finish();
+
+            Observable.create(new Observable.OnSubscribe<ShouRuModel>() {
+                @Override
+                public void call(Subscriber<? super ShouRuModel> subscriber) {
+                    DaoShouRuModel.insertShouRu(model);
+                    subscriber.onNext(model);
+                }
+            }).compose(RxUtil.<ShouRuModel>applySchedulers()).subscribe(new Action1<ShouRuModel>() {
+                @Override
+                public void call(ShouRuModel shouRuModel) {
+                    RxBus.getInstance().post(Config.RxToSHouRuFragment, shouRuModel);
+                    finish();
+                }
+            });
         }
     }
 

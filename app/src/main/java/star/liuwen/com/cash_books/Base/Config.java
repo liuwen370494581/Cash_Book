@@ -25,25 +25,12 @@ public class Config {
 
 
     public final static String isBgCash = "isBgCash";
-    public final static String isBgCXK = "isBgCXK";
-    public final static String isBgXYK = "isBgXYK";
-    public final static String isBgZFB = "isBgZFB";
-    public final static String isBgJC = "isBgJC";
-    public final static String isBgJR = "isBgJR";
 
     public final static String isRemindPush = "isRemindPush";
     public final static String isOpenCodedLock = "isOpenCodedLock";
     public final static String ChangeBg = "ChangeBg";
 
 
-    public enum AccountType {
-        zhiChu, shouRu;
-    }
-
-
-    public enum Account {
-        Cash, Cxk, Xyk, Zfb, Jc, Jr, other
-    }
 
 
     public final static String ZHI_CHU = "ZHICHU";
@@ -59,6 +46,7 @@ public class Config {
     public final static String CZK = "储值卡";
     public final static String TOUZI = "投资账户";
     public final static String INTENTACCOUNT = "网络账户";
+
     public final static String ChoiceAccount = "ChoiceAccount";
     public final static String AccountModel = "AccountModel";
     public final static String PayShowDetailModel = "PayShowDetailModel";
@@ -74,16 +62,11 @@ public class Config {
     public final static String HuoBICh = "HuoBICh";
     public final static String HuoBIEn = "HuoBIEn";
 
-    public final static String AccountSetting = "AccountSetting";
-
     public static final String SHARE_LOGO = RootPath + "/share/logo/";
 
 
     public static final String LockPassword = "LockPassword";
-    public static final String newSavePosition = "newSavePosition";
     public static final String PlanSaveMoneyModel = "PlanSaveMoneyModel";
-    public static final String Travel = "Travel";
-    public static final String Concert = "Concert";
     public static final String Game = "Game";
 
     public static final String FistStar = "FirstStar";
@@ -96,7 +79,6 @@ public class Config {
     public static final String PlanIsPut = "PlanIsPut";
 
     public static final String SaveAPenPlatform = "SaveAPenPlatform";
-    public static final String SaveAccount = "SaveAccount";
     public static final String TextInPut = "TextInPut";
 
 
@@ -109,8 +91,6 @@ public class Config {
     public static final String TxtDebt = "TxtDebt";
     public static final String TxtYuEr = "TxtYuer";
     public static final String TxtAccount = "TxtAccount";
-    public static final String TxtStartTime = "TxtStartTime";
-    public static final String TxtEndTime = "TxtEndTime";
     public static final String TxtPlanMoney = "TxtPlanMoney";
     public static final String TxtPlanRemark = "TxtPlanRemark";
     public static final String TxtNickName = "TxtNickName";

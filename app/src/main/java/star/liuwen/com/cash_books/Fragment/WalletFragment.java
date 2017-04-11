@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,30 +94,22 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         mAdapter = new WalletAdapter(mRecyclerView);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
+        mList = new ArrayList<>();
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        if (DaoChoiceAccount.query() != null) {
-            Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
-                @Override
-                public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
-                    mList = DaoChoiceAccount.query();
-                    subscriber.onNext(mList);
-                }
-            }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
-                @Override
-                public void call(List<ChoiceAccount> list) {
-                    mAdapter.setData(list);
-                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                    for (int i = 0; i < list.size(); i++) {
-                        totalYue = totalYue + list.get(i).getMoney();
-                    }
-                    tvYuer.setText(String.format("%.2f", totalYue));
-                    mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
-                }
-            });
+        if (DaoChoiceAccount.query().size() != 0) {
+            mList = DaoChoiceAccount.query();
+            mAdapter.setData(mList);
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+            for (int i = 0; i < mList.size(); i++) {
+                totalYue = totalYue + mList.get(i).getMoney();
+            }
+            tvYuer.setText(String.format("%.2f", totalYue));
+        } else {
+            mAdapter.setData(mList);
+            mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
-
+        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
         mAdapter.setOnRVItemClickListener(this);
         if (SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null) != null) {
             Bitmap bitmap = BitMapUtils.getBitmapByPath(getActivity(), SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null), false);
@@ -154,10 +147,12 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             @Override
             public void onRxBusResult(Object o) {
                 ChoiceAccount account = (ChoiceAccount) o;
-                mList = DaoChoiceAccount.query();
-                mAdapter.updateWallet(mList);
-                mAdapter.addItem(mList.size() - 1, account);
-
+                if (mList.size() != 0) {
+                    mAdapter.addItem(mList.size() - 1, account);
+                }
+                for (ChoiceAccount ss : mList) {
+                    Log.e("MainActivity", ss.getAccountName() + "" + ss.getMoney());
+                }
                 for (int i = 0; i < mList.size(); i++) {
                     yuer = yuer + mList.get(i).getMoney();
                 }
@@ -183,6 +178,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                     totalYue = totalYue + mList.get(i).getMoney();
                 }
                 tvYuer.setText(String.format("%.2f", totalYue));
+
             }
         });
     }
