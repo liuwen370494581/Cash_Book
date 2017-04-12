@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.RxBus.RxBus;
+import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.PieChart.PieChart;
@@ -51,7 +54,59 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.shouru_reports_fragment);
         initView();
+        initData();
         return getContentView();
+    }
+
+    private void initData() {
+        RxBus.getInstance().toObserverableOnMainThread("AccountModel", new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
+                mViewStub.setVisibility(View.GONE);
+                mAdapter.setData(mList);
+                mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                money = new float[mList.size()];
+                for (int i = 0; i < mList.size(); i++) {
+                    money[i] = (float) mList.get(i).getMoney();
+                }
+
+                mPieChart.setRadius(230);
+                mPieChart.setDescr("总收入");
+                mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
+                    @Override
+                    public void click(int position) {
+                    }
+                });
+            }
+
+        });
+
+
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
+                if(mList.size()==0){
+                    mViewStub.setVisibility(View.VISIBLE);
+                }else {
+                    mAdapter.setData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    money = new float[mList.size()];
+                    for (int i = 0; i < mList.size(); i++) {
+                        money[i] = (float) mList.get(i).getMoney();
+                    }
+
+                    mPieChart.setRadius(230);
+                    mPieChart.setDescr("总收入");
+                    mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
+                        @Override
+                        public void click(int position) {
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void initView() {
@@ -129,5 +184,11 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
         });
         //显示
         pvTime.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable("AccountModel");
     }
 }

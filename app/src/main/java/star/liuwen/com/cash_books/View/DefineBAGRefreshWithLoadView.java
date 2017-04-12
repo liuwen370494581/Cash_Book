@@ -132,7 +132,6 @@ public class DefineBAGRefreshWithLoadView extends BGARefreshViewHolder {
         if (!this.mIsLoadingMoreEnabled) {
             return null;
         }
-        Log.i("TAG" , "啦啦啦啦");
         if (this.mLoadMoreFooterView == null) {
             this.mLoadMoreFooterView = View.inflate(this.mContext, R.layout.footer_bga_dodo, null);
             this.mLoadMoreFooterView.setBackgroundColor(Color.TRANSPARENT);

@@ -156,7 +156,9 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 mAdapter.addNewData(mList);
                 for (int i = 0; i < mList.size(); i++) {
                     if (mList.get(i).getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
-                        zhiChuAdd = zhiChuAdd + mList.get(i).getMoney() + totalZhiChuAdd;
+                        zhiChuAdd += mList.get(i).getMoney() + totalZhiChuAdd;
+                        //避免第二次总数在相加 只需要加一次
+                        totalZhiChuAdd = 0;
                         tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
                         model = new AccountModel();
                         int y = 1 + (int) (Math.random() * 10000000);
@@ -183,9 +185,10 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                             }
                         });
 
-
                     } else {
-                        shouRuAdd = shouRuAdd + mList.get(i).getMoney() + totalShouRuAdd;
+                        shouRuAdd += mList.get(i).getMoney() + totalShouRuAdd;
+                        //避免第二次总数在相加 只需要加一次
+                        totalShouRuAdd = 0;
                         tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
                         model = new AccountModel();
                         //为了解决ID的唯一性产生的bug 当删除一个item的时候 id依然存在数据库中 在插入的时候 会插入同样的数据 所以使用了随机数
@@ -264,6 +267,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                public void ClickRight() {
                                    mAdapter.removeItem(position);
                                    DaoAccount.deleteAccountById(DaoAccount.query().get(position).getId());
+                                   RxBus.getInstance().post(Config.RxHomeFragmentToReportsFragment, true);
                                    mList = DaoAccount.query();
                                    if (DaoAccount.query().size() == 0) {
                                        totalShouRuAdd = 0;

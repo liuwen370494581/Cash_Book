@@ -31,8 +31,6 @@ public class Config {
     public final static String ChangeBg = "ChangeBg";
 
 
-
-
     public final static String ZHI_CHU = "ZHICHU";
     public final static String SHOU_RU = "SHOURU";
     public final static String CASH = "现金";
@@ -111,6 +109,7 @@ public class Config {
     public static final String RxModelToWalletFragment = "RxModelToWalletFragment";
     public static final String RxPaySettingToWalletFragment = "RxPaySettingToWalletFragment";
     public static final String RxPayShowDetailToPayShowActivity = "RxPayShowDetailToPayShowActivity";
+    public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
 
 
 }

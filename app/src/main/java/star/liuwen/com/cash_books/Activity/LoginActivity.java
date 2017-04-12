@@ -1,5 +1,6 @@
 package star.liuwen.com.cash_books.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,25 +13,27 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.View.CircleImageView;
+import star.liuwen.com.cash_books.View.SmsCodeView;
 
 /**
  * Created by liuwen on 2017/2/9.
  */
-public class LoginActivity extends AppCompatActivity {
-    //初始化控件
-    private EditText txtUsername, txtPassword;
-    private ImageView imageUsername, imagePassword;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private EditText txtUsername, txtPassword, txtPasswordRepeat;
+    private ImageView imageUsername, imagePassword, imagePasswordRepeat;
     private CheckBox showpassword;
     private Button btnRegister, btnLogin;
 
@@ -38,6 +41,10 @@ public class LoginActivity extends AppCompatActivity {
     private String username, password;
     private CircleImageView userImage;
     private RelativeLayout mRelativeLayout;
+
+    private SmsCodeView mImgCode;
+    private LinearLayout lyShowSmsCode, lyShowUser;
+    private boolean isShowBack = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,13 +59,22 @@ public class LoginActivity extends AppCompatActivity {
     public void initView() {
         txtUsername = (EditText) findViewById(R.id.login_username);
         txtPassword = (EditText) findViewById(R.id.login_password);
+        txtPasswordRepeat = (EditText) findViewById(R.id.login_password_repeat);
         imageUsername = (ImageView) findViewById(R.id.login_image_username);
         imagePassword = (ImageView) findViewById(R.id.login_image_password);
+        imagePasswordRepeat = (ImageView) findViewById(R.id.login_image_password_repeat);
+        mImgCode = (SmsCodeView) findViewById(R.id.sms_code);
         showpassword = (CheckBox) findViewById(R.id.show_password);
         userImage = (CircleImageView) findViewById(R.id.login_image_head);
         mRelativeLayout = (RelativeLayout) findViewById(R.id.re_01);
         btnLogin = (Button) findViewById(R.id.login_btn_login);
         btnRegister = (Button) findViewById(R.id.login_btn_register);
+
+        lyShowSmsCode = (LinearLayout) findViewById(R.id.login_linear3);
+        lyShowUser = (LinearLayout) findViewById(R.id.login_linear4);
+
+        mImgCode.createNewCode();
+        mImgCode.setOnClickListener(this);
 
         addLayoutListener(mRelativeLayout, btnRegister);
         initData();
@@ -108,15 +124,82 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //重复密码获取焦点
+        txtPasswordRepeat.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    imagePasswordRepeat.setImageResource(R.mipmap.icon_password_nor);
+                } else {
+                    imagePasswordRepeat.setImageResource(R.mipmap.icon_password_pre);
+                }
+            }
+        });
     }
 
     private void initData() {
-//        RxBus.getInstance().toObserverableOnMainThread(Config.userUrl, new RxBusResult() {
-//            @Override
-//            public void onRxBusResult(Object o) {
-//                userImage.setImageBitmap((Bitmap) o);
-//            }
-//        });
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == mImgCode) {
+            mImgCode.createNewCode();
+        }
+    }
+
+
+    //随便看看
+    public void LookAround(View view) {
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
+    }
+
+    //登陆
+    public void login(View view) {
+
+    }
+
+    //注册
+    public void register(View view) {
+
+        if (isShowBack) {
+            txtUsername.setFocusable(true);
+            txtUsername.setFocusableInTouchMode(true);
+            txtUsername.requestFocus();
+            //打开软键盘
+            InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            showRegisterModule(isShowBack);
+            btnLogin.setText("注册");
+            btnRegister.setText("返回登陆");
+            isShowBack = false;
+        } else {
+            txtUsername.setFocusable(true);
+            txtUsername.setFocusableInTouchMode(true);
+            txtUsername.requestFocus();
+            //打开软键盘
+            InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            showRegisterModule(isShowBack);
+            btnLogin.setText("登陆");
+            btnRegister.setText("注册记账宝");
+            isShowBack = true;
+        }
+
+    }
+
+    private void showRegisterModule(boolean isShow) {
+        lyShowUser.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        lyShowSmsCode.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // RxBus.getInstance().removeObserverable(Config.userUrl);
     }
 
     public void addLayoutListener(final View main, final View scroll) {
@@ -136,16 +219,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public void LookAround(View view) {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-       // RxBus.getInstance().removeObserverable(Config.userUrl);
     }
 }

@@ -27,12 +27,12 @@ public class SmsCodeView extends View {
         super(context, attrs);
         mTempPaint.setAntiAlias(true);
         mTempPaint.setTextSize(30);
-        mTempPaint.setColor(context.getResources().getColor(R.color.text_color_33));
+        mTempPaint.setColor(context.getResources().getColor(R.color.white));
         mTempPaint.setStrokeWidth(3);
     }
 
     public void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.parseColor("#FFFFE7"));
+        canvas.drawColor(Color.parseColor("#382C22"));
         // 绘制验证码
         final int height = getHeight();
         final int width = getWidth();
@@ -41,17 +41,17 @@ public class SmsCodeView extends View {
             canvas.drawText("" + mCheckNum[i], dx, (height / 2) + 10, mTempPaint);
             dx += width / 5;
         }
-//		int[] line;
-//		for (int i = 0; i < LINE_NUM; i++) {
-//			line = CheckGetUtil.getLine(height, width);
-//			canvas.drawLine(line[0], line[1], line[2], line[3], mTempPaint);
-//		}
-//		// 绘制小圆点
-//		int[] point;
-//		for (int i = 0; i < POINT_NUM; i++) {
-//			point = CheckGetUtil.getPoint(height, width);
-//			canvas.drawCircle(point[0], point[1], 1, mTempPaint);
-//		}
+		int[] line;
+		for (int i = 0; i < LINE_NUM; i++) {
+			line = CheckGetUtil.getLine(height, width);
+			canvas.drawLine(line[0], line[1], line[2], line[3], mTempPaint);
+		}
+		// 绘制小圆点
+		int[] point;
+		for (int i = 0; i < POINT_NUM; i++) {
+			point = CheckGetUtil.getPoint(height, width);
+			canvas.drawCircle(point[0], point[1], 1, mTempPaint);
+		}
     }
 
     public int[] getCode() {

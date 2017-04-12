@@ -140,7 +140,7 @@ public class DaoAccount {
         Collections.sort(list, new Comparator<AccountModel>() {
             @Override
             public int compare(AccountModel model1, AccountModel model2) {
-                return model2.getData().compareTo(model1.getData());
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
             }
         });
         return list;

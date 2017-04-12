@@ -58,15 +58,15 @@ public class LoadingActivity extends AppCompatActivity {
             mViews = new ArrayList<>();
             ImageView imageView1 = new ImageView(this);
             imageView1.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView1.setBackgroundResource(R.mipmap.one);
+            imageView1.setBackgroundResource(R.mipmap.welcome_pic_1);
             mViews.add(imageView1);
             ImageView imageView2 = new ImageView(this);
             imageView2.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView2.setBackgroundResource(R.mipmap.two);
+            imageView2.setBackgroundResource(R.mipmap.welcome_pic_2);
             mViews.add(imageView2);
             ImageView imageView3 = new ImageView(this);
             imageView3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView3.setBackgroundResource(R.mipmap.three);
+            imageView3.setBackgroundResource(R.mipmap.welcome_pic_3);
             mViews.add(imageView3);
 
             View view = LayoutInflater.from(this).inflate(R.layout.layout_loading, null);

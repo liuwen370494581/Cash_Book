@@ -192,10 +192,12 @@
             android:name=".Activity.TransferActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--消费或者支出详细页面-->
         <activity
             android:name=".Activity.PayShowDetailActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+
     </application>
 
 

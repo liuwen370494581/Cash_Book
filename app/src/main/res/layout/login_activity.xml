@@ -10,12 +10,12 @@
                 android:paddingTop="@dimen/activity_vertical_margin">
 
     <Button
-        android:onClick="LookAround"
         android:id="@+id/login_image"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
+        android:onClick="LookAround"
         android:text="随便逛逛"
         android:textColor="@color/white"
         android:textSize="15dp"/>
@@ -52,7 +52,8 @@
             android:layout_height="42dp"
             android:layout_marginTop="4dp"
             android:background="@null"
-            android:hint="请输入已验证的手机"
+            android:hint="请输入你的用户名"
+            android:inputType="text"
             android:paddingLeft="15dp"
             android:textColor="@android:color/white"
             android:textColorHint="@color/background"
@@ -87,14 +88,71 @@
             android:textColor="@android:color/white"
             android:textColorHint="@color/text_color_bg"
             android:textSize="14dp"/>
+
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_linear3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/login_linear2"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="2dp"
+        android:background="@mipmap/bg_input_down"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/login_image_password_repeat"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="6dp"
+            android:src="@mipmap/icon_password_pre"/>
+
+        <EditText
+            android:id="@+id/login_password_repeat"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
+            android:background="@null"
+            android:hint="请输入验证码          "
+            android:inputType="textPassword"
+            android:paddingLeft="15dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/text_color_bg"
+            android:textSize="14dp"/>
+
+        <star.liuwen.com.cash_books.View.SmsCodeView
+            android:id="@+id/sms_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/background"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_linear4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/login_linear3"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="3dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="注册即代表您已同意《记账宝用户协议》"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
 
     <CheckBox
         android:id="@+id/show_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/login_linear2"
+        android:layout_below="@id/login_linear4"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_marginTop="3dp"
         android:text="显示密码"
@@ -106,6 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/show_password"
         android:background="@drawable/btn_demglu"
+        android:onClick="login"
         android:text="登陆"
         android:textColor="@android:color/white"/>
 
@@ -117,6 +176,7 @@
         android:layout_below="@id/login_btn_login"
         android:layout_marginTop="12dp"
         android:background="@mipmap/bg_input_down"
+        android:onClick="register"
         android:text="注册记账宝"
         android:textColor="@android:color/white"/>
 </RelativeLayout>
