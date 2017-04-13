@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by liuwen on 2017/1/13.
  */
 public class PlanSaveMoneyModel implements Serializable {
-
+    private static final long serialVersionUID = 1L;//为了避免反序列化失败 加的一个uid
     private long id;
     private String planName;
     private String planPeopleNumber;

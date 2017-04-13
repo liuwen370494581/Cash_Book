@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 @Entity
 public class BaseModel implements Serializable {
+    private static final long serialVersionUID = 1L;//为了避免反序列化失败 加的一个uid
     @Id(autoincrement = true)
     private Long id; //ID
     private int url; //图标

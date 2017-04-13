@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by liuwen on 2017/1/11.
  */
 public class CreditCardModel implements Serializable {
-
+    private static final long serialVersionUID = 1L;//为了避免反序列化失败 加的一个uid
     private int id;
     private String bank;
     private String accountName;

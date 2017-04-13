@@ -9,34 +9,43 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class ZhiChuModel {
+    private static final long serialVersionUID = 1L;//为了避免反序列化失败 加的一个uid
     @Id(autoincrement = true)
     private long id;
     private int url;
     private String names;
+
     public String getNames() {
         return this.names;
     }
+
     public void setNames(String names) {
         this.names = names;
     }
+
     public int getUrl() {
         return this.url;
     }
+
     public void setUrl(int url) {
         this.url = url;
     }
+
     public long getId() {
         return this.id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     @Generated(hash = 196369667)
     public ZhiChuModel(long id, int url, String names) {
         this.id = id;
         this.url = url;
         this.names = names;
     }
+
     @Generated(hash = 1865233734)
     public ZhiChuModel() {
     }

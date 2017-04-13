@@ -24,9 +24,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
@@ -83,7 +83,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             userImage.setImageBitmap(bt);
         }
 
-        txtNickName.setText(SharedPreferencesUtil.getStringPreferences(this, Config.userNickName, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.userNickName, ""));
+        txtNickName.setText(SharedPreferencesUtil.getStringPreferences(this, Config.userNickName, "").isEmpty() ? SharedPreferencesUtil.getStringPreferences(this, Config.UserName, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.UserName, "") : SharedPreferencesUtil.getStringPreferences(this, Config.userNickName, ""));
         txtSignature.setText(SharedPreferencesUtil.getStringPreferences(this, Config.userSignature, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.userSignature, ""));
         txtSex.setText(SharedPreferencesUtil.getStringPreferences(this, Config.userSex, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.userSex, ""));
     }
@@ -109,7 +109,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         } else if (v == reLocation) {
 
         } else if (v == reOut) {
-
+            LoginOut();
         } else if (v == rePhoto) {
             try {
                 Intent intentPhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//开启相机应用程序获取并返回图片（capture：俘获）
@@ -126,7 +126,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             startActivityForResult(intentPhotoChoice, CHOOSE_PICTURE);
             window.dismiss();
         } else if (v == rePhotoCancel) {
-
             window.dismiss();
 
         } else if (v == reMan) {
@@ -150,6 +149,30 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 backgroundAlpha(0.5f);
             }
         }
+    }
+
+    private void LoginOut() {
+        final TipandEditDialog dialog = new TipandEditDialog(this, "确定要退出吗");
+        dialog.show();
+        dialog.setLeftTextColor(getResources().getColor(R.color.jiechu));
+        dialog.setRightTextColor(getResources().getColor(R.color.blue));
+        dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
+            @Override
+            public void ClickLeft() {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void ClickRight() {
+                SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.userSex);
+                SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.userSignature);
+                SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.UserName);
+                SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.UserPassWord);
+                startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
+                RxBus.getInstance().post(Config.RxUserInFoToMyFragment, true);
+                finish();
+            }
+        });
     }
 
     private static final int CHOOSE_PICTURE = 101;
@@ -257,7 +280,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         });
 
     }
-
 
     /**
      * 设置添加屏幕的背景透明度

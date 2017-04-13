@@ -95,8 +95,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (bt != null) {
             mImageUrl.setImageBitmap(bt);
         }
-
-        txtUserNickName.setText(SharedPreferencesUtil.getStringPreferences(getActivity(), Config.userNickName, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(getActivity(), Config.userNickName, ""));
+        txtUserNickName.setText(SharedPreferencesUtil.getStringPreferences(getActivity(), Config.userNickName, "").isEmpty() ? SharedPreferencesUtil.getStringPreferences(getActivity(), Config.UserName, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(getActivity(), Config.UserName, "") : SharedPreferencesUtil.getStringPreferences(getActivity(), Config.userNickName, ""));
         txtSignature.setText(SharedPreferencesUtil.getStringPreferences(getActivity(), Config.userSignature, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(getActivity(), Config.userSignature, ""));
 
     }
@@ -138,6 +137,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             }
         });
 
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxUserInFoToMyFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                txtUserNickName.setText(getString(R.string.no_setting));
+            }
+        });
+
     }
 
     @Override
@@ -174,9 +180,4 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().release();
-    }
 }

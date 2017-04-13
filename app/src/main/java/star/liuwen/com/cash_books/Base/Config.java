@@ -30,7 +30,6 @@ public class Config {
     public final static String isOpenCodedLock = "isOpenCodedLock";
     public final static String ChangeBg = "ChangeBg";
 
-
     public final static String ZHI_CHU = "ZHICHU";
     public final static String SHOU_RU = "SHOURU";
     public final static String CASH = "现金";
@@ -101,6 +100,8 @@ public class Config {
     public static final String ModelChoiceAccount = "ModelChoiceAccount";
     public static final String Position = "Position";
 
+
+    //RxBus标识符
     public static final String RxToReports = "RxToReports";
     public static final String RxToZhiChuFragment = "RxToZhiChu";
     public static final String RxToSHouRuFragment = "RxToSHouRu";
@@ -110,6 +111,7 @@ public class Config {
     public static final String RxPaySettingToWalletFragment = "RxPaySettingToWalletFragment";
     public static final String RxPayShowDetailToPayShowActivity = "RxPayShowDetailToPayShowActivity";
     public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
+    public static final String RxUserInFoToMyFragment = "RxUserInFoToMyFragment";
 
 
 }

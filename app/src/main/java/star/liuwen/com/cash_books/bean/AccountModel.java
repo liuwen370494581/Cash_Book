@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Entity
 public class AccountModel implements Serializable {
+    private static final long serialVersionUID = 1L;//为了避免反序列化失败 加的一个uid
     @Id(autoincrement = true)
     private Long id;
     private String AccountType;//账户类型 (账户名)
