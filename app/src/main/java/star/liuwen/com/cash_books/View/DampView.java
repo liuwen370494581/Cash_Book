@@ -20,7 +20,7 @@ public class DampView extends ScrollView {
     private boolean handleStop = false;
     private int eachStep = 0;
 
-    private static final int MAX_SCROLL_HEIGHT = 200;// 最大滑动距离
+    private static final int MAX_SCROLL_HEIGHT = 300;// 最大滑动距离
     private static final float SCROLL_RATIO = 0.4f;// 阻尼系数,越小阻力就越大
 
     public DampView(Context context) {

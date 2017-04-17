@@ -84,7 +84,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private TimePickerView pvTime;
     private boolean isShowDelete = false;
     private ChoiceAccount model;
-
     private double accountMoney;
 
     @Nullable
@@ -167,7 +166,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         } else {
             isShowDelete = true;
         }
-        VibratorUtil.Vibrate(getActivity(), 70);
+        VibratorUtil.Vibrate(getActivity(), 120);
         mAdapter.setShowDelete(isShowDelete);
         mAdapter.setClickItemIndex(position);
         return true;
@@ -230,7 +229,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
                 AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
         RxBus.getInstance().post("AccountModel", homListData);
-       // updateChoiceAccountYuer();
+        // updateChoiceAccountYuer();
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);

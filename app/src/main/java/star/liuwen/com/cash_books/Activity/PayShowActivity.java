@@ -3,6 +3,7 @@ package star.liuwen.com.cash_books.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -135,6 +136,8 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
                 String accountType = "";
                 for (Map.Entry<Integer, BaseModel> entry : maps) {
                     DaoAccountBalance.deleteByModel(entry.getValue());
+                    Log.e("MainActivity", entry.getValue().getMoney() + "");
+                    Log.e("MainActivity", entry.getKey() + "");
                     mAdapter.removeItem(entry.getKey());
                     accountType = entry.getValue().getAccountType();
                 }

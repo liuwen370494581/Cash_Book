@@ -113,5 +113,4 @@ public class Config {
     public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
     public static final String RxUserInFoToMyFragment = "RxUserInFoToMyFragment";
 
-
 }

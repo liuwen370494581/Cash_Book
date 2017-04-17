@@ -66,8 +66,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private List<ChoiceAccount> mList;
     private double totalYue, yuer;
 
-    private ItemTouchHelper mItemTouchHelper;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -169,7 +167,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 HashMap<Integer, ChoiceAccount> hashMap = (HashMap<Integer, ChoiceAccount>) o;
                 Set<Map.Entry<Integer, ChoiceAccount>> maps = hashMap.entrySet();
                 for (Map.Entry<Integer, ChoiceAccount> entry : maps) {
-                    DaoChoiceAccount.deleteChoiceAccountByModel(entry.getValue());
+                   DaoChoiceAccount.deleteChoiceAccountByModel(entry.getValue());
                     mAdapter.removeItem(entry.getKey());
                 }
                 mList = DaoChoiceAccount.query();
@@ -195,7 +193,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             startActivity(intent);
         }
     }
-
 
     @Override
     public void onDestroy() {
