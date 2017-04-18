@@ -1,6 +1,5 @@
 package star.liuwen.com.cash_books.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,8 +13,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -23,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +31,8 @@ import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoUserInfo;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.RxBus.RxBus;
+import star.liuwen.com.cash_books.Utils.ApkInfoUtils;
 import star.liuwen.com.cash_books.Utils.CheckGetUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
@@ -60,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private SmsCodeView mImgCode;
     private LinearLayout lyShowSmsCode, lyShowUser;
     private boolean isShowBack = true;
+    private boolean IsForgetGesturePassword = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,13 +87,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         lyShowSmsCode = (LinearLayout) findViewById(R.id.login_linear3);
         lyShowUser = (LinearLayout) findViewById(R.id.login_linear4);
 
+        //接收忘记手势密码 进入登录页面逻辑
+        IsForgetGesturePassword = getIntent().getBooleanExtra(Config.TxtForgetGesturePassword, false);
+        txtPassword.setText(IsForgetGesturePassword ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.UserPassWord, "").isEmpty() ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.UserPassWord, ""));
         mImgCode.createNewCode();
         mImgCode.setOnClickListener(this);
-
         txtUsername.setText(SharedPreferencesUtil.getStringPreferences(this, Config.UserName, "").isEmpty() ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.UserName, ""));
-        txtPassword.setText(SharedPreferencesUtil.getStringPreferences(this, Config.UserPassWord, "").isEmpty() ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.UserPassWord, ""));
 
-        if (!TextUtils.isEmpty(txtUsername.getText().toString().trim()) && !TextUtils.isEmpty(txtPassword.getText().toString())) {
+        if (!TextUtils.isEmpty(txtUsername.getText().toString().trim()) && !TextUtils.isEmpty(txtPassword.getText().toString()) && !IsForgetGesturePassword) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
@@ -171,10 +171,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
     //随便看看
     public void LookAround(View view) {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        ApkInfoUtils.closeSoftInput(this);
         this.finish();
     }
 
@@ -249,7 +249,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             SharedPreferencesUtil.setStringPreferences(this, Config.UserName, tvUserName);
             SharedPreferencesUtil.setStringPreferences(this, Config.UserPassWord, tvPassword);
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            RxBus.getInstance().post(Config.TxtForgetGesturePassword, true);
             this.finish();
+
         }
     }
 
@@ -259,12 +261,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             txtUsername.setFocusable(true);
             txtUsername.setFocusableInTouchMode(true);
             txtUsername.requestFocus();
-            //打开软键盘
-            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             showRegisterModule(isShowBack);
-            btnLogin.setText("注册");
-            btnRegister.setText("返回登陆");
+            btnLogin.setText(getString(R.string.register));
+            btnRegister.setText(getString(R.string.back_login));
             txtUsername.setText("");
             txtPassword.setText("");
             isShowBack = false;
@@ -272,12 +271,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             txtUsername.setFocusable(true);
             txtUsername.setFocusableInTouchMode(true);
             txtUsername.requestFocus();
-            //打开软键盘
-            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             showRegisterModule(isShowBack);
-            btnLogin.setText("登陆");
-            btnRegister.setText("注册记账宝");
+            btnLogin.setText(getString(R.string.login));
+            btnRegister.setText(getString(R.string.register_cash_book));
             isShowBack = true;
         }
 

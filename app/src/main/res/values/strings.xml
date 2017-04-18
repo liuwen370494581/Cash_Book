@@ -132,4 +132,9 @@
     <string name="other">其他</string>
     <string name="Balance_change">余额变更</string>
     <string name="pingzhang">平账支出</string>
+
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="register_cash_book">注册记账宝</string>
+    <string name="back_login">返回登陆</string>
 </resources>

@@ -94,6 +94,7 @@ public class Config {
     public static final String TxtSigNature = "TxtSigNature";
     public static final String TxtChoiceAccount = "TxtChoiceAccount";
     public static final String TxtChoiceAccountDate = "TxtChoiceAccountDate";
+    public static final String TxtForgetGesturePassword = "TxtForgetGesturePassword";
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";
@@ -112,5 +113,9 @@ public class Config {
     public static final String RxPayShowDetailToPayShowActivity = "RxPayShowDetailToPayShowActivity";
     public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
     public static final String RxUserInFoToMyFragment = "RxUserInFoToMyFragment";
+
+    //EventBus的标识符
+    public static final int Bus_newSaveMoneyToSaveMoneyActivity = 101;
+    public static final int Bus_newSaveMoneyToMyFragment = 102;
 
 }

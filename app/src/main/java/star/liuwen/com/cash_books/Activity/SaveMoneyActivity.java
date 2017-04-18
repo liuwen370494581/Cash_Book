@@ -32,7 +32,6 @@ public class SaveMoneyActivity extends BaseActivity {
         setBackView();
         setLeftText(getString(R.string.back));
         setLeftImage(R.mipmap.fanhui_lan);
-
         lyCjShow = (LinearLayout) findViewById(R.id.re_save_money);
         mViewStub = (ViewStub) findViewById(R.id.view_stub);
         tvSaveMoney = (TextView) findViewById(R.id.txt_save_money);
@@ -67,17 +66,9 @@ public class SaveMoneyActivity extends BaseActivity {
         RxBus.getInstance().toObserverableOnMainThread(Config.Game, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
-                boolean close = (boolean) o;
-                if (close) {
-                    SaveMoneyActivity.this.finish();
-                }
+                SaveMoneyActivity.this.finish();
             }
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().release();
-    }
 }

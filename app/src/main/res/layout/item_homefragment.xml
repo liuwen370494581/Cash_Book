@@ -18,7 +18,7 @@
         android:layout_height="28dp"
         android:layout_below="@id/view_1"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/maicai"/>
+        android:src="@mipmap/icon_gouwu"/>
 
     <RelativeLayout
         android:id="@+id/item_home_rezhichu"

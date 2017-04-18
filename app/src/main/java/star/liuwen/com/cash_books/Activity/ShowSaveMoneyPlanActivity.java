@@ -59,7 +59,6 @@ public class ShowSaveMoneyPlanActivity extends BaseActivity implements BGAOnRVIt
         setTitle(getString(R.string.save_money_plan));
         setLeftImage(R.mipmap.fanhui_lan);
         setLeftText(getString(R.string.back));
-
         txtName = (TextView) findViewById(R.id.show_money_txt_name);
         txtTime = (TextView) findViewById(R.id.show_money_txt_time);
         txtMoney = (NumberAnimTextView) findViewById(R.id.show_money_plan);
@@ -137,12 +136,6 @@ public class ShowSaveMoneyPlanActivity extends BaseActivity implements BGAOnRVIt
 
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.ModelSaveAPen);
     }
 
     public void Save(View view) {

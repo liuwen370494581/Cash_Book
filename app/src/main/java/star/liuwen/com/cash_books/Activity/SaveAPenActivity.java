@@ -25,7 +25,6 @@ import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoSaveMoneyPlan;
-import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
@@ -311,6 +310,13 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
                 txtRemark.setText(data.getExtras().getString(Config.TextInPut));
                 break;
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getInstance().removeObserverable(Config.ModelSaveAPen);
     }
 }
 

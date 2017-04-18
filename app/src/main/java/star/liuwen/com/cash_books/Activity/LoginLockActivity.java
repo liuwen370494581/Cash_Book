@@ -8,14 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.GraphicLock.GraphicLockView;
-import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
@@ -58,7 +55,9 @@ public class LoginLockActivity extends AppCompatActivity implements GraphicLockV
         txtForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginLockActivity.this, LoginActivity.class));
+                Intent intent = new Intent(LoginLockActivity.this, LoginActivity.class);
+                intent.putExtra(Config.TxtForgetGesturePassword, true);
+                startActivity(intent);
             }
         });
 
@@ -69,6 +68,15 @@ public class LoginLockActivity extends AppCompatActivity implements GraphicLockV
             @Override
             public void onRxBusResult(Object o) {
                 imgUser.setImageBitmap((Bitmap) o);
+            }
+        });
+
+        RxBus.getInstance().toObserverableOnMainThread(Config.TxtForgetGesturePassword, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                if((boolean)o){
+                    finish();
+                }
             }
         });
     }
