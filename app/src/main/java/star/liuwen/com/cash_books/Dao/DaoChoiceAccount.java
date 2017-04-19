@@ -7,8 +7,6 @@ import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.bean.AccountModel;
-import star.liuwen.com.cash_books.bean.AccountModelDao;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.ChoiceAccountDao;
 

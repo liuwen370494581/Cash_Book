@@ -113,9 +113,6 @@ public class Config {
     public static final String RxPayShowDetailToPayShowActivity = "RxPayShowDetailToPayShowActivity";
     public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
     public static final String RxUserInFoToMyFragment = "RxUserInFoToMyFragment";
-
-    //EventBus的标识符
-    public static final int Bus_newSaveMoneyToSaveMoneyActivity = 101;
-    public static final int Bus_newSaveMoneyToMyFragment = 102;
+    public static final String RxZhiChuFragmentToWalletFragment = "RxZhiChuFragmentToWalletFragment";
 
 }

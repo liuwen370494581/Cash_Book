@@ -7,20 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import java.util.List;
-
-import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Enage.DataEnige;
-import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
-import star.liuwen.com.cash_books.bean.AccountModel;
-import star.liuwen.com.cash_books.bean.ChoiceAccount;
-import star.liuwen.com.cash_books.bean.CreditCardModel;
 import star.liuwen.com.cash_books.bean.DaoMaster;
 import star.liuwen.com.cash_books.bean.DaoSession;
-import star.liuwen.com.cash_books.bean.SaveMoneyPlanModel;
 import star.liuwen.com.cash_books.netState.NetChangeObserver;
 import star.liuwen.com.cash_books.netState.NetStateReceiver;
 import star.liuwen.com.cash_books.netState.NetworkUtils;
@@ -35,6 +26,7 @@ public class App extends Application {
     public static boolean isOpenCodedLock = false;
     public static String cycleData = "";
     public static String cycleTime = "";
+
 
     private RefWatcher mRefWatcher;
     private static DaoSession mDaoSession;

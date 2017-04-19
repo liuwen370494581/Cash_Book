@@ -1,23 +1,16 @@
 package star.liuwen.com.cash_books.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -39,12 +32,13 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemChildTouchListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewHolder;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import star.liuwen.com.cash_books.Activity.EditIncomeAndCostActivity;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
@@ -56,6 +50,7 @@ import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.Utils.VibratorUtil;
@@ -110,6 +105,8 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         choiceAccountDate = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccountDate, "");
         tvZhanghu.setText(choiceAccount.isEmpty() ? "账户" : choiceAccount);
         tvData.setText(choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate);
+        //如果没有选择账户 则刚进入就要计算余额 方便计算
+        choiceAccountYuer(AccountType == null ? choiceAccount : AccountType);
 
         View headView = View.inflate(getActivity(), R.layout.zhichu_shouru_head, null);
         edName = (EditText) headView.findViewById(R.id.zhichu_name);
@@ -135,6 +132,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
+
     }
 
     @Override
@@ -224,12 +222,13 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         if (tvData.getText().toString().equals("日期")) {
             ToastUtils.showToast(getActivity(), "请选择日期");
         }
+
         homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
                 , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
                 AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
         RxBus.getInstance().post("AccountModel", homListData);
-        // updateChoiceAccountYuer();
+        updateChoiceAccountYuer(AccountType == null ? choiceAccount : AccountType);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);
@@ -237,9 +236,25 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
 
     }
 
-    private void updateChoiceAccountYuer() {
-        model.setMoney(accountMoney - Double.parseDouble(mEdName));
-        DaoChoiceAccount.updateAccount(model);
+    private void updateChoiceAccountYuer(final String choiceAccount) {
+        Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+            @Override
+            public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                List<ChoiceAccount> list = DaoChoiceAccount.queryByAccountType(choiceAccount);
+                subscriber.onNext(list);
+            }
+        }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+            @Override
+            public void call(List<ChoiceAccount> accounts) {
+                for (int i = 0; i < accounts.size(); i++) {
+                    model = accounts.get(i);
+                    model.setMoney(accountMoney - Double.parseDouble(mEdName));
+                    DaoChoiceAccount.updateAccount(model);
+                }
+
+            }
+        });
+
     }
 
 
@@ -276,7 +291,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccount, AccountType);
             }
         });
-
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setOutsideTouchable(true);
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -287,12 +301,22 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         });
     }
 
-    //选择账户余额
-    private void choiceAccountYuer(String type) {
-        for (int i = 0; i < DaoChoiceAccount.queryByAccountType(type).size(); i++) {
-            accountMoney = DaoChoiceAccount.queryByAccountType(type).get(i).getMoney();
-        }
-
+    //选择账户余额 是为了计算账户有多少余额
+    private void choiceAccountYuer(final String type) {
+        Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+            @Override
+            public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                List<ChoiceAccount> mList = DaoChoiceAccount.queryByAccountType(type);
+                subscriber.onNext(mList);
+            }
+        }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+            @Override
+            public void call(List<ChoiceAccount> accounts) {
+                for (ChoiceAccount model : accounts) {
+                    accountMoney = model.getMoney();
+                }
+            }
+        });
     }
 
     /**

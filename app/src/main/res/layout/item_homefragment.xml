@@ -106,21 +106,26 @@
             android:textSize="10sp"/>
     </RelativeLayout>
 
-    <View
-        android:id="@+id/view_3"
-        android:layout_width="0.5dp"
-        android:layout_height="13dp"
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/item_home_url"
-        android:layout_centerHorizontal="true"
-        android:background="#A6A6A6"/>
+        android:layout_centerInParent="true"
+        android:layout_marginTop="-1dp">
 
+        <View
+            android:layout_gravity="center"
+            android:id="@+id/view_3"
+            android:layout_width="0.5dp"
+            android:layout_height="18dp"
+            android:background="#A6A6A6"/>
 
-    <ImageView
-        android:id="@+id/item_home_show"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_below="@id/view_3"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/hi"
-        android:visibility="gone"/>
+        <TextView
+            android:layout_marginTop="-2dp"
+            android:id="@+id/item_home_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"/>
+    </FrameLayout>
 </RelativeLayout>

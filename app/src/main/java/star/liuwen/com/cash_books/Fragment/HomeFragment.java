@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         mDefineBAGRefreshWithLoadView.setReleaseRefreshText("下拉同步账单中...");
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -134,6 +134,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
                     tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
                     mAdapter.addNewData(mList);
+                    mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路"));
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
             });
@@ -150,79 +151,115 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
     private void initData() {
         RxBus.getInstance().toObserverableOnMainThread("AccountModel", new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                mList = (List<AccountModel>) o;
-                mAdapter.addNewData(mList);
-                for (int i = 0; i < mList.size(); i++) {
-                    if (mList.get(i).getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
-                        zhiChuAdd += mList.get(i).getMoney() + totalZhiChuAdd;
-                        //避免第二次总数在相加 只需要加一次
-                        totalZhiChuAdd = 0;
-                        tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
-                        model = new AccountModel();
-                        int y = 1 + (int) (Math.random() * 10000000);
-                        model.setId(DaoAccount.getCount() + y);
-                        model.setAccountType(mList.get(i).getAccountType());
-                        model.setData(mList.get(i).getData());
-                        model.setMoney(mList.get(i).getMoney());
-                        model.setConsumeType(mList.get(i).getConsumeType());
-                        model.setUrl(mList.get(i).getUrl());
-                        model.setTimeMinSec(DateTimeUtil.getCurrentTime_Today());
-                        model.setZhiChuShouRuType(Config.ZHI_CHU);
-                        model.setZhiCHuAdd(mList.get(i).getMoney());
-                        model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
-                        Observable.create(new Observable.OnSubscribe<AccountModel>() {
-                            @Override
-                            public void call(Subscriber<? super AccountModel> subscriber) {
-                                DaoAccount.insertAccount(model);
-                                subscriber.onNext(model);
-                            }
-                        }).compose(RxUtil.<AccountModel>applySchedulers()).subscribe(new Action1<AccountModel>() {
-                            @Override
-                            public void call(AccountModel model) {
+                    @Override
+                    public void onRxBusResult(Object o) {
+                        mList = (List<AccountModel>) o;
+                        mAdapter.addNewData(mList);
+                        for (int i = 0; i < mList.size(); i++) {
+                            if (mList.get(i).getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                                zhiChuAdd += mList.get(i).getMoney() + totalZhiChuAdd;
+                                //避免第二次总数在相加 只需要加一次
+                                totalZhiChuAdd = 0;
+                                tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
+                                model = new AccountModel();
+                                int y = 1 + (int) (Math.random() * 10000000);
+                                model.setId(DaoAccount.getCount() + y);
+                                model.setAccountType(mList.get(i).getAccountType());
+                                model.setData(mList.get(i).getData());
+                                model.setMoney(mList.get(i).getMoney());
+                                model.setConsumeType(mList.get(i).getConsumeType());
+                                model.setUrl(mList.get(i).getUrl());
+                                model.setTimeMinSec(DateTimeUtil.getCurrentTime_Today());
+                                model.setZhiChuShouRuType(Config.ZHI_CHU);
+                                model.setZhiCHuAdd(mList.get(i).getMoney());
+                                model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
+                                model.setShowFirstDate("");
+                                Observable.create(new Observable.OnSubscribe<AccountModel>() {
+                                    @Override
+                                    public void call(Subscriber<? super AccountModel> subscriber) {
+                                        DaoAccount.insertAccount(model);
+                                        subscriber.onNext(model);
+                                    }
+                                }).compose(RxUtil.<AccountModel>applySchedulers()).subscribe(new Action1<AccountModel>() {
+                                    @Override
+                                    public void call(AccountModel model) {
+                                        Log.e("MainActivity", model.getMoney() + "");
+                                    }
+                                });
 
-                            }
-                        });
+                                //在这里加的一段主要是为了只添加一次你于什么时候开启了你的记账之路
+                                Observable.create(new Observable.OnSubscribe<List<AccountModel>>() {
+                                    @Override
+                                    public void call(Subscriber<? super List<AccountModel>> subscriber) {
+                                        List<AccountModel> list = DaoAccount.query();
+                                        subscriber.onNext(list);
+                                    }
+                                }).compose(RxUtil.<List<AccountModel>>applySchedulers()).subscribe(new Action1<List<AccountModel>>() {
+                                    @Override
+                                    public void call(List<AccountModel> models) {
+                                        if (models.size() == 1) {
+                                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路"));
+                                        }
+                                    }
+                                });
 
-                    } else {
-                        shouRuAdd += mList.get(i).getMoney() + totalShouRuAdd;
-                        //避免第二次总数在相加 只需要加一次
-                        totalShouRuAdd = 0;
-                        tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
-                        model = new AccountModel();
-                        //为了解决ID的唯一性产生的bug 当删除一个item的时候 id依然存在数据库中 在插入的时候 会插入同样的数据 所以使用了随机数
-                        int y = 1 + (int) (Math.random() * 10000000);
-                        model.setId(DaoAccount.getCount() + y);
-                        model.setAccountType(mList.get(i).getAccountType());
-                        model.setData(mList.get(i).getData());
-                        model.setMoney(mList.get(i).getMoney());
-                        model.setConsumeType(mList.get(i).getConsumeType());
-                        model.setUrl(mList.get(i).getUrl());
-                        model.setTimeMinSec(DateTimeUtil.getCurrentTime_Today());
-                        model.setZhiChuShouRuType(Config.SHOU_RU);
-                        model.setSHouRuAdd(mList.get(i).getMoney());
-                        model.setConsumePercent((float) (model.getMoney() / shouRuAdd) * 100);
-                        Observable.create(new Observable.OnSubscribe<AccountModel>() {
-                            @Override
-                            public void call(Subscriber<? super AccountModel> subscriber) {
-                                DaoAccount.insertAccount(model);
-                                subscriber.onNext(model);
-                            }
-                        }).compose(RxUtil.<AccountModel>applySchedulers()).subscribe(new Action1<AccountModel>() {
-                            @Override
-                            public void call(AccountModel model) {
+                            } else {
+                                shouRuAdd += mList.get(i).getMoney() + totalShouRuAdd;
+                                //避免第二次总数在相加 只需要加一次
+                                totalShouRuAdd = 0;
+                                tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
+                                model = new AccountModel();
+                                //为了解决ID的唯一性产生的bug 当删除一个item的时候 id依然存在数据库中 在插入的时候 会插入同样的数据 所以使用了随机数
+                                int y = 1 + (int) (Math.random() * 10000000);
+                                model.setId(DaoAccount.getCount() + y);
+                                model.setAccountType(mList.get(i).getAccountType());
+                                model.setData(mList.get(i).getData());
+                                model.setMoney(mList.get(i).getMoney());
+                                model.setConsumeType(mList.get(i).getConsumeType());
+                                model.setUrl(mList.get(i).getUrl());
+                                model.setTimeMinSec(DateTimeUtil.getCurrentTime_Today());
+                                model.setZhiChuShouRuType(Config.SHOU_RU);
+                                model.setSHouRuAdd(mList.get(i).getMoney());
+                                model.setConsumePercent((float) (model.getMoney() / shouRuAdd) * 100);
+                                model.setShowFirstDate("");
+                                Observable.create(new Observable.OnSubscribe<AccountModel>() {
+                                    @Override
+                                    public void call(Subscriber<? super AccountModel> subscriber) {
+                                        DaoAccount.insertAccount(model);
+                                        subscriber.onNext(model);
+                                    }
+                                }).compose(RxUtil.<AccountModel>applySchedulers()).subscribe(new Action1<AccountModel>() {
+                                    @Override
+                                    public void call(AccountModel model) {
 
+                                    }
+                                });
+
+                                //在这里加的一段主要是为了只添加一次你于什么时候开启了你的记账之路
+                                Observable.create(new Observable.OnSubscribe<List<AccountModel>>() {
+                                    @Override
+                                    public void call(Subscriber<? super List<AccountModel>> subscriber) {
+                                        List<AccountModel> list = DaoAccount.query();
+                                        subscriber.onNext(list);
+                                    }
+                                }).compose(RxUtil.<List<AccountModel>>applySchedulers()).subscribe(new Action1<List<AccountModel>>() {
+                                    @Override
+                                    public void call(List<AccountModel> models) {
+                                        if (models.size() == 1) {
+                                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路"));
+                                        }
+                                    }
+                                });
                             }
-                        });
+                        }
+                        mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                        mViewStub.setVisibility(View.GONE);
+                        headView.setVisibility(View.VISIBLE);
+                        mBGARefreshLayout.setVisibility(View.VISIBLE);
                     }
                 }
-                mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                mViewStub.setVisibility(View.GONE);
-                headView.setVisibility(View.VISIBLE);
-                mBGARefreshLayout.setVisibility(View.VISIBLE);
-            }
-        });
+
+        );
 
     }
 
@@ -251,6 +288,9 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
     @Override
     public boolean onRVItemLongClick(final ViewGroup parent, View itemView, final int position) {
+        if (mAdapter.getItemCount() - 1 == position) {
+            return false;
+        }
         final TipandEditDialog dialog = new TipandEditDialog(getActivity(), "确定要删除吗?");
         dialog.show();
         dialog.setLeftText(getString(R.string.cancel));
@@ -309,19 +349,33 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
         @Override
         protected void fillData(BGAViewHolderHelper helper, int position, AccountModel model) {
+            helper.setText(R.id.item_home_show, model.getShowFirstDate());
             if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
+                helper.setVisibility(R.id.view_3, View.VISIBLE);
                 helper.setVisibility(R.id.item_home_rezhichu, View.VISIBLE);
                 helper.setVisibility(R.id.item_home_reshouru, View.GONE);
                 helper.setImageResource(R.id.item_home_url, model.getUrl());
                 helper.setText(R.id.item_home_txtzhichuname, model.getConsumeType());
-                helper.setText(R.id.item_home_txtzhichumoney, String.format("%.2f", model.getMoney()));
+                if (model.getMoney() != 0) {
+                    helper.setText(R.id.item_home_txtzhichumoney, String.format("%.2f", model.getMoney()));
+                } else {
+                    helper.setVisibility(R.id.view_3, View.GONE);
+                    helper.setText(R.id.item_home_txtzhichumoney, "");
+                }
                 helper.setText(R.id.item_home_txtzhiRemark, model.getAccountType());
             } else {
+                helper.setVisibility(R.id.view_3, View.VISIBLE);
                 helper.setVisibility(R.id.item_home_reshouru, View.VISIBLE);
                 helper.setVisibility(R.id.item_home_rezhichu, View.GONE);
                 helper.setImageResource(R.id.item_home_url, model.getUrl());
                 helper.setText(R.id.item_home_txtshouruname, model.getConsumeType());
-                helper.setText(R.id.item_home_txtshourumoney, String.format("%.2f", model.getMoney()));
+                if (model.getMoney() != 0) {
+                    helper.setVisibility(R.id.view_3, View.VISIBLE);
+                    helper.setText(R.id.item_home_txtshourumoney, String.format("%.2f", model.getMoney()));
+                } else {
+                    helper.setVisibility(R.id.view_3, View.GONE);
+                    helper.setText(R.id.item_home_txtshourumoney, "");
+                }
                 helper.setText(R.id.item_home_txtshouruRemark, model.getAccountType());
             }
         }

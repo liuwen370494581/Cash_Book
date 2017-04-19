@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.Dao.DaoAccountBalance;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.bean.BaseModel;
@@ -64,7 +63,6 @@ public class PayShowDetailActivity extends BaseActivity {
 
 
     private void deleteBaseModel() {
-
 
     }
 }

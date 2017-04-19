@@ -1,11 +1,8 @@
 package star.liuwen.com.cash_books.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-
-import star.liuwen.com.cash_books.Base.Config;
-
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
 
@@ -28,6 +25,7 @@ public class AccountModel implements Serializable {
     private double zhiCHuAdd; //总支出
     private double sHouRuAdd; //总收入
     private double AccountYuer;//账户余额
+    private String ShowFirstDate;//用来标识是否显示开启了记账之路
 
     public AccountModel() {
     }
@@ -55,6 +53,16 @@ public class AccountModel implements Serializable {
         this.url = url;
         this.timeMinSec = timeMinSec;
         this.zhiChuShouRuType = zhiChuShouRuType;
+    }
+
+
+    public String getShowFirstDate() {
+        return this.ShowFirstDate;
+    }
+
+
+    public void setShowFirstDate(String ShowFirstDate) {
+        this.ShowFirstDate = ShowFirstDate;
     }
 
 
@@ -178,9 +186,9 @@ public class AccountModel implements Serializable {
     }
 
 
-    @Generated(hash = 141009023)
+    @Generated(hash = 1474669575)
     public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
-            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer) {
+            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String ShowFirstDate) {
         this.id = id;
         this.AccountType = AccountType;
         this.Data = Data;
@@ -193,5 +201,9 @@ public class AccountModel implements Serializable {
         this.zhiCHuAdd = zhiCHuAdd;
         this.sHouRuAdd = sHouRuAdd;
         this.AccountYuer = AccountYuer;
+        this.ShowFirstDate = ShowFirstDate;
     }
+
+
+   
 }

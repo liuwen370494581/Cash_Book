@@ -8,12 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,33 +22,20 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 import star.liuwen.com.cash_books.Activity.ChoiceAccountTypeActivity;
 import star.liuwen.com.cash_books.Activity.PayShowActivity;
 import star.liuwen.com.cash_books.Activity.TransferActivity;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.Dao.DaoAccount;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
-import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
-import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.Utils.SnackBarUtil;
-import star.liuwen.com.cash_books.Utils.ToastUtils;
-import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
@@ -141,6 +126,21 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             }
         });
 
+        RxBus.getInstance().toObserverableChildThread(Config.RxZhiChuFragmentToWalletFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                mList = DaoChoiceAccount.query();
+                mAdapter.setData(mList);
+                mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                for (int i = 0; i < mList.size(); i++) {
+                    yuer = yuer + mList.get(i).getMoney();
+                }
+                tvYuer.setText(String.format("%.2f", yuer));
+                //因为余额的数值会添加要设为0重新开始算
+                yuer = 0;
+            }
+        });
+
         RxBus.getInstance().toObserverableOnMainThread(Config.RxModelToWalletFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
@@ -167,7 +167,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 HashMap<Integer, ChoiceAccount> hashMap = (HashMap<Integer, ChoiceAccount>) o;
                 Set<Map.Entry<Integer, ChoiceAccount>> maps = hashMap.entrySet();
                 for (Map.Entry<Integer, ChoiceAccount> entry : maps) {
-                   DaoChoiceAccount.deleteChoiceAccountByModel(entry.getValue());
+                    DaoChoiceAccount.deleteChoiceAccountByModel(entry.getValue());
                     mAdapter.removeItem(entry.getKey());
                 }
                 mList = DaoChoiceAccount.query();
