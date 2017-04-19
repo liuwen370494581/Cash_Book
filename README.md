@@ -3,7 +3,8 @@
 
 
 
-![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1256_%E5%89%AF%E6%9C%AC.jpg)    ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1257_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1258_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1259_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172347_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-173614_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172515_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172358_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172406_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172457_%E5%89%AF%E6%9C%AC.jpg)  
+![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1256_%E5%89%AF%E6%9C%AC.jpg)    ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1257_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1258_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1259_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172347_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-173614_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172515_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172358_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172406_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172457_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1424_%E5%89%AF%E6%9C%AC.jpg)    
+
 
 
 本项目是业余时间编写，纯粹是享受编写代码的乐趣，由于本身工作也是十分繁重 
@@ -23,3 +24,4 @@
 * 2017-4-13 v1.55 更新日志： 添加了注册和登陆页面实现了部分功能。修改了首页下拉刷新的UI
 * 2017-4-14 v1.60 更新日志： 登陆注册功能都已完成  修改了一些小bug 算是build(1)的版本啦 
 * 2017-4-17 v1.61 更新日志： 添加了分享QQ和微博分享等功能 微信和朋友圈因为app么有审核暂不能分享。
+* 2017-4-18 v1.62 更新日志： 添加了轻量级9宫格解锁页面 app可以保护隐私拉.
