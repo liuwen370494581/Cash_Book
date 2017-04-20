@@ -4,17 +4,13 @@
 
 
     <uses-permission android:name="android.permission.CAMERA"/>
-
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
     <!-- 获取当前WiFi接入的状态以及WLAN热点的信息 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <!-- 改变WiFi多播状态 -->
@@ -48,14 +44,11 @@
             android:name=".Activity.IncomeAndCostActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
-        <!--显示money页面-->
-        <!--钱的设置页面-->
-        <!--修改的通用界面-->
-        <!--存钱和账单总结的通用页面-->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"/>
 
+        <!--存钱页面-->
         <activity
             android:name=".Activity.SaveMoneyActivity"
             android:launchMode="standard"
@@ -90,7 +83,6 @@
             android:name=".Activity.ChangeSkinActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
-        <!--通用修改存钱计划页面-->
         <!--用户界面-->
         <activity
             android:name=".Activity.UserInfoActivity"
@@ -121,7 +113,6 @@
             android:name=".Activity.HuoBiSettingActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
-        <!--报表明细页面-->
         <!--登陆界面-->
         <activity
             android:name=".Activity.LoginActivity"
@@ -138,13 +129,11 @@
             android:name=".Activity.LoginLockActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
-        <!--主页-->
         <!--展示存钱的页面-->
         <activity
             android:name=".Activity.ShowSaveMoneyPlanActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
-
         <!--存一笔-->
         <activity
             android:name=".Activity.SaveAPenActivity"
@@ -197,6 +186,7 @@
             android:name=".Activity.PayShowDetailActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--分享页面需要的-->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:screenOrientation="portrait"

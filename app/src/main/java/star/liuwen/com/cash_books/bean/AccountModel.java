@@ -203,7 +203,4 @@ public class AccountModel implements Serializable {
         this.AccountYuer = AccountYuer;
         this.ShowFirstDate = ShowFirstDate;
     }
-
-
-   
 }

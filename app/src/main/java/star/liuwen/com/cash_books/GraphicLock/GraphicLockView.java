@@ -21,7 +21,7 @@ import star.liuwen.com.cash_books.R;
 
 /**
  * 九宫格解锁
- * Created by liuwen on 2017/2/10..
+ * Created by liuwen on 2017/4/17.
  */
 public class GraphicLockView extends View {
 

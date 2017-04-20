@@ -46,10 +46,7 @@ public class BankFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.bank_recyclerView);
         mIndexView = (IndexView) getContentView().findViewById(R.id.choice_indexView);
         mTextView = (TextView) getContentView().findViewById(R.id.choice_txt_tip);
-
         mAdapter = new ChoiceIssuingBankAdapter(mRecyclerView);
-
-
         mAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
             @Override
             public void onRVItemClick(ViewGroup parent, View itemView, int position) {
@@ -101,11 +98,7 @@ public class BankFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter.setData(DataEnige.getBankData());
         mRecyclerView.setAdapter(mAdapter);
-
-
     }
-
-
     private void initData() {
 
     }

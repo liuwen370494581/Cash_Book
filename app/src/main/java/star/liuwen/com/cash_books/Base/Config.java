@@ -69,6 +69,7 @@ public class Config {
     public static final String FistStar = "FirstStar";
     public static final String UserName = "UserName";
     public static final String UserPassWord = "UserPassWord";
+    public static final String UserLocation = "UserLocation";
 
     public static final String PlanMoney = "PlanMoney";
     public static final String PlanFinishTime = "PlanFinishTime";
@@ -95,6 +96,7 @@ public class Config {
     public static final String TxtChoiceAccount = "TxtChoiceAccount";
     public static final String TxtChoiceAccountDate = "TxtChoiceAccountDate";
     public static final String TxtForgetGesturePassword = "TxtForgetGesturePassword";
+
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";

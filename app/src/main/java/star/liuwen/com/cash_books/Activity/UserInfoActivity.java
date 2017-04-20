@@ -1,6 +1,7 @@
 package star.liuwen.com.cash_books.Activity;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -8,13 +9,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +26,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
@@ -32,6 +43,11 @@ import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.CircleImageView;
+import star.liuwen.com.cash_books.View.Wheel.AddrXmlParser;
+import star.liuwen.com.cash_books.View.Wheel.CityInfoModel;
+import star.liuwen.com.cash_books.View.Wheel.DistrictInfoModel;
+import star.liuwen.com.cash_books.View.Wheel.ProvinceInfoModel;
+import star.liuwen.com.cash_books.View.Wheel.WheelView;
 
 /**
  * Created by liuwen on 2017/1/21.
@@ -44,6 +60,25 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private PopupWindow window;
     private Bitmap head;//头像Bitmap
     private static String path = "/sdcard/DemoHead/";//sd路径
+
+    private PopupWindow addressPopWindow;
+    private WheelView mProvincePicker;
+    private WheelView mCityPicker;
+    private WheelView mCountyPicker;
+    private LinearLayout boxBtnCancel;
+    private LinearLayout boxBtnOk;
+    protected boolean isDataLoaded = false;
+
+    /**
+     * 与选择地址相关
+     */
+    protected ArrayList<String> mProvinceDatas;
+    protected Map<String, ArrayList<String>> mCitisDatasMap = new HashMap<String, ArrayList<String>>();
+    protected Map<String, ArrayList<String>> mDistrictDatasMap = new HashMap<String, ArrayList<String>>();
+    protected String mCurrentProviceName;
+    protected String mCurrentCityName;
+    protected String mCurrentDistrictName;
+    private boolean isAddrChoosed = false;
 
     @Override
     public int activityLayoutRes() {
@@ -77,6 +112,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         reLocation.setOnClickListener(this);
         reOut.setOnClickListener(this);
         userImage.setOnClickListener(this);
+        initProviceSelectView();
 
         Bitmap bt = BitmapFactory.decodeFile(Config.RootPath + "head.jpg");
         if (bt != null) {
@@ -86,6 +122,188 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         txtNickName.setText(SharedPreferencesUtil.getStringPreferences(this, Config.userNickName, "").isEmpty() ? SharedPreferencesUtil.getStringPreferences(this, Config.UserName, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.UserName, "") : SharedPreferencesUtil.getStringPreferences(this, Config.userNickName, ""));
         txtSignature.setText(SharedPreferencesUtil.getStringPreferences(this, Config.userSignature, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.userSignature, ""));
         txtSex.setText(SharedPreferencesUtil.getStringPreferences(this, Config.userSex, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.userSex, ""));
+        txtLocation.setText(SharedPreferencesUtil.getStringPreferences(this, Config.UserLocation, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.UserLocation, ""));
+    }
+
+    private void initProviceSelectView() {
+
+        View contentView = LayoutInflater.from(this).inflate(
+                R.layout.pop_city_picker, null);
+        mProvincePicker = (WheelView) contentView.findViewById(R.id.province);
+        mCityPicker = (WheelView) contentView.findViewById(R.id.city);
+        mCountyPicker = (WheelView) contentView.findViewById(R.id.county);
+        boxBtnCancel = (LinearLayout) contentView.findViewById(R.id.box_btn_cancel);
+        boxBtnOk = (LinearLayout) contentView.findViewById(R.id.box_btn_ok);
+        addressPopWindow = new PopupWindow(contentView,
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        addressPopWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        addressPopWindow.setOutsideTouchable(true);
+
+        addressPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+        mProvincePicker.setOnSelectListener(new WheelView.OnSelectListener() {
+            @Override
+            public void endSelect(int id, String text) {
+                String provinceText = mProvinceDatas.get(id);
+                if (!mCurrentProviceName.equals(provinceText)) {
+                    mCurrentProviceName = provinceText;
+                    ArrayList<String> mCityData = mCitisDatasMap.get(mCurrentProviceName);
+                    mCityPicker.resetData(mCityData);
+                    mCityPicker.setDefault(0);
+                    mCurrentCityName = mCityData.get(0);
+
+                    ArrayList<String> mDistrictData = mDistrictDatasMap.get(mCurrentCityName);
+                    mCountyPicker.resetData(mDistrictData);
+                    mCountyPicker.setDefault(0);
+                    mCurrentDistrictName = mDistrictData.get(0);
+                }
+            }
+
+            @Override
+            public void selecting(int id, String text) {
+            }
+        });
+
+        mCityPicker.setOnSelectListener(new WheelView.OnSelectListener() {
+            @Override
+            public void endSelect(int id, String text) {
+                ArrayList<String> mCityData = mCitisDatasMap.get(mCurrentProviceName);
+                String cityText = mCityData.get(id);
+                if (!mCurrentCityName.equals(cityText)) {
+                    mCurrentCityName = cityText;
+                    ArrayList<String> mCountyData = mDistrictDatasMap.get(mCurrentCityName);
+                    mCountyPicker.resetData(mCountyData);
+                    mCountyPicker.setDefault(0);
+                    mCurrentDistrictName = mCountyData.get(0);
+                }
+            }
+
+            @Override
+            public void selecting(int id, String text) {
+
+            }
+        });
+
+        mCountyPicker.setOnSelectListener(new WheelView.OnSelectListener() {
+            @Override
+            public void endSelect(int id, String text) {
+                ArrayList<String> mDistrictData = mDistrictDatasMap.get(mCurrentCityName);
+                String districtText = mDistrictData.get(id);
+                if (!mCurrentDistrictName.equals(districtText)) {
+                    mCurrentDistrictName = districtText;
+                }
+            }
+
+            @Override
+            public void selecting(int id, String text) {
+            }
+        });
+
+        boxBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addressPopWindow.dismiss();
+            }
+        });
+
+        boxBtnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isAddrChoosed = true;
+                String addr = mCurrentProviceName + mCurrentCityName;
+                if (!mCurrentDistrictName.equals("其他")) {
+                    addr += mCurrentDistrictName;
+                }
+                txtLocation.setText(addr);
+                SharedPreferencesUtil.setStringPreferences(UserInfoActivity.this, Config.UserLocation, addr);
+                addressPopWindow.dismiss();
+            }
+        });
+
+        // 启动线程读取数据
+        new Thread() {
+            @Override
+            public void run() {
+                // 读取数据
+                isDataLoaded = readAddrDatas();
+
+                // 通知界面线程
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mProvincePicker.setData(mProvinceDatas);
+                        mProvincePicker.setDefault(0);
+                        mCurrentProviceName = mProvinceDatas.get(0);
+
+                        ArrayList<String> mCityData = mCitisDatasMap.get(mCurrentProviceName);
+                        mCityPicker.setData(mCityData);
+                        mCityPicker.setDefault(0);
+                        mCurrentCityName = mCityData.get(0);
+
+                        ArrayList<String> mDistrictData = mDistrictDatasMap.get(mCurrentCityName);
+                        mCountyPicker.setData(mDistrictData);
+                        mCountyPicker.setDefault(0);
+                        mCurrentDistrictName = mDistrictData.get(0);
+                    }
+                });
+            }
+        }.start();
+
+    }
+
+    /**
+     * 读取地址数据，请使用线程进行调用
+     *
+     * @return
+     */
+    protected boolean readAddrDatas() {
+        List<ProvinceInfoModel> provinceList = null;
+        AssetManager asset = getAssets();
+        try {
+            InputStream input = asset.open("province_data.xml");
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            SAXParser parser = spf.newSAXParser();
+            AddrXmlParser handler = new AddrXmlParser();
+            parser.parse(input, handler);
+            input.close();
+            provinceList = handler.getDataList();
+            if (provinceList != null && !provinceList.isEmpty()) {
+                mCurrentProviceName = provinceList.get(0).getName();
+                List<CityInfoModel> cityList = provinceList.get(0).getCityList();
+                if (cityList != null && !cityList.isEmpty()) {
+                    mCurrentCityName = cityList.get(0).getName();
+                    List<DistrictInfoModel> districtList = cityList.get(0).getDistrictList();
+                    mCurrentDistrictName = districtList.get(0).getName();
+                }
+            }
+            mProvinceDatas = new ArrayList<String>();
+            for (int i = 0; i < provinceList.size(); i++) {
+                mProvinceDatas.add(provinceList.get(i).getName());
+                List<CityInfoModel> cityList = provinceList.get(i).getCityList();
+                ArrayList<String> cityNames = new ArrayList<String>();
+                for (int j = 0; j < cityList.size(); j++) {
+                    cityNames.add(cityList.get(j).getName());
+                    List<DistrictInfoModel> districtList = cityList.get(j).getDistrictList();
+                    ArrayList<String> distrinctNameArray = new ArrayList<String>();
+                    DistrictInfoModel[] distrinctArray = new DistrictInfoModel[districtList.size()];
+                    for (int k = 0; k < districtList.size(); k++) {
+                        DistrictInfoModel districtModel = new DistrictInfoModel(districtList.get(k).getName(), districtList.get(k).getZipcode());
+                        distrinctArray[k] = districtModel;
+                        distrinctNameArray.add(districtModel.getName());
+                    }
+                    mDistrictDatasMap.put(cityNames.get(j), distrinctNameArray);
+                }
+                mCitisDatasMap.put(provinceList.get(i).getName(), cityNames);
+            }
+            return true;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
@@ -107,6 +325,16 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 backgroundAlpha(0.5f);
             }
         } else if (v == reLocation) {
+            if (isDataLoaded) {
+                if (addressPopWindow.isShowing()) {
+                    addressPopWindow.dismiss();
+                } else {
+                    addressPopWindow.showAtLocation(reLocation, Gravity.BOTTOM, 0, 0);
+                    backgroundAlpha(0.5f);
+                }
+            } else {
+                ToastUtils.showToast(this, "加载数据失败,请稍后再试");
+            }
 
         } else if (v == reOut) {
             LoginOut();
@@ -151,6 +379,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+
     private void LoginOut() {
         final TipandEditDialog dialog = new TipandEditDialog(this, "确定要退出吗");
         dialog.show();
@@ -174,6 +403,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
 
     private static final int CHOOSE_PICTURE = 101;
     private static final int PHOTO = 102;

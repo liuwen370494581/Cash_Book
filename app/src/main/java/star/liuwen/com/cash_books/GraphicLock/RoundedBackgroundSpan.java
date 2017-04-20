@@ -10,7 +10,7 @@ import android.text.style.ReplacementSpan;
 import star.liuwen.com.cash_books.R;
 
 /**
- * Created by liuwen on 2017/2/10..
+ * Created by liuwen on 2017/4/17
  * 九宫格解锁
  */
 public class RoundedBackgroundSpan extends ReplacementSpan {

@@ -176,7 +176,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                     totalYue = totalYue + mList.get(i).getMoney();
                 }
                 tvYuer.setText(String.format("%.2f", totalYue));
-
             }
         });
     }
@@ -206,13 +205,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
 
         public WalletAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_fragment_wallet);
-        }
-
-        protected void updateWallet(List<ChoiceAccount> accounts) {
-            if (null != accounts) {
-                list = accounts;
-                mAdapter.notifyDataSetChangedWrapper();
-            }
         }
 
         @Override

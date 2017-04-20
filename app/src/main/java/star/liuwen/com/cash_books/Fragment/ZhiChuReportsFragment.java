@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -197,5 +196,6 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
     public void onDestroy() {
         super.onDestroy();
         RxBus.getInstance().removeObserverable("AccountModel");
+        RxBus.getInstance().removeObserverable(Config.RxHomeFragmentToReportsFragment);
     }
 }

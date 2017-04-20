@@ -21,8 +21,6 @@ import star.liuwen.com.cash_books.View.tab.BarEntity;
 import star.liuwen.com.cash_books.View.tab.BottomTabBar;
 
 public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSelectListener {
-
-
     private BottomTabBar tb;
     private List<BarEntity> bars;
     private HomeFragment homeFragment;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
     private ReportFragment reportFragment;
     private MyFragment myFragment;
     private FragmentManager manager;
-
+    private long firstTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
     private void initData() {
     }
 
-
     /**
      * 因为MainActivity使用了singleTask或者singleInstance的启动模式 所以只有一个实例
      * 那么久不会重新去调用onCreate()的方法 所以便要重写onNeWIntent的方法();
@@ -77,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
         }
     }
 
-    private long firstTime = 0;
-
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - firstTime > 2000) {
@@ -89,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
             App app = (App) getApplication();
             app.destroyReceiver();
             RxBus.getInstance().release();
+            ToastUtils.removeToast();
             finish();
         }
         super.onBackPressed();

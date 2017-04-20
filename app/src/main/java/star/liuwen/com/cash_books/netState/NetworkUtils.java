@@ -13,7 +13,7 @@ import android.provider.Settings;
 
 /**
  * 描述: 网络相关工具类
- * Created by mjd on 2016/12/19.
+ * Created by liuwen on 2017/4/17.
  * <p/>
  * 需添加权限 {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>}
  * 需添加权限 {@code <uses-permission android:name="android.permission.INTERNET"/>}

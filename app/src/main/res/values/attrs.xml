@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-    <declare-styleable name="MagnificentChart">
-        <attr name="animation" format="boolean"/>
-        <attr name="round" format="boolean"/>
-        <attr name="shadow" format="boolean"/>
-        <attr name="showTitle" format="boolean"/>
-        <attr name="shadowColor" format="color"/>
-        <attr name="bg" format="color"/>
-    </declare-styleable>
-
-
     <!-- 圆形头像控件-->
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension"/>
@@ -19,9 +8,25 @@
     </declare-styleable>
 
 
+    <!--底部导航栏-->
     <declare-styleable name="BottomTabBar">
         <attr name="textColor" format="color"/>
         <attr name="backgroundColor" format="color"/>
         <attr name="textSelectColor" format="color"/>
+    </declare-styleable>
+
+    <!--滚动栏地址省市区-->
+    <declare-styleable name="WheelView">
+        <attr name="normalTextColor" format="color"/>
+        <attr name="normalTextSize" format="dimension"/>
+        <attr name="selectedTextColor" format="color"/>
+        <attr name="selectedTextSize" format="dimension"/>
+        <attr name="unitHight" format="dimension"/>
+        <attr name="itemNumber" format="integer"/>
+        <attr name="lineColor" format="color"/>
+        <attr name="lineHeight" format="dimension"/>
+        <attr name="maskHight" format="dimension"/>
+        <attr name="noEmpty" format="boolean"/>
+        <attr name="isEnable" format="boolean"/>
     </declare-styleable>
 </resources>
