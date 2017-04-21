@@ -52,67 +52,17 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.shouru_reports_fragment);
         initView();
-        initData();
         return getContentView();
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread("AccountModel", new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
-                mViewStub.setVisibility(View.GONE);
-                mAdapter.setData(mList);
-                mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                money = new float[mList.size()];
-                for (int i = 0; i < mList.size(); i++) {
-                    money[i] = (float) mList.get(i).getMoney();
-                }
-
-                mPieChart.setRadius(230);
-                mPieChart.setDescr("总收入");
-                mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
-                    @Override
-                    public void click(int position) {
-                    }
-                });
-            }
-
-        });
-
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
-                if(mList.size()==0){
-                    mViewStub.setVisibility(View.VISIBLE);
-                }else {
-                    mAdapter.setData(mList);
-                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                    money = new float[mList.size()];
-                    for (int i = 0; i < mList.size(); i++) {
-                        money[i] = (float) mList.get(i).getMoney();
-                    }
-
-                    mPieChart.setRadius(230);
-                    mPieChart.setDescr("总收入");
-                    mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
-                        @Override
-                        public void click(int position) {
-                        }
-                    });
-                }
-            }
-        });
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initAdapter();
+        initData();
     }
 
-    private void initView() {
-        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.shouru_reports_recyclerView);
-        mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
-        mViewStub.inflate();
-        mViewStub.setVisibility(View.GONE);
-
+    private void initAdapter() {
         View headView = View.inflate(getActivity(), R.layout.head_reportfragment, null);
         mPieChart = (PieChart) headView.findViewById(R.id.piechart);
         txtChoiceDate = (TextView) headView.findViewById(R.id.f_re_txt);
@@ -151,6 +101,66 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
             mViewStub.setVisibility(View.VISIBLE);
         }
         mRecyclerView.addItemDecoration(BGADivider.newShapeDivider());
+    }
+
+    private void initData() {
+        RxBus.getInstance().toObserverableOnMainThread("AccountModel", new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
+                mViewStub.setVisibility(View.GONE);
+                mAdapter.setData(mList);
+                mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                money = new float[mList.size()];
+                for (int i = 0; i < mList.size(); i++) {
+                    money[i] = (float) mList.get(i).getMoney();
+                }
+
+                mPieChart.setRadius(230);
+                mPieChart.setDescr("总收入");
+                mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
+                    @Override
+                    public void click(int position) {
+                    }
+                });
+            }
+
+        });
+
+
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
+                if (mList.size() == 0) {
+                    mViewStub.setVisibility(View.VISIBLE);
+                } else {
+                    mAdapter.setData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    money = new float[mList.size()];
+                    for (int i = 0; i < mList.size(); i++) {
+                        money[i] = (float) mList.get(i).getMoney();
+                    }
+
+                    mPieChart.setRadius(230);
+                    mPieChart.setDescr("总收入");
+                    mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
+                        @Override
+                        public void click(int position) {
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void initView() {
+        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.shouru_reports_recyclerView);
+        mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
+        mViewStub.inflate();
+        mViewStub.setVisibility(View.GONE);
+
+
     }
 
     @Override

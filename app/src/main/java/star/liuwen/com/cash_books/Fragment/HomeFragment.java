@@ -71,39 +71,20 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 startActivity(new Intent(getActivity(), CalendarActivity.class));
             }
         });
-        initData();
         initView();
-        setBgaRefreshLayout();
         return getContentView();
     }
 
-    /**
-     * 设置 BGARefreshLayout刷新和加载
-     */
-    private void setBgaRefreshLayout() {
-        mDefineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getActivity(), true, true);
-        //设置刷新样式
-        mBGARefreshLayout.setRefreshViewHolder(mDefineBAGRefreshWithLoadView);
-        mDefineBAGRefreshWithLoadView.setRefreshingText("同步账单中...");
-        mDefineBAGRefreshWithLoadView.setPullDownRefreshText("同步账单中...");
-        mDefineBAGRefreshWithLoadView.setReleaseRefreshText("下拉同步账单中...");
-    }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //避免内存溢出
-        RxBus.getInstance().removeObserverable("AccountModel");
-        RxBus.getInstance().removeObserverable(Config.RxToReports);
-        RxBus.getInstance().release();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initAdapter();
+        initData();
+        setBgaRefreshLayout();
     }
 
-    private void initView() {
-        mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
-        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_h_recycler);
-        mBGARefreshLayout = (BGARefreshLayout) getContentView().findViewById(R.id.define_bga_refresh_with_load);   //设置刷新和加载监听
-        mBGARefreshLayout.setDelegate(this);
-
+    private void initAdapter() {
         headView = View.inflate(getActivity(), R.layout.layout_head_home, null);
         tvShouRuMonth = (TextView) headView.findViewById(R.id.home_shouru_month);
         tvZhiChuMonth = (TextView) headView.findViewById(R.id.home_zhichu_month);
@@ -134,7 +115,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
                     tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
                     mAdapter.addNewData(mList);
-                    mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路"));
+                    mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1));
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
             });
@@ -147,6 +128,36 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         }
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
+    }
+
+
+    /**
+     * 设置 BGARefreshLayout刷新和加载
+     */
+    private void setBgaRefreshLayout() {
+        mDefineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getActivity(), true, true);
+        //设置刷新样式
+        mBGARefreshLayout.setRefreshViewHolder(mDefineBAGRefreshWithLoadView);
+        mDefineBAGRefreshWithLoadView.setRefreshingText("同步账单中...");
+        mDefineBAGRefreshWithLoadView.setPullDownRefreshText("同步账单中...");
+        mDefineBAGRefreshWithLoadView.setReleaseRefreshText("下拉同步账单中...");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //避免内存溢出
+        RxBus.getInstance().removeObserverable("AccountModel");
+        RxBus.getInstance().removeObserverable(Config.RxToReports);
+        RxBus.getInstance().release();
+    }
+
+    private void initView() {
+        mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
+        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_h_recycler);
+        mBGARefreshLayout = (BGARefreshLayout) getContentView().findViewById(R.id.define_bga_refresh_with_load);   //设置刷新和加载监听
+        mBGARefreshLayout.setDelegate(this);
+
     }
 
     private void initData() {
@@ -174,6 +185,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                 model.setZhiCHuAdd(mList.get(i).getMoney());
                                 model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
                                 model.setShowFirstDate("");
+                                model.setChoiceAccountId(mList.get(i).getChoiceAccountId());
                                 Observable.create(new Observable.OnSubscribe<AccountModel>() {
                                     @Override
                                     public void call(Subscriber<? super AccountModel> subscriber) {
@@ -198,7 +210,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                     @Override
                                     public void call(List<AccountModel> models) {
                                         if (models.size() == 1) {
-                                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路"));
+                                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1));
                                         }
                                     }
                                 });
@@ -222,6 +234,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                 model.setSHouRuAdd(mList.get(i).getMoney());
                                 model.setConsumePercent((float) (model.getMoney() / shouRuAdd) * 100);
                                 model.setShowFirstDate("");
+                                model.setChoiceAccountId(mList.get(i).getChoiceAccountId());
                                 Observable.create(new Observable.OnSubscribe<AccountModel>() {
                                     @Override
                                     public void call(Subscriber<? super AccountModel> subscriber) {
@@ -231,7 +244,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                 }).compose(RxUtil.<AccountModel>applySchedulers()).subscribe(new Action1<AccountModel>() {
                                     @Override
                                     public void call(AccountModel model) {
-
                                     }
                                 });
 
@@ -246,7 +258,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                     @Override
                                     public void call(List<AccountModel> models) {
                                         if (models.size() == 1) {
-                                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路"));
+                                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1));
                                         }
                                     }
                                 });

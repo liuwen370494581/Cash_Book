@@ -9,7 +9,6 @@ import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.AccountModelDao;
-import star.liuwen.com.cash_books.bean.SaveMoneyPlanModel;
 
 /**
  * Created by liuwen on 2017/2/27.
@@ -111,6 +110,46 @@ public class DaoAccount {
         return list;
     }
 
+
+    /**
+     * 根据ID来查找数据 简单版Api
+     * @param id
+     * @return
+     */
+    public static List<AccountModel> queryById(long id) {
+        List<AccountModel> list = new ArrayList<>();
+        list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.ChoiceAccountId.eq(id)).build().list();
+        Collections.sort(list, new Comparator<AccountModel>() {
+            @Override
+            public int compare(AccountModel model1, AccountModel model2) {
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
+            }
+        });
+        return list;
+    }
+
+
+    /**
+     * 根据 id 和日期来查询数据
+     *
+     * @param id
+     * @param data
+     * @return
+     */
+    public static List<AccountModel> queryByIdAndDate(long id, String data) {
+        List<AccountModel> list = new ArrayList<>();
+
+        return list;
+    }
+
+
+    /**
+     * 根据两个日期之间来查询数据
+     *
+     * @param startData
+     * @param endData
+     * @return
+     */
     public static List<AccountModel> queryByDate(String startData, String endData) {
         List<AccountModel> list = new ArrayList<>();
         list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.Data.between(startData, endData)).build().list();

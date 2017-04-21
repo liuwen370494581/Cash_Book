@@ -7,8 +7,6 @@ import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.bean.AccountModel;
-import star.liuwen.com.cash_books.bean.AccountModelDao;
 import star.liuwen.com.cash_books.bean.BaseModel;
 import star.liuwen.com.cash_books.bean.BaseModelDao;
 
@@ -84,6 +82,18 @@ public class DaoAccountBalance {
         return list;
     }
 
+    public static List<BaseModel> queryById(long id) {
+        List<BaseModel> list = new ArrayList<>();
+        list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.ChoiceAccountId.eq(id)).build().list();
+        Collections.sort(list, new Comparator<BaseModel>() {
+            @Override
+            public int compare(BaseModel model1, BaseModel model2) {
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
+            }
+        });
+        return list;
+    }
+
 
     /**
      * 删除所有
@@ -103,6 +113,7 @@ public class DaoAccountBalance {
 
     /**
      * 根据model来删除
+     *
      * @param model
      */
     public static void deleteByModel(BaseModel model) {

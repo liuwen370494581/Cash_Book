@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import star.liuwen.com.cash_books.Adapter.FragmentAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
-
-import android.support.v4.app.FragmentManager;
-
 import star.liuwen.com.cash_books.R;
 
 /**
@@ -32,8 +29,13 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.report_fragment);
         initView();
-        initData();
         return getContentView();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initData();
     }
 
     private void initView() {
@@ -41,7 +43,9 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mTvTabOne = (TextView) getContentView().findViewById(R.id.reports_head_zhichu);
         mTvTabTwo = (TextView) getContentView().findViewById(R.id.reports_head_shouru);
         mTvTabThree = (TextView) getContentView().findViewById(R.id.reports_head_qushi);
+    }
 
+    private void initData() {
         mShouRuReportsFragment = new ShouRuReportsFragment();
         mZhiChuReportsFragment = new ZhiChuReportsFragment();
         mTrendFragment = new TrendFragment();
@@ -49,20 +53,12 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
         mFragmentAdapter.addFragment(mZhiChuReportsFragment, "我的消费");
         mFragmentAdapter.addFragment(mShouRuReportsFragment, "我的存款");
         mFragmentAdapter.addFragment(mTrendFragment, "我的趋势");
-
-
         mViewPager.setAdapter(mFragmentAdapter);
 
         mViewPager.setOnPageChangeListener(this);
         mTvTabOne.setOnClickListener(this);
         mTvTabTwo.setOnClickListener(this);
         mTvTabThree.setOnClickListener(this);
-
-
-    }
-
-    private void initData() {
-
     }
 
 

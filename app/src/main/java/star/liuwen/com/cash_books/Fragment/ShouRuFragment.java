@@ -32,7 +32,6 @@ import java.util.Date;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
@@ -42,13 +41,10 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import star.liuwen.com.cash_books.Activity.EditIncomeAndCostActivity;
 import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
-import star.liuwen.com.cash_books.Adapter.ZhiChuAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
-import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
-import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
@@ -56,12 +52,10 @@ import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.AccountModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
-import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
  * Created by liuwen on 2017/1/5.
@@ -77,12 +71,14 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private Integer AccountUrl;
     private PopupWindow window;
     private List<AccountModel> homListData;
-    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate;
+    private String AccountType, AccountData, AccountConsumeType, choiceAccount, choiceAccountDate, mEdName;
     private ListView mListView;
     private PopWindowAdapter mPopWindowAdapter;
     private TimePickerView pvTime;
     private boolean isShowDelete = false;
     private ChoiceAccount model;
+    private double accountMoney;//用来计算账户的余额
+    private long shouRuId;//用来标识每个item独有的属性
 
 
     @Nullable
@@ -95,20 +91,21 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         return getContentView();
     }
 
-    private void initView() {
-        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_shouru_recycler);
-        tvData = (TextView) getContentView().findViewById(R.id.f_shouru_data);
-        tvZhanghu = (TextView) getContentView().findViewById(R.id.f_shouru_zhanghu);
-        tvSure = (TextView) getContentView().findViewById(R.id.f_shouru_sure);
-        tvData.setOnClickListener(this);
-        tvZhanghu.setOnClickListener(this);
-        tvSure.setOnClickListener(this);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initAdapter();
+        initData();
+    }
 
+    private void initAdapter() {
+        shouRuId = SharedPreferencesUtil.getLongPreferences(getActivity(), Config.TxtZhiChuId, 0);
         choiceAccount = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccount, "");
         choiceAccountDate = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccountDate, "");
         tvZhanghu.setText(choiceAccount.isEmpty() ? "账户" : choiceAccount);
         tvData.setText(choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate);
-
+        //如果没有选择账户 则刚进入就要计算余额 方便计算
+        choiceAccountYuer(shouRuId);
         View headView = View.inflate(getActivity(), R.layout.zhichu_shouru_head, null);
         edName = (EditText) headView.findViewById(R.id.zhichu_name);
         imageName = (ImageView) headView.findViewById(R.id.imag_name);
@@ -134,6 +131,16 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnRVItemClickListener(this);
+    }
+
+    private void initView() {
+        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_shouru_recycler);
+        tvData = (TextView) getContentView().findViewById(R.id.f_shouru_data);
+        tvZhanghu = (TextView) getContentView().findViewById(R.id.f_shouru_zhanghu);
+        tvSure = (TextView) getContentView().findViewById(R.id.f_shouru_sure);
+        tvData.setOnClickListener(this);
+        tvZhanghu.setOnClickListener(this);
+        tvSure.setOnClickListener(this);
     }
 
     @Override
@@ -210,7 +217,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
 
     private void doSure() {
         homListData = new ArrayList<>();
-        String mEdName = edName.getText().toString();
+        mEdName = edName.getText().toString();
         if (TextUtils.isEmpty(mEdName.trim())) {
             ToastUtils.showToast(getActivity(), "请输入金额");
             return;
@@ -227,12 +234,34 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
                 , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.other) : AccountConsumeType,
-                AccountUrl == null ? R.mipmap.icon_shouru_type_qita : AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.SHOU_RU));
+                AccountUrl == null ? R.mipmap.icon_shouru_type_qita : AccountUrl, DateTimeUtil.getCurrentTime_Today(),
+                Config.SHOU_RU, shouRuId));
         RxBus.getInstance().post("AccountModel", homListData);
+        updateChoiceAccountYuer(shouRuId);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    private void updateChoiceAccountYuer(final long id) {
+        Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+            @Override
+            public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                List<ChoiceAccount> list = DaoChoiceAccount.queryByAccountId(id);
+                subscriber.onNext(list);
+            }
+        }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+            @Override
+            public void call(List<ChoiceAccount> accounts) {
+                for (int i = 0; i < accounts.size(); i++) {
+                    model = accounts.get(i);
+                    model.setMoney(accountMoney + Double.parseDouble(mEdName));
+                    DaoChoiceAccount.updateAccount(model);
+                }
+            }
+        });
+
     }
 
 
@@ -264,8 +293,11 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 window.dismiss();
+                shouRuId = mPopWindowAdapter.getItem(position).getId();
                 AccountType = mPopWindowAdapter.getItem(position).getAccountName();
                 tvZhanghu.setText(AccountType);
+                choiceAccountYuer(shouRuId);
+                SharedPreferencesUtil.setLongPreferences(getActivity(), Config.TxtZhiChuId, shouRuId);
                 SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccount, AccountType);
             }
         });
@@ -279,6 +311,25 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             }
         });
     }
+
+    //选择账户余额 是为了计算账户有多少余额
+    private void choiceAccountYuer(final long shouRuId) {
+        Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+            @Override
+            public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                List<ChoiceAccount> mList = DaoChoiceAccount.queryByAccountId(shouRuId);
+                subscriber.onNext(mList);
+            }
+        }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+            @Override
+            public void call(List<ChoiceAccount> accounts) {
+                for (ChoiceAccount model : accounts) {
+                    accountMoney = model.getMoney();
+                }
+            }
+        });
+    }
+
 
     /**
      * 设置添加屏幕的背景透明

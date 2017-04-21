@@ -13,10 +13,14 @@ import cn.bingoogolapple.androidcommon.adapter.BGADivider;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
 
 /**
@@ -40,14 +44,24 @@ public class ChoiceAccountTypeActivity extends BaseActivity implements BGAOnRVIt
         setLeftImage(R.mipmap.fanhui_lan);
         mRecyclerView = (RecyclerView) findViewById(R.id.choice_account_type_recyclerView);
         mAdapter = new ChoiceAccountTypeAdapter(mRecyclerView);
-        mList = DataEnige.getAddChoiceAccount();
-        mAdapter.setData(mList);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnRVItemClickListener(this);
-        mRecyclerView.addItemDecoration(BGADivider.newShapeDivider());
+        Observable.create(new Observable.OnSubscribe<List<PlanSaveMoneyModel>>() {
+            @Override
+            public void call(Subscriber<? super List<PlanSaveMoneyModel>> subscriber) {
+                mList = DataEnige.getAddChoiceAccount();
+                subscriber.onNext(mList);
+            }
+        }).compose(RxUtil.<List<PlanSaveMoneyModel>>applySchedulers()).subscribe(new Action1<List<PlanSaveMoneyModel>>() {
+            @Override
+            public void call(List<PlanSaveMoneyModel> models) {
+                mAdapter.setData(models);
+                LinearLayoutManager manager = new LinearLayoutManager(ChoiceAccountTypeActivity.this);
+                manager.setOrientation(LinearLayoutManager.VERTICAL);
+                mRecyclerView.setLayoutManager(manager);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnRVItemClickListener(ChoiceAccountTypeActivity.this);
+                mRecyclerView.addItemDecoration(BGADivider.newShapeDivider());
+            }
+        });
     }
 
     @Override

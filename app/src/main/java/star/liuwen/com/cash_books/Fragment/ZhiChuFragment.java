@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,6 +81,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private boolean isShowDelete = false;
     private ChoiceAccount model;
     private double accountMoney;
+    private long zhichuId;//用来标识每个item独有的属性
 
     @Nullable
     @Override
@@ -87,27 +89,24 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.fragment_zhichu);
         initView();
-        initData();
         return getContentView();
     }
 
-    private void initView() {
-        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_zhichu_recycler);
-        tvData = (TextView) getContentView().findViewById(R.id.f_zhichu_data);
-        tvZhanghu = (TextView) getContentView().findViewById(R.id.f_zhichu_zhanghu);
-        tvSure = (TextView) getContentView().findViewById(R.id.f_zhichu_sure);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initAdapter();
+        initData();
+    }
 
-        tvData.setOnClickListener(this);
-        tvZhanghu.setOnClickListener(this);
-        tvSure.setOnClickListener(this);
-
+    private void initAdapter() {
+        zhichuId = SharedPreferencesUtil.getLongPreferences(getActivity(), Config.TxtZhiChuId, 0);
         choiceAccount = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccount, "");
         choiceAccountDate = SharedPreferencesUtil.getStringPreferences(getActivity(), Config.TxtChoiceAccountDate, "");
         tvZhanghu.setText(choiceAccount.isEmpty() ? "账户" : choiceAccount);
         tvData.setText(choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate);
         //如果没有选择账户 则刚进入就要计算余额 方便计算
-        choiceAccountYuer(AccountType == null ? choiceAccount : AccountType);
-
+        choiceAccountYuer(zhichuId);
         View headView = View.inflate(getActivity(), R.layout.zhichu_shouru_head, null);
         edName = (EditText) headView.findViewById(R.id.zhichu_name);
         imageName = (ImageView) headView.findViewById(R.id.imag_name);
@@ -132,6 +131,18 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         mAdapter.setOnRVItemClickListener(this);
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
+    }
+
+    private void initView() {
+        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_zhichu_recycler);
+        tvData = (TextView) getContentView().findViewById(R.id.f_zhichu_data);
+        tvZhanghu = (TextView) getContentView().findViewById(R.id.f_zhichu_zhanghu);
+        tvSure = (TextView) getContentView().findViewById(R.id.f_zhichu_sure);
+
+        tvData.setOnClickListener(this);
+        tvZhanghu.setOnClickListener(this);
+        tvSure.setOnClickListener(this);
+
 
     }
 
@@ -226,9 +237,9 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
                 , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
-                AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU));
+                AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU, zhichuId));
         RxBus.getInstance().post("AccountModel", homListData);
-        updateChoiceAccountYuer(AccountType == null ? choiceAccount : AccountType);
+        updateChoiceAccountYuer(zhichuId);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);
@@ -236,11 +247,11 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
 
     }
 
-    private void updateChoiceAccountYuer(final String choiceAccount) {
+    private void updateChoiceAccountYuer(final long id) {
         Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
             @Override
             public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
-                List<ChoiceAccount> list = DaoChoiceAccount.queryByAccountType(choiceAccount);
+                List<ChoiceAccount> list = DaoChoiceAccount.queryByAccountId(id);
                 subscriber.onNext(list);
             }
         }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
@@ -251,10 +262,8 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                     model.setMoney(accountMoney - Double.parseDouble(mEdName));
                     DaoChoiceAccount.updateAccount(model);
                 }
-
             }
         });
-
     }
 
 
@@ -284,10 +293,12 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 window.dismiss();
+                zhichuId = mPopWindowAdapter.getItem(position).getId();
                 AccountType = mPopWindowAdapter.getItem(position).getAccountName();
                 tvZhanghu.setText(AccountType);
                 //选择账户余额，方便计算
-                choiceAccountYuer(AccountType);
+                choiceAccountYuer(zhichuId);
+                SharedPreferencesUtil.setLongPreferences(getActivity(), Config.TxtZhiChuId, zhichuId);
                 SharedPreferencesUtil.setStringPreferences(getActivity(), Config.TxtChoiceAccount, AccountType);
             }
         });
@@ -302,11 +313,11 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     }
 
     //选择账户余额 是为了计算账户有多少余额
-    private void choiceAccountYuer(final String type) {
+    private void choiceAccountYuer(final long zhichuId) {
         Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
             @Override
             public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
-                List<ChoiceAccount> mList = DaoChoiceAccount.queryByAccountType(type);
+                List<ChoiceAccount> mList = DaoChoiceAccount.queryByAccountId(zhichuId);
                 subscriber.onNext(mList);
             }
         }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
@@ -315,6 +326,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 for (ChoiceAccount model : accounts) {
                     accountMoney = model.getMoney();
                 }
+                Log.e("MainActivity", accountMoney + "");
             }
         });
     }

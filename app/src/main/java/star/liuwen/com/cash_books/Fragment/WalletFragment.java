@@ -63,9 +63,16 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 startActivity(new Intent(getActivity(), TransferActivity.class));
             }
         });
+        return getContentView();
+    }
+
+    //之所以重写这个onViewCreated的方法 是因为首先给用户第一印象的是布局所以为了点击不影响卡段 一些
+    //初始化的操作就写在onviewCreated中了
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initView();
         initData();
-        return getContentView();
     }
 
     private void initView() {

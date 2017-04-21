@@ -26,6 +26,7 @@ public class AccountModel implements Serializable {
     private double sHouRuAdd; //总收入
     private double AccountYuer;//账户余额
     private String ShowFirstDate;//用来标识是否显示开启了记账之路
+    private long choiceAccountId;//用来标识查询账户的唯一数据
 
     public AccountModel() {
     }
@@ -45,7 +46,7 @@ public class AccountModel implements Serializable {
         this.url = url;
     }
 
-    public AccountModel(String accountType, String data, double money, String consumeType, int url, String timeMinSec, String zhiChuShouRuType) {
+    public AccountModel(String accountType, String data, double money, String consumeType, int url, String timeMinSec, String zhiChuShouRuType, long id) {
         AccountType = accountType;
         Data = data;
         Money = money;
@@ -53,6 +54,17 @@ public class AccountModel implements Serializable {
         this.url = url;
         this.timeMinSec = timeMinSec;
         this.zhiChuShouRuType = zhiChuShouRuType;
+        this.choiceAccountId = id;
+    }
+
+
+    public long getChoiceAccountId() {
+        return this.choiceAccountId;
+    }
+
+
+    public void setChoiceAccountId(long choiceAccountId) {
+        this.choiceAccountId = choiceAccountId;
     }
 
 
@@ -186,9 +198,9 @@ public class AccountModel implements Serializable {
     }
 
 
-    @Generated(hash = 1474669575)
+    @Generated(hash = 1714161724)
     public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
-            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String ShowFirstDate) {
+                        float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String ShowFirstDate, long choiceAccountId) {
         this.id = id;
         this.AccountType = AccountType;
         this.Data = Data;
@@ -202,5 +214,8 @@ public class AccountModel implements Serializable {
         this.sHouRuAdd = sHouRuAdd;
         this.AccountYuer = AccountYuer;
         this.ShowFirstDate = ShowFirstDate;
+        this.choiceAccountId = choiceAccountId;
     }
+
+
 }

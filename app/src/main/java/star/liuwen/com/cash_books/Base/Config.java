@@ -96,7 +96,7 @@ public class Config {
     public static final String TxtChoiceAccount = "TxtChoiceAccount";
     public static final String TxtChoiceAccountDate = "TxtChoiceAccountDate";
     public static final String TxtForgetGesturePassword = "TxtForgetGesturePassword";
-
+    public static final String TxtZhiChuId = "TxtZhiChuId";
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";

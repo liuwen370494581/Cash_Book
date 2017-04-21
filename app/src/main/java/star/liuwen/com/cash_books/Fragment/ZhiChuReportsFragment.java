@@ -53,18 +53,17 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.zhichu_reports_fragment);
         initView();
-        initData();
         return getContentView();
     }
 
-    private void initView() {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initAdapter();
+        initData();
+    }
 
-        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.zhichu_reports_recyclerView);
-        mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
-        mViewStub.inflate();
-        mViewStub.setVisibility(View.GONE);
-
-
+    private void initAdapter() {
         View headView = View.inflate(getActivity(), R.layout.head_reportfragment, null);
         mPieChart = (PieChart) headView.findViewById(R.id.piechart);
         txtChoiceDate = (TextView) headView.findViewById(R.id.f_re_txt);
@@ -88,7 +87,6 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
             }
         });
 
-
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new ReportsDetailAdapter(mRecyclerView);
@@ -105,6 +103,13 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
             mViewStub.setVisibility(View.VISIBLE);
         }
         mRecyclerView.addItemDecoration(BGADivider.newShapeDivider());
+    }
+
+    private void initView() {
+        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.zhichu_reports_recyclerView);
+        mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
+        mViewStub.inflate();
+        mViewStub.setVisibility(View.GONE);
     }
 
     private void initData() {
