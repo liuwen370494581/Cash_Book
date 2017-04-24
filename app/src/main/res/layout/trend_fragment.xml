@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
 
-    <RelativeLayout
+    <star.liuwen.com.cash_books.View.ScoreTrend
+        android:id="@+id/scoreTrend"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="230dp"
+        android:background="@color/white"
+        />
 
-        <TextView
-            android:textSize="@dimen/textSize_16"
-            android:textColor="@color/blue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="该页面正在开发中"/>
-    </RelativeLayout>
+    <ViewStub
+        android:id="@+id/view_stub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout="@layout/accout_no_result"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/zhichu_reports_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_reports_detail"/>
 </LinearLayout>

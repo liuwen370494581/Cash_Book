@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="400dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/f_re_choicedate"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/background">
+
+            <TextView
+                android:id="@+id/f_re_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="选择时间"
+                android:textColor="@color/text_color_66"/>
+        </RelativeLayout>
+
+        <star.liuwen.com.cash_books.View.ScoreTrend
+            android:id="@+id/scoreTrend"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@color/white"
+            />
+    </LinearLayout>
+</RelativeLayout>

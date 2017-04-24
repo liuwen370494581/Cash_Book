@@ -3,6 +3,12 @@ package star.liuwen.com.cash_books.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class SharedPreferencesUtil {
 
@@ -159,5 +165,44 @@ public class SharedPreferencesUtil {
         editor.commit();
     }
 
+
+    /**
+     * 保存Object转16进制后的string
+     * @param context
+     * @param key
+     * @param obj
+     */
+    public static void setObj(Context context, String key, Object obj) {
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream os = new ObjectOutputStream(bos);
+            // 将对象序列化写入byte缓存
+            os.writeObject(obj);
+            SharedPreferencesUtil.setStringPreferences(context, key, EncryptUtil.bytesToHexString(bos.toByteArray()));
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * 获取出16进制的string转Object
+     * @param context
+     * @param key
+     * @return
+     */
+    public static Object getObj(Context context, String key) {
+        try {
+            String objHexString = SharedPreferencesUtil.getStringPreferences(context,key,"");
+            if(!TextUtils.isEmpty(objHexString)) {
+                byte[] stringToBytes = EncryptUtil.stringToBytes(objHexString);
+                ByteArrayInputStream bis = new ByteArrayInputStream(stringToBytes);
+                ObjectInputStream is = new ObjectInputStream(bis);
+                // 返回反序列化得到的对象
+                Object readObject = is.readObject();
+                return readObject;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
 }

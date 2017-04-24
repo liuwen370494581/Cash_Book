@@ -19,6 +19,4 @@
         tools:listitem="@layout/item_reports_detail">
 
     </android.support.v7.widget.RecyclerView>
-
-
 </LinearLayout>
