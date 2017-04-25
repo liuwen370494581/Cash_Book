@@ -10,6 +10,7 @@ import java.io.InputStream;
 
 /**
  * Created by liuwen on 2017/1/20.
+ * 获取assets下的资源文件类
  */
 public class BitMapUtils {
     public static Bitmap getBitmapByPath(Context context, String path, boolean auto) {

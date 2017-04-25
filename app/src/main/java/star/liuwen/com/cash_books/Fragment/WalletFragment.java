@@ -51,6 +51,11 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private List<ChoiceAccount> mList;
     private double totalYue, yuer;
 
+    @Override
+    public void lazyInitData() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

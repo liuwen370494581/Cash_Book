@@ -46,6 +46,11 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
     private TimePickerView pvTime;
     private float[] money;
 
+    @Override
+    public void lazyInitData() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

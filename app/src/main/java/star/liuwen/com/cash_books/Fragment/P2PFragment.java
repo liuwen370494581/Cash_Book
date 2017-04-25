@@ -14,7 +14,6 @@ import cn.bingoogolapple.androidcommon.adapter.BGADivider;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewScrollHelper;
 import star.liuwen.com.cash_books.Adapter.ChoiceIssuingBankAdapter;
-import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
@@ -32,6 +31,11 @@ public class P2PFragment extends BaseFragment {
     private BGARecyclerViewScrollHelper mRecyclerViewScrollHelper;
     private LinearLayoutManager mLayoutManager;
 
+
+    @Override
+    public void lazyInitData() {
+
+    }
 
     @Nullable
     @Override

@@ -59,6 +59,11 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     private double totalZhiChuAdd, totalShouRuAdd;
     private AccountModel model;
 
+    @Override
+    public void lazyInitData() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -147,9 +152,8 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     public void onDestroy() {
         super.onDestroy();
         //避免内存溢出
-        RxBus.getInstance().removeObserverable("AccountModel");
         RxBus.getInstance().removeObserverable(Config.RxToReports);
-        RxBus.getInstance().release();
+        RxBus.getInstance().removeObserverable(Config.RxHomeFragmentToReportsFragment);
     }
 
     private void initView() {
@@ -392,6 +396,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
             }
         }
     }
+
 }
 
 

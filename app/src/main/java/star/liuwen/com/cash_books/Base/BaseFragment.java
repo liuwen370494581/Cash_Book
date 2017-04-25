@@ -12,22 +12,20 @@ import android.widget.TextView;
 
 import com.squareup.leakcanary.RefWatcher;
 
-import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
-import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
  * Created by liuwen on 2016/12/28.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     private RelativeLayout mTitle;
 
     private View view;
     private LayoutInflater inflater;
     private ViewGroup container;
-
+    //懒加载
+    protected boolean isVisible;
 
     public View setContentView(int resourceId) {
         view = inflater.inflate(resourceId, container, false);
@@ -44,6 +42,29 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
+        }
+    }
+
+    //页面可见的时候 才加载数据
+    protected void onVisible() {
+        lazyInitData();
+    }
+
+    protected void onInvisible() {
+    }
+
+    //懒加载
+    public abstract void lazyInitData();
 
     @Nullable
     @Override

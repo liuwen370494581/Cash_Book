@@ -83,6 +83,11 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private double accountMoney;
     private long zhichuId;//用来标识每个item独有的属性
 
+    @Override
+    public void lazyInitData() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -81,6 +81,11 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private long shouRuId;//用来标识每个item独有的属性
 
 
+    @Override
+    public void lazyInitData() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

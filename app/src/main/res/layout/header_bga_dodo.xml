@@ -12,26 +12,26 @@
         <!-- android:src="@mipmap/refresh_head_arrow" -->
         <ImageView
             android:id="@+id/iv_normal_refresh_header_arrow"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_gravity="center"
-            android:src="@mipmap/gallery_load_progress_1"/>
+            android:src="@mipmap/im_loading_1"/>
 
         <ImageView
             android:id="@+id/iv_normal_refresh_header_chrysanthemum"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@anim/header_dodo_bga_refresh_loading"
             android:visibility="invisible"/>
     </FrameLayout>
 
     <TextView
-        android:layout_gravity="center"
         android:id="@+id/tv_normal_refresh_header_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="下拉同步中"
         android:textColor="#777"
         android:textSize="12sp"/>

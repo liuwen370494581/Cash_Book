@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 
 /**
  * Created by liuwen on 2017/1/22.
+ * apk版本类
  */
 public class ApkInfoUtils {
 

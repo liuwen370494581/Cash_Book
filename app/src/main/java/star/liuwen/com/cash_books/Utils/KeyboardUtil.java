@@ -12,8 +12,7 @@ import star.liuwen.com.cash_books.R;
 
 
 /**
- * 作者：xy_z on 2016/3/18 13:05
- * 邮箱：xyz@163.com
+ * Created by liuwen on 2017/2/23.
  */
 public class KeyboardUtil {
     private KeyboardView keyboardView;   //keyBoardView组件

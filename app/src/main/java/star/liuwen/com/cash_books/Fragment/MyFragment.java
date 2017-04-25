@@ -44,6 +44,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private PlanSaveMoneyModel model;
 
 
+    @Override
+    public void lazyInitData() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
