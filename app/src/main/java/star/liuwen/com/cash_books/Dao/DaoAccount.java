@@ -58,7 +58,7 @@ public class DaoAccount {
     }
 
     /**
-     * 查询 SaveMoneyPlanModel的集合对象
+     * 查询 AccountModel的集合对象
      * 都可以按timeMinSecond来排序
      *
      * @return
@@ -75,8 +75,22 @@ public class DaoAccount {
         return list;
     }
 
+
+    public static List<AccountModel> queryByDate(String date) {
+        List<AccountModel> list = new ArrayList<>();
+        list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.Data.eq(date)).build().list();
+        Collections.sort(list, new Comparator<AccountModel>() {
+            @Override
+            public int compare(AccountModel model1, AccountModel model2) {
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
+            }
+        });
+        return list;
+    }
+
     /**
      * 查询条件
+     * AccountModel
      *
      * @param accountType 账户名称
      * @return
@@ -113,6 +127,7 @@ public class DaoAccount {
 
     /**
      * 根据ID来查找数据 简单版Api
+     *
      * @param id
      * @return
      */

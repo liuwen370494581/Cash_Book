@@ -25,5 +25,4 @@ public class VibratorUtil {
         Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
         vib.vibrate(pattern, isRepeat ? 1 : -1);
     }
-
 }

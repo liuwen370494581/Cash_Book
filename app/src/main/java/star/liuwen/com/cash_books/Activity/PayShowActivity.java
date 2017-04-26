@@ -207,68 +207,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             }
         }
         mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-
-//        if (model.getMAccountType().equals(Config.CASH)) {
-//            payShowCommonCode(Config.CASH);
-//        } else if (model.getMAccountType().equals(Config.CXK)) {
-//            payShowCommonCode(Config.CXK);
-//        } else if (model.getMAccountType().equals(Config.XYK)) {
-//            payShowCommonCode(Config.XYK);
-//        } else if (model.getMAccountType().equals(Config.ZFB)) {
-//            payShowCommonCode(Config.ZFB);
-//        } else if (model.getMAccountType().equals(Config.WEIXIN)) {
-//            payShowCommonCode(Config.WEIXIN);
-//        } else if (model.getMAccountType().equals(Config.CZK)) {
-//            payShowCommonCode(Config.CZK);
-//        } else if (model.getMAccountType().equals(Config.TOUZI)) {
-//            payShowCommonCode(Config.TOUZI);
-//        } else if (model.getMAccountType().equals(Config.INTENTACCOUNT)) {
-//            payShowCommonCode(Config.INTENTACCOUNT);
-//        }
     }
-
-//    private void payShowCommonCode(final String accountType) {
-//        mList = DaoAccount.queryByAccountType(accountType);
-//        for (int i = 0; i < mList.size(); i++) {
-//            BaseModel baseModel = new BaseModel();
-//            baseModel.setUrl(mList.get(i).getUrl());
-//            baseModel.setMoney(mList.get(i).getMoney());
-//            baseModel.setName(mList.get(i).getConsumeType());
-//            baseModel.setType(Config.AccountModel);
-//            baseModel.setZhiChuShouRuType(mList.get(i).getZhiChuShouRuType());
-//            baseModel.setTimeMinSec(mList.get(i).getTimeMinSec());
-//            baseModel.setAccountType(accountType);
-//            baseList.add(baseModel);
-//        }
-//        choiceList = DaoAccountBalance.queryByType(accountType);
-//        for (int i = 0; i < choiceList.size(); i++) {
-//            baseList.add(choiceList.get(i));
-//            tvAccountValue = choiceList.get(0).getMoney();
-//        }
-//
-//        Collections.sort(baseList, new Comparator<BaseModel>() {
-//            @Override
-//            public int compare(BaseModel model1, BaseModel model2) {
-//                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
-//            }
-//        });
-//
-//        if (baseList.size() == 0) {
-//            mViewStub.setVisibility(View.VISIBLE);
-//        } else {
-//            mAdapter.setData(baseList);
-//        }
-//        for (BaseModel model : baseList) {
-//            if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
-//                zhiChu += model.getMoney();
-//                txtLiuChu.setText(String.format("%.2f", zhiChu));
-//            } else {
-//                liuRu += model.getMoney();
-//                txtLiuRu.setText(String.format("%.2f", liuRu));
-//            }
-//        }
-//        mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-//    }
 
 
     public void toData(View view) {
@@ -352,7 +291,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
                 , getString(R.string.Balance_change), getString(R.string.pingzhang), Double.parseDouble(data),
                 Config.ChoiceAccount,
                 Double.parseDouble(data) > tvAccountValue ? Config.SHOU_RU : Config.ZHI_CHU,
-                DateTimeUtil.getCurrentTime_Today(), accountType,payShowId);
+                DateTimeUtil.getCurrentTime_Today(), accountType, payShowId);
         Observable.create(new Observable.OnSubscribe<BaseModel>() {
             @Override
             public void call(Subscriber<? super BaseModel> subscriber) {

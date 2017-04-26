@@ -3,7 +3,6 @@ package star.liuwen.com.cash_books.Utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -94,6 +93,19 @@ public class DateTimeUtil {
         Date A1 = new SimpleDateFormat("yyyy-MM-dd").parse(a1);
         Date B1 = new SimpleDateFormat("yyyy-MM-dd").parse(b1);
         return (B1.getTime() - A1.getTime()) / (24 * 60 * 60 * 1000);
+    }
+
+    //将string转化成date
+    public static Date getStringDayToDate(String date) {
+        Date date2 = null;
+
+        try {
+            SimpleDateFormat d2 = new SimpleDateFormat("yyyy-MM-dd");
+            date2 = d2.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date2;
     }
 
 

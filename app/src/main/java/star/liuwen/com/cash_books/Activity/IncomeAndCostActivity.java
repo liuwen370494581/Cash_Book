@@ -2,6 +2,7 @@ package star.liuwen.com.cash_books.Activity;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import star.liuwen.com.cash_books.Adapter.FragmentAdapter;
@@ -30,6 +31,10 @@ public class IncomeAndCostActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void initView() {
+        if (getIntent().getBooleanExtra(Config.WEIXIN, false)) {
+            //为了跳转时候过来 屏幕头部ui显示不完全bug 但还是不够流畅
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         mViewPager = (ViewPager) findViewById(R.id.id_view_pager);
         txtZhiChu = (TextView) findViewById(R.id.id_zhichu_tab);
         txtShouRu = (TextView) findViewById(R.id.id_shouru_tab);
