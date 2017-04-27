@@ -8,6 +8,7 @@ import android.widget.TextView;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 
 /**
@@ -15,7 +16,7 @@ import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
  */
 public class HuoBiActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout reHuoBi;
-    private TextView txtHuoBiCh, txtHuoBiEn;
+    private TextView txtHuoBiCh, txtHuoBiEn, txtHuoBiUpdate;
 
 
     @Override
@@ -33,9 +34,10 @@ public class HuoBiActivity extends BaseActivity implements View.OnClickListener 
         reHuoBi = (RelativeLayout) findViewById(R.id.re_huobi);
         txtHuoBiCh = (TextView) findViewById(R.id.txt_huobi_ch);
         txtHuoBiEn = (TextView) findViewById(R.id.txt_huobi_en);
+        txtHuoBiUpdate = (TextView) findViewById(R.id.huobi_update);
 
         reHuoBi.setOnClickListener(this);
-
+        txtHuoBiUpdate.setText("汇率更新与"+ DateTimeUtil.getCurrentTime_Today());
         txtHuoBiCh.setText(SharedPreferencesUtil.getStringPreferences(this, Config.HuoBICh, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.HuoBICh, ""));
         txtHuoBiEn.setText(SharedPreferencesUtil.getStringPreferences(this, Config.HuoBIEn, "").isEmpty() ? getString(R.string.no_setting) : SharedPreferencesUtil.getStringPreferences(this, Config.HuoBIEn, ""));
     }

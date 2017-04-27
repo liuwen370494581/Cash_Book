@@ -65,6 +65,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     private int position;
     private double tvAccountValue;
     private long payShowId;
+    private String payShowDate;
 
 
     @Override
@@ -111,9 +112,9 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (model != null) {
             payShowId = model.getId();
+            payShowDate = model.getData();
             if (DaoAccount.queryByAccountType(model.getMAccountType()).size() != 0 || DaoChoiceAccount.query().size() != 0) {
-                //setAdapter(DateTimeUtil.getCurrentYearMonth());
-                PayShowList(payShowId);
+                PayShowList(payShowId, DateTimeUtil.getCurrentYearMonth() + "-01", DateTimeUtil.getCurrentYearMonth() + "-31");
             } else {
                 mAdapter.setData(baseList);
                 mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
@@ -167,8 +168,10 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     }
 
 
-    private void PayShowList(long id) {
-        mList = DaoAccount.queryById(id);
+    private void PayShowList(long id, String startTime, String endTime) {
+        baseList.clear();
+        mList = DaoAccount.queryByIdAndDate(id, startTime, endTime);
+        //账户的支出和消费记录list
         for (int i = 0; i < mList.size(); i++) {
             BaseModel baseModel = new BaseModel();
             baseModel.setUrl(mList.get(i).getUrl());
@@ -177,9 +180,11 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             baseModel.setType(Config.AccountModel);
             baseModel.setZhiChuShouRuType(mList.get(i).getZhiChuShouRuType());
             baseModel.setTimeMinSec(mList.get(i).getTimeMinSec());
+            baseModel.setDate(mList.get(i).getData());
             baseList.add(baseModel);
         }
-        choiceList = DaoAccountBalance.queryById(id);
+        //账户的修改余额的list
+        choiceList = DaoAccountBalance.queryByIDAndDate(id, startTime, endTime);
         for (int i = 0; i < choiceList.size(); i++) {
             baseList.add(choiceList.get(i));
             tvAccountValue = choiceList.get(0).getMoney();
@@ -191,10 +196,14 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
                 return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
             }
         });
-
         if (baseList.size() == 0) {
             mViewStub.setVisibility(View.VISIBLE);
+            txtLiuChu.setText(getString(R.string.ling));
+            txtLiuRu.setText(getString(R.string.ling));
+            tvAccount.setText(getString(R.string.ling));
         } else {
+            tvAccount.setText(String.format("%.2f", model.getMoney()));//设置总金额不变
+            mViewStub.setVisibility(View.GONE);
             mAdapter.setData(baseList);
         }
         for (BaseModel model : baseList) {
@@ -228,7 +237,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             @Override
             public void onTimeSelect(Date date) {
                 txtMonth.setText(DateTimeUtil.getTime(date));
-                //setAdapter(DateTimeUtil.getTime(date));
+                PayShowList(payShowId, DateTimeUtil.getTime(date) + "-01", DateTimeUtil.getTime(date) + "-31");
             }
         });
         //显示
@@ -291,7 +300,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
                 , getString(R.string.Balance_change), getString(R.string.pingzhang), Double.parseDouble(data),
                 Config.ChoiceAccount,
                 Double.parseDouble(data) > tvAccountValue ? Config.SHOU_RU : Config.ZHI_CHU,
-                DateTimeUtil.getCurrentTime_Today(), accountType, payShowId);
+                DateTimeUtil.getCurrentTime_Today(), accountType, payShowId, payShowDate);
         Observable.create(new Observable.OnSubscribe<BaseModel>() {
             @Override
             public void call(Subscriber<? super BaseModel> subscriber) {

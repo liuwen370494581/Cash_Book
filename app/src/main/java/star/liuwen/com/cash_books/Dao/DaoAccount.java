@@ -26,15 +26,6 @@ public class DaoAccount {
         App.getDaoInstant().getAccountModelDao().insert(model);
     }
 
-    /**
-     * 删除对象数据
-     * 删除对象为AccountModel
-     *
-     * @param model
-     */
-    public static void deleteAccountByModel(AccountModel model) {
-        App.getDaoInstant().getAccountModelDao().delete(model);
-    }
 
     public static void deleteAccountById(long id) {
         App.getDaoInstant().getAccountModelDao().deleteByKey(id);
@@ -76,6 +67,12 @@ public class DaoAccount {
     }
 
 
+    /**
+     * 根据具体的某一天日期来查询 eg:2017-4-25
+     *
+     * @param date
+     * @return
+     */
     public static List<AccountModel> queryByDate(String date) {
         List<AccountModel> list = new ArrayList<>();
         list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.Data.eq(date)).build().list();
@@ -165,13 +162,13 @@ public class DaoAccount {
      * @param endData
      * @return
      */
-    public static List<AccountModel> queryByDate(String startData, String endData) {
+    public static List<AccountModel> queryByIdAndDate(long id, String startData, String endData) {
         List<AccountModel> list = new ArrayList<>();
-        list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.Data.between(startData, endData)).build().list();
+        list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.ChoiceAccountId.eq(id), AccountModelDao.Properties.Data.between(startData, endData)).build().list();
         Collections.sort(list, new Comparator<AccountModel>() {
             @Override
             public int compare(AccountModel model1, AccountModel model2) {
-                return model2.getData().compareTo(model1.getData());
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
             }
         });
         return list;

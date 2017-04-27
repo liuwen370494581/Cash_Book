@@ -1,10 +1,10 @@
 package star.liuwen.com.cash_books.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by liuwen on 2017/4/6.
@@ -24,22 +24,24 @@ public class BaseModel implements Serializable {
     private String timeMinSec;//时间 格式 2017-4-16-13-15-15;
     private String AccountType;//用来区别是哪个账户 比如是信用卡账户或者是现金账户
     private long choiceAccountId;//用来标识账户的唯一性 因为之前都是以现金账户或者支付宝账户来查询 这就会形成了一个bug 就是在添加的一个相同的账户 同样的数据会显示在同一个账户中 不严谨
+    private String date;//用来标识查询整月的消费和支出记录
 
     public BaseModel() {
     }
 
-    @Generated(hash = 342425950)
-    public BaseModel(Long id, int url, String name, String BalanceChange, double money, String type,
-            String zhiChuShouRuType, String timeMinSec, String AccountType, long choiceAccountId) {
-        this.id = id;
-        this.url = url;
-        this.name = name;
-        this.BalanceChange = BalanceChange;
-        this.money = money;
-        this.type = type;
-        this.zhiChuShouRuType = zhiChuShouRuType;
-        this.timeMinSec = timeMinSec;
-        this.AccountType = AccountType;
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public long getChoiceAccountId() {
+        return this.choiceAccountId;
+    }
+
+    public void setChoiceAccountId(long choiceAccountId) {
         this.choiceAccountId = choiceAccountId;
     }
 
@@ -115,15 +117,23 @@ public class BaseModel implements Serializable {
         this.id = id;
     }
 
-    public long getChoiceAccountId() {
-        return choiceAccountId;
-    }
-
-    public void setChoiceAccountId(long choiceAccountId) {
+    @Generated(hash = 1780390684)
+    public BaseModel(Long id, int url, String name, String BalanceChange, double money, String type,
+            String zhiChuShouRuType, String timeMinSec, String AccountType, long choiceAccountId, String date) {
+        this.id = id;
+        this.url = url;
+        this.name = name;
+        this.BalanceChange = BalanceChange;
+        this.money = money;
+        this.type = type;
+        this.zhiChuShouRuType = zhiChuShouRuType;
+        this.timeMinSec = timeMinSec;
+        this.AccountType = AccountType;
         this.choiceAccountId = choiceAccountId;
+        this.date = date;
     }
 
-    
+
 
 
 }

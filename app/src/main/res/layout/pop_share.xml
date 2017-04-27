@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/background"
+              android:background="@color/white"
               android:orientation="vertical"
     >
 
@@ -48,8 +48,8 @@
 
             <ImageView
                 android:id="@+id/ige_qq"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:src="@mipmap/config_share_qq"/>
@@ -75,8 +75,8 @@
 
             <ImageView
                 android:id="@+id/ige_sina"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:src="@mipmap/config_share_weibo"/>
@@ -102,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/ige_weixin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:src="@mipmap/config_share_weixin"/>
@@ -129,8 +129,8 @@
 
             <ImageView
                 android:id="@+id/ige_weixin_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:src="@mipmap/config_share_pengyouquan"/>
@@ -147,6 +147,13 @@
 
         </RelativeLayout>
     </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/base_horizontal_line">
+    </View>
 
 
     <RelativeLayout

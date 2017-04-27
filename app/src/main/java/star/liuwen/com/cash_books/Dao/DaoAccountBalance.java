@@ -96,6 +96,26 @@ public class DaoAccountBalance {
 
 
     /**
+     * 根据两个日期之间来查询数据
+     *
+     * @param startData
+     * @param endData
+     * @return
+     */
+    public static List<BaseModel> queryByIDAndDate(long id, String startData, String endData) {
+        List<BaseModel> list = new ArrayList<>();
+        list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.ChoiceAccountId.eq(id), BaseModelDao.Properties.Date.between(startData, endData)).build().list();
+        Collections.sort(list, new Comparator<BaseModel>() {
+            @Override
+            public int compare(BaseModel model1, BaseModel model2) {
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
+            }
+        });
+        return list;
+    }
+
+
+    /**
      * 删除所有
      */
     public static void deleteAllData() {
