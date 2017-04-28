@@ -45,6 +45,7 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
     private TextView txtChoiceDate;
     private TimePickerView pvTime;
     private float[] money;
+    private View headView;
 
     @Override
     public void lazyInitData() {
@@ -68,7 +69,7 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
     }
 
     private void initAdapter() {
-        View headView = View.inflate(getActivity(), R.layout.head_reportfragment, null);
+        headView = View.inflate(getActivity(), R.layout.head_reportfragment, null);
         mPieChart = (PieChart) headView.findViewById(R.id.piechart);
         txtChoiceDate = (TextView) headView.findViewById(R.id.f_re_txt);
         reChoiceDate = (RelativeLayout) headView.findViewById(R.id.f_re_choicedate);
@@ -131,22 +132,21 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
             }
 
         });
-
-
         RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
+                mList.clear();
+                mAdapter.clear();
                 mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
                 if (mList.size() == 0) {
                     mViewStub.setVisibility(View.VISIBLE);
+                    headView.setVisibility(View.GONE);
                 } else {
-                    mAdapter.setData(mList);
-                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    headView.setVisibility(View.VISIBLE);
                     money = new float[mList.size()];
                     for (int i = 0; i < mList.size(); i++) {
                         money[i] = (float) mList.get(i).getMoney();
                     }
-
                     mPieChart.setRadius(230);
                     mPieChart.setDescr("总收入");
                     mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
@@ -154,6 +154,8 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
                         public void click(int position) {
                         }
                     });
+                    mAdapter.setData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
             }
         });

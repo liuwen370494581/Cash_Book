@@ -326,6 +326,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                    RxBus.getInstance().post(Config.RxHomeFragmentToReportsFragment, true);
                                    mList = DaoAccount.query();
                                    if (DaoAccount.query().size() == 0) {
+                                       mAdapter.clear();
                                        totalShouRuAdd = 0;
                                        totalZhiChuAdd = 0;
                                        headView.setVisibility(View.GONE);

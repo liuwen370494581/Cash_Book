@@ -244,7 +244,6 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         pvTime.show();
     }
 
-
     public void toYuer(View view) {
         Intent intent = new Intent(PayShowActivity.this, UpdateCommonKeyBoardActivity.class);
         intent.putExtra(Config.SaveAPenPlatform, "YuER");

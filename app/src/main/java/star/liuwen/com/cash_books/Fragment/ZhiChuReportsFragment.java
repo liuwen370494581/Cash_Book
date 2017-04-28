@@ -45,6 +45,7 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
     private TextView txtChoiceDate;
     private TimePickerView pvTime;
     private float[] money;
+    private View headView;
 
 
     @Override
@@ -68,7 +69,7 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
     }
 
     private void initAdapter() {
-        View headView = View.inflate(getActivity(), R.layout.head_reportfragment, null);
+        headView = View.inflate(getActivity(), R.layout.head_reportfragment, null);
         mPieChart = (PieChart) headView.findViewById(R.id.piechart);
         txtChoiceDate = (TextView) headView.findViewById(R.id.f_re_txt);
         reChoiceDate = (RelativeLayout) headView.findViewById(R.id.f_re_choicedate);
@@ -122,6 +123,7 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
             public void onRxBusResult(Object o) {
                 mList = DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU);
                 mViewStub.setVisibility(View.GONE);
+                headView.setVisibility(View.VISIBLE);
                 mAdapter.setData(mList);
                 mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 money = new float[mList.size()];
@@ -139,23 +141,23 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
                     }
                 });
             }
-
         });
 
         RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
+                mList.clear();
+                mAdapter.clear();
                 mList = DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU);
                 if (mList.size() == 0) {
-                    mViewStub.setVisibility(View.GONE);
+                    mViewStub.setVisibility(View.VISIBLE);
+                    headView.setVisibility(View.GONE);
                 } else {
-                    mAdapter.setData(mList);
-                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    headView.setVisibility(View.VISIBLE);
                     money = new float[mList.size()];
                     for (int i = 0; i < mList.size(); i++) {
                         money[i] = (float) mList.get(i).getMoney();
                     }
-
                     mPieChart.setRadius(230);
                     mPieChart.setDescr("总支出");
                     mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
@@ -163,6 +165,8 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
                         public void click(int position) {
                         }
                     });
+                    mAdapter.setData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
             }
         });

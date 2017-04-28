@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
-        android:layout="@layout/accout_no_result"/>
+        android:layout="@layout/reports_no_result"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/zhichu_reports_recyclerView"

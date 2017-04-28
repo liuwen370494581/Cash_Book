@@ -40,6 +40,7 @@ import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
+import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
@@ -156,6 +157,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             @Override
             public void onRxBusResult(Object o) {
                 mList.clear();
+                ToastUtils.showToast(getActivity(), "接收支出或者收入传递过来的值");
                 Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
                     @Override
                     public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
@@ -178,7 +180,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             }
         });
 
-
         RxBus.getInstance().toObserverableOnMainThread(Config.RxModelToWalletFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
@@ -196,6 +197,33 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 //因为余额的数值会添加要设为0重新开始算
                 yuer = 0;
 
+            }
+        });
+
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                ToastUtils.showToast(getActivity(), "从删除的时候接收过来的值");
+                mList.clear();
+                Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                        mList = DaoChoiceAccount.query();
+                        subscriber.onNext(mList);
+                    }
+                }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(List<ChoiceAccount> accounts) {
+                        mAdapter.setData(mList);
+                        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                        for (int i = 0; i < mList.size(); i++) {
+                            yuer = yuer + mList.get(i).getMoney();
+                        }
+                        tvYuer.setText(String.format("%.2f", yuer));
+                        //因为余额的数值会添加要设为0重新开始算
+                        yuer = 0;
+                    }
+                });
             }
         });
 
