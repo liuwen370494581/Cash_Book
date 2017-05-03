@@ -40,7 +40,6 @@ import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
@@ -51,7 +50,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private WalletAdapter mAdapter;
     private RelativeLayout mRyYuer;
     private TextView tvYuer;
-    private int position;
     private DrawerLayout mDrawerLayout;
     private List<ChoiceAccount> mList;
     private double totalYue, yuer;
@@ -157,7 +155,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             @Override
             public void onRxBusResult(Object o) {
                 mList.clear();
-                ToastUtils.showToast(getActivity(), "接收支出或者收入传递过来的值");
                 Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
                     @Override
                     public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
@@ -203,7 +200,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
-                ToastUtils.showToast(getActivity(), "从删除的时候接收过来的值");
                 mList.clear();
                 Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
                     @Override
@@ -262,12 +258,10 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().release();
     }
 
 
     public class WalletAdapter extends BGARecyclerViewAdapter<ChoiceAccount> {
-        private List<ChoiceAccount> list;
 
         public WalletAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_fragment_wallet);

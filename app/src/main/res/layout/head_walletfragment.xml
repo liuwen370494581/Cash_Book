@@ -40,7 +40,7 @@
                 android:padding="10dp"
                 android:text="@string/calendar_jia"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/textSize_20"/>
+                android:textSize="@dimen/textSize_22"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

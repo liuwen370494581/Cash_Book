@@ -226,7 +226,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                 tvShouRuData.setNumberString(String.format("%.2f", shouRuAdd));
                                 model = new AccountModel();
                                 //为了解决ID的唯一性产生的bug 当删除一个item的时候 id依然存在数据库中 在插入的时候 会插入同样的数据 所以使用了随机数
-                                int y = 1 + (int) (Math.random() * 10000000);
+                                int y = 1 + (int) (Math.random() * 1000);
                                 model.setId(DaoAccount.getCount() + y);
                                 model.setAccountType(mList.get(i).getAccountType());
                                 model.setData(mList.get(i).getData());

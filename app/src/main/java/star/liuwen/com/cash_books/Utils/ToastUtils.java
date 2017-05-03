@@ -20,6 +20,8 @@ public class ToastUtils {
     }
 
     public static void removeToast() {
-        mToast = null;
+        if (mToast != null) {
+            mToast = null;
+        }
     }
 }

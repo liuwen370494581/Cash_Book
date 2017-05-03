@@ -207,7 +207,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mImgCode.createNewCode();
                 ToastUtils.showToast(this, "验证码输入错误");
             }
-            int y = 1 + (int) (Math.random() * 10000000);
+            int y = 1 + (int) (Math.random() * 100);
             final UserInfoModel model = new UserInfoModel(DaoUserInfo.getCount() + y, tvUserName, tvPassword, "", "", "");
             SharedPreferencesUtil.setStringPreferences(this, Config.UserName, tvUserName);
             SharedPreferencesUtil.setStringPreferences(this, Config.UserPassWord, tvPassword);

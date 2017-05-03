@@ -31,6 +31,8 @@ public class DaoAccount {
         App.getDaoInstant().getAccountModelDao().deleteByKey(id);
     }
 
+
+
     /**
      * 删除所有
      */
@@ -141,22 +143,9 @@ public class DaoAccount {
     }
 
 
-    /**
-     * 根据 id 和日期来查询数据
-     *
-     * @param id
-     * @param data
-     * @return
-     */
-    public static List<AccountModel> queryByIdAndDate(long id, String data) {
-        List<AccountModel> list = new ArrayList<>();
-
-        return list;
-    }
-
 
     /**
-     * 根据两个日期之间来查询数据
+     * 根据ID和两个日期之间来查询数据(查询一个月消费了多少)
      *
      * @param startData
      * @param endData

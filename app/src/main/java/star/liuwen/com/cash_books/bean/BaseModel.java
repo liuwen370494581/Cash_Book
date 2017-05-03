@@ -17,12 +17,12 @@ public class BaseModel implements Serializable {
     private Long id; //ID
     private int url; //图标
     private String name; //余额变更
-    private String BalanceChange;//平账支出
+    private String BalanceChange;//平账支出  这个是余额变更需要用的 字段
     private double money;//金额
     private String type;//是否是choiceAccount的数据 还是AccountModel的数据
     private String zhiChuShouRuType; //是否是支出或者是存款
     private String timeMinSec;//时间 格式 2017-4-16-13-15-15;
-    private String AccountType;//用来区别是哪个账户 比如是信用卡账户或者是现金账户
+    private String AccountType;//用来区别是哪个账户 比如是信用卡账户或者是现金账户 这个是消费或者支出需要用的字段
     private long choiceAccountId;//用来标识账户的唯一性 因为之前都是以现金账户或者支付宝账户来查询 这就会形成了一个bug 就是在添加的一个相同的账户 同样的数据会显示在同一个账户中 不严谨
     private String date;//用来标识查询整月的消费和支出记录
 
@@ -119,7 +119,7 @@ public class BaseModel implements Serializable {
 
     @Generated(hash = 1780390684)
     public BaseModel(Long id, int url, String name, String BalanceChange, double money, String type,
-            String zhiChuShouRuType, String timeMinSec, String AccountType, long choiceAccountId, String date) {
+                     String zhiChuShouRuType, String timeMinSec, String AccountType, long choiceAccountId, String date) {
         this.id = id;
         this.url = url;
         this.name = name;
@@ -132,8 +132,6 @@ public class BaseModel implements Serializable {
         this.choiceAccountId = choiceAccountId;
         this.date = date;
     }
-
-
 
 
 }

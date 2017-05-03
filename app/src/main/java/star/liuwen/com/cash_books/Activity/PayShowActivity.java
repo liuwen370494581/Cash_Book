@@ -3,7 +3,6 @@ package star.liuwen.com.cash_books.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -65,8 +64,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     private int position;
     private double tvAccountValue;
     private long payShowId;
-    private String payShowDate;
-
+    private String payShowDate, startTime, endTime;
 
     @Override
     public int activityLayoutRes() {
@@ -106,6 +104,9 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         mViewStub.setVisibility(View.GONE);
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
 
+        startTime = DateTimeUtil.getCurrentYearMonth() + "-01";
+        endTime = DateTimeUtil.getCurrentYearMonth() + "-31";
+
         position = getIntent().getIntExtra(Config.Position, 0);
         mAdapter = new PaySHowAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
@@ -114,7 +115,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             payShowId = model.getId();
             payShowDate = model.getData();
             if (DaoAccount.queryByAccountType(model.getMAccountType()).size() != 0 || DaoChoiceAccount.query().size() != 0) {
-                PayShowList(payShowId, DateTimeUtil.getCurrentYearMonth() + "-01", DateTimeUtil.getCurrentYearMonth() + "-31");
+                PayShowList(payShowId, startTime, endTime);
             } else {
                 mAdapter.setData(baseList);
                 mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
@@ -137,15 +138,13 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             public void onRxBusResult(Object o) {
                 HashMap<Integer, BaseModel> hashMap = (HashMap<Integer, BaseModel>) o;
                 Set<Map.Entry<Integer, BaseModel>> maps = hashMap.entrySet();
-                String accountType = "";
+                long choiceAccountId = 1l;
                 for (Map.Entry<Integer, BaseModel> entry : maps) {
                     DaoAccountBalance.deleteByModel(entry.getValue());
-                    Log.e("MainActivity", entry.getValue().getMoney() + "");
-                    Log.e("MainActivity", entry.getKey() + "");
                     mAdapter.removeItem(entry.getKey());
-                    accountType = entry.getValue().getAccountType();
+                    choiceAccountId = entry.getValue().getChoiceAccountId();
                 }
-                baseList = DaoAccountBalance.queryByType(accountType);
+                baseList = DaoAccountBalance.queryById(choiceAccountId);
                 if (baseList.size() == 0) {
                     txtLiuChu.setText("0");
                     txtLiuRu.setText("0");
@@ -172,8 +171,12 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         baseList.clear();
         mList = DaoAccount.queryByIdAndDate(id, startTime, endTime);
         //账户的支出和消费记录list
+
         for (int i = 0; i < mList.size(); i++) {
             BaseModel baseModel = new BaseModel();
+            int y = 1 + (int) (Math.random() * 1000);
+            baseModel.setId(mList.get(i).getChoiceAccountId());
+            baseModel.setAccountType(mList.get(i).getAccountType());
             baseModel.setUrl(mList.get(i).getUrl());
             baseModel.setMoney(mList.get(i).getMoney());
             baseModel.setName(mList.get(i).getConsumeType());

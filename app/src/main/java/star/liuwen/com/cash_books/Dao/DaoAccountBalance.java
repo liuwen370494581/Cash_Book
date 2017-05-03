@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
-import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.bean.BaseModel;
 import star.liuwen.com.cash_books.bean.BaseModelDao;
 
@@ -53,35 +52,11 @@ public class DaoAccountBalance {
         return list;
     }
 
-    public static List<BaseModel> queryByType(String accountType) {
-        List<BaseModel> list = new ArrayList<>();
-        if (accountType.equals(Config.XYK)) {
-            // list=App.getDaoInstant().getAccountModelDao().queryBuilder().whereOr(AccountModelDao.Properties.AccountType.eq(accountType),AccountModelDao.Properties.Data.eq())
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals(Config.CXK)) {
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals(Config.CASH)) {
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals(Config.ZFB)) {
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals(Config.WEIXIN)) {
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals(Config.TOUZI)) {
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals(Config.CZK)) {
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        } else if (accountType.equals(Config.INTENTACCOUNT)) {
-            list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.AccountType.eq(accountType)).build().list();
-        }
-        Collections.sort(list, new Comparator<BaseModel>() {
-            @Override
-            public int compare(BaseModel model1, BaseModel model2) {
-                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
-            }
-        });
-        return list;
-    }
-
+    /**
+     * 根据唯一性标识 choiceAccountId 来查询
+     * @param id
+     * @return
+     */
     public static List<BaseModel> queryById(long id) {
         List<BaseModel> list = new ArrayList<>();
         list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.ChoiceAccountId.eq(id)).build().list();

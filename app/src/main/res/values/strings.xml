@@ -85,7 +85,7 @@
     <string name="reports_xiaofei">消费合计(元)</string>
     <string name="reports_find_detail">查看明细</string>
     <string name="reports_xiaofei_detail">消费(元)：</string>
-    <string name="reports_xiaofei_txt">%s元</string>
+    <string name="reports_xiaofei_txt" formatted="false">%s元</string>
     <string name="reports_detail">消费明细</string>
 
 
