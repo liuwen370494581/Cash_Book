@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
@@ -138,10 +134,10 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
                     @Override
                     public void call(List<ChoiceAccount> accounts) {
-                        mAdapter.setData(mList);
+                        mAdapter.setData(accounts);
                         mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
-                        for (int i = 0; i < mList.size(); i++) {
-                            yuer = yuer + mList.get(i).getMoney();
+                        for (int i = 0; i < accounts.size(); i++) {
+                            yuer = yuer + accounts.get(i).getMoney();
                         }
                         tvYuer.setText(String.format("%.2f", yuer));
                         //因为余额的数值会添加要设为0重新开始算
@@ -155,6 +151,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             @Override
             public void onRxBusResult(Object o) {
                 mList.clear();
+                mAdapter.clear();
                 Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
                     @Override
                     public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
@@ -164,10 +161,11 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
                     @Override
                     public void call(List<ChoiceAccount> accounts) {
-                        mAdapter.setData(mList);
+                        mAdapter.setData(accounts);
                         mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
-                        for (int i = 0; i < mList.size(); i++) {
-                            yuer = yuer + mList.get(i).getMoney();
+                        for (int i = 0; i < accounts.size(); i++) {
+                            yuer = yuer + accounts.get(i).getMoney(
+                            );
                         }
                         tvYuer.setText(String.format("%.2f", yuer));
                         //因为余额的数值会添加要设为0重新开始算
@@ -180,20 +178,26 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         RxBus.getInstance().toObserverableOnMainThread(Config.RxModelToWalletFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
-                ChoiceAccount account = (ChoiceAccount) o;
-                if (mList.size() != 0) {
-                    mAdapter.addItem(mList.size() - 1, account);
-                }
-                for (ChoiceAccount ss : mList) {
-                    Log.e("MainActivity", ss.getAccountName() + "" + ss.getMoney());
-                }
-                for (int i = 0; i < mList.size(); i++) {
-                    yuer = yuer + mList.get(i).getMoney();
-                }
-                tvYuer.setText(String.format("%.2f", yuer));
-                //因为余额的数值会添加要设为0重新开始算
-                yuer = 0;
-
+                //  mList.clear();
+                Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                        mList = DaoChoiceAccount.query();
+                        subscriber.onNext(mList);
+                    }
+                }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(List<ChoiceAccount> accounts) {
+                        mAdapter.setData(accounts);
+                        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                        for (int i = 0; i < accounts.size(); i++) {
+                            yuer = yuer + accounts.get(i).getMoney();
+                        }
+                        tvYuer.setText(String.format("%.2f", yuer));
+                        //因为余额的数值会添加要设为0重新开始算
+                        yuer = 0;
+                    }
+                });
             }
         });
 
@@ -210,10 +214,10 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
                     @Override
                     public void call(List<ChoiceAccount> accounts) {
-                        mAdapter.setData(mList);
+                        mAdapter.setData(accounts);
                         mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
-                        for (int i = 0; i < mList.size(); i++) {
-                            yuer = yuer + mList.get(i).getMoney();
+                        for (int i = 0; i < accounts.size(); i++) {
+                            yuer = yuer + accounts.get(i).getMoney();
                         }
                         tvYuer.setText(String.format("%.2f", yuer));
                         //因为余额的数值会添加要设为0重新开始算
@@ -226,18 +230,27 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         RxBus.getInstance().toObserverableOnMainThread(Config.RxPaySettingToWalletFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
-                HashMap<Integer, ChoiceAccount> hashMap = (HashMap<Integer, ChoiceAccount>) o;
-                Set<Map.Entry<Integer, ChoiceAccount>> maps = hashMap.entrySet();
-                for (Map.Entry<Integer, ChoiceAccount> entry : maps) {
-                    DaoChoiceAccount.deleteChoiceAccountByModel(entry.getValue());
-                    mAdapter.removeItem(entry.getKey());
-                }
-                mList = DaoChoiceAccount.query();
-                totalYue = 0;
-                for (int i = 0; i < mList.size(); i++) {
-                    totalYue = totalYue + mList.get(i).getMoney();
-                }
-                tvYuer.setText(String.format("%.2f", totalYue));
+                mList.clear();
+                mAdapter.clear();
+                Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                        mList = DaoChoiceAccount.query();
+                        subscriber.onNext(mList);
+                    }
+                }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(List<ChoiceAccount> accounts) {
+                        mAdapter.setData(accounts);
+                        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                        for (int i = 0; i < accounts.size(); i++) {
+                            yuer = yuer + accounts.get(i).getMoney();
+                        }
+                        tvYuer.setText(String.format("%.2f", yuer));
+                        //因为余额的数值会添加要设为0重新开始算
+                        yuer = 0;
+                    }
+                });
             }
         });
     }
@@ -250,7 +263,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             ChoiceAccount model = mList.get(position);
             Intent intent = new Intent(getActivity(), PayShowActivity.class);
             intent.putExtra(Config.ModelWallet, model);
-            intent.putExtra(Config.Position, position);
             startActivity(intent);
         }
     }
@@ -262,6 +274,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
 
 
     public class WalletAdapter extends BGARecyclerViewAdapter<ChoiceAccount> {
+        private List<ChoiceAccount> list;
 
         public WalletAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_fragment_wallet);

@@ -5,15 +5,12 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.HashMap;
-
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.View.DatePickerDialog;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
@@ -26,8 +23,6 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
     private TextView txtBank, txtAccount, txtType, txtMoney, txtCreditLimit, txtDebt, txtDebtData;
     private ChoiceAccount model;
     private DatePickerDialog dialog;
-    private int position;
-    private HashMap<Integer, ChoiceAccount> mHashMap = new HashMap<>();
 
     @Override
     public int activityLayoutRes() {
@@ -43,8 +38,8 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         setRightImage(R.mipmap.account_add_shanchu, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHashMap.put(position, model);
-                RxBus.getInstance().post(Config.RxPaySettingToWalletFragment, mHashMap);
+                RxBus.getInstance().post(Config.RxPaySettingToWalletFragment, true);
+                DaoChoiceAccount.deleteChoiceAccountByModel(model);
                 Intent intent = new Intent(PaySettingsActivity.this, MainActivity.class);
                 intent.putExtra("id", 2);
                 startActivity(intent);
@@ -89,7 +84,6 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         reCreditLimit.setOnClickListener(this);
         reDebt.setOnClickListener(this);
         reDebtData.setOnClickListener(this);
-        position = getIntent().getIntExtra(Config.Position, 0);
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
         if (model != null) {
             txtType.setText(model.getMAccountType());

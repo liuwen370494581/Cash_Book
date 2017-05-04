@@ -22,8 +22,11 @@ public class RxBus {
 
     private static RxBus rxBus;
 
+    private RxBus() {
 
-    //单列模式
+    }
+
+    //单列模式(双重锁模式)
     public static RxBus getInstance() {
         if (rxBus == null) {
             synchronized (RxBus.class) {

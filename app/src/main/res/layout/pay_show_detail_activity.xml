@@ -8,10 +8,10 @@
 
 
     <star.liuwen.com.cash_books.View.DampView
-        android:fadingEdge="none"
         overScrollMode="never"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fadingEdge="none">
 
 
         <LinearLayout
@@ -61,7 +61,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp">
+                android:layout_height="140dp">
 
                 <RelativeLayout
                     android:id="@+id/re_01"
@@ -135,6 +135,32 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="20dp"
                         android:text="民生银行"
+                        android:textColor="@color/text_color_66"
+                        android:textSize="@dimen/textSize_16"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_04"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/re_03"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="支出or收入"
+                        android:textColor="@color/text_color_99"
+                        android:textSize="@dimen/textSize_16"/>
+
+                    <TextView
+                        android:id="@+id/txt_zhichuorshouru"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:text="支出"
                         android:textColor="@color/text_color_66"
                         android:textSize="@dimen/textSize_16"/>
                 </RelativeLayout>

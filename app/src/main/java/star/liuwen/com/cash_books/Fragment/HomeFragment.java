@@ -152,7 +152,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     public void onDestroy() {
         super.onDestroy();
         //避免内存溢出
-        RxBus.getInstance().removeObserverable(Config.RxToReports);
         RxBus.getInstance().removeObserverable(Config.RxHomeFragmentToReportsFragment);
     }
 
@@ -332,7 +331,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                        headView.setVisibility(View.GONE);
                                        mBGARefreshLayout.setVisibility(View.GONE);
                                        mViewStub.setVisibility(View.VISIBLE);
-                                       RxBus.getInstance().post(Config.RxToReports, false);
                                    } else {
                                        totalShouRuAdd = 0;
                                        totalZhiChuAdd = 0;

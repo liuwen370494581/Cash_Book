@@ -61,7 +61,6 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     private View headView;
     private double zhiChu, liuRu;
     private ViewStub mViewStub;
-    private int position;
     private double tvAccountValue;
     private long payShowId;
     private String payShowDate, startTime, endTime;
@@ -84,7 +83,6 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             public void onClick(View v) {
                 Intent intent = new Intent(PayShowActivity.this, PaySettingsActivity.class);
                 intent.putExtra(Config.ModelWallet, model);
-                intent.putExtra(Config.Position, position);
                 startActivity(intent);
             }
         });
@@ -107,7 +105,6 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         startTime = DateTimeUtil.getCurrentYearMonth() + "-01";
         endTime = DateTimeUtil.getCurrentYearMonth() + "-31";
 
-        position = getIntent().getIntExtra(Config.Position, 0);
         mAdapter = new PaySHowAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -291,7 +288,8 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     private void updateAccountYuer(String data, String accountType) {
         model.setMoney(Double.parseDouble(data));
         DaoChoiceAccount.updateAccount(model);
-        RxBus.getInstance().post(Config.RxPayShowActivityToWalletFragment, position);
+        //通知钱包页面数据发送改变
+        RxBus.getInstance().post(Config.RxPayShowActivityToWalletFragment, true);
 
         //循环baseList的第一个数据来和插入的数据来比较
         for (int i = 0; i < baseList.size(); i++) {
@@ -335,7 +333,6 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
         Intent intent = new Intent(PayShowActivity.this, PayShowDetailActivity.class);
         intent.putExtra(Config.PayShowDetailModel, baseList.get(position));
-        intent.putExtra(Config.Position, position);
         startActivity(intent);
 
     }
