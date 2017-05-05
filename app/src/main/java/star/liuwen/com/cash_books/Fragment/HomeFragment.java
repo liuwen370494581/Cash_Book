@@ -12,7 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.wyt.searchbox.SearchFragment;
+import com.wyt.searchbox.custom.IOnSearchClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +39,7 @@ import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
+import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.bean.AccountModel;
@@ -42,7 +47,7 @@ import star.liuwen.com.cash_books.bean.AccountModel;
 /**
  * 明细
  */
-public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener, BGAOnRVItemLongClickListener {
+public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener, BGAOnRVItemLongClickListener, IOnSearchClickListener {
     private RecyclerView mRecyclerView;
     private HomesAdapter mAdapter;
 
@@ -58,6 +63,9 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     private double zhiChuAdd, shouRuAdd;
     private double totalZhiChuAdd, totalShouRuAdd;
     private AccountModel model;
+
+    private SearchFragment searchFragment;//增加了主页搜索功能
+
 
     @Override
     public void lazyInitData() {
@@ -76,10 +84,33 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 startActivity(new Intent(getActivity(), CalendarActivity.class));
             }
         });
+        setLeftImages(R.mipmap.search_icon, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchFragment.show(getActivity().getSupportFragmentManager(), SearchFragment.TAG);
+            }
+        });
         initView();
         return getContentView();
     }
 
+    /**
+     * 回调搜索结果
+     *
+     * @param keyword
+     */
+    @Override
+    public void OnSearchClick(String keyword) {
+        ToastUtils.showToast(getActivity(), keyword);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //在界面中点击文本输入框，键盘弹出后有时会将界面中的布局顶起。为避免该情况，可在onCreate()方法中加入以下代码:
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //当点击搜索的时候 会把底部的布局弹出
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -161,6 +192,9 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         mBGARefreshLayout = (BGARefreshLayout) getContentView().findViewById(R.id.define_bga_refresh_with_load);   //设置刷新和加载监听
         mBGARefreshLayout.setDelegate(this);
 
+        searchFragment = SearchFragment.newInstance();
+        searchFragment.setOnSearchClickListener(this);
+
     }
 
     private void initData() {
@@ -176,7 +210,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                 totalZhiChuAdd = 0;
                                 tvZhiChuData.setNumberString(String.format("%.2f", zhiChuAdd));
                                 model = new AccountModel();
-                                int y = 1 + (int) (Math.random() * 10000000);
+                                int y = 1 + (int) (Math.random() * 1000);
                                 model.setId(DaoAccount.getCount() + y);
                                 model.setAccountType(mList.get(i).getAccountType());
                                 model.setData(mList.get(i).getData());

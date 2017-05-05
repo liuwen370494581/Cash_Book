@@ -32,7 +32,6 @@ public class DaoAccount {
     }
 
 
-
     /**
      * 删除所有
      */
@@ -141,7 +140,6 @@ public class DaoAccount {
         });
         return list;
     }
-
 
 
     /**

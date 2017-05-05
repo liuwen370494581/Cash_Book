@@ -45,6 +45,56 @@
         <!--android:textSize="16sp"/>-->
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/back_view2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/toolbar_left_iv2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/button_back_white"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/toolbar_left_tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="返回"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/txt_16"
+            android:visibility="gone"
+            />
+
+        <!--<TextView-->
+        <!--android:id="@+id/toolbar_left_tv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:text="返回"-->
+        <!--android:textColor="@color/blue"-->
+        <!--android:textSize="16sp"/>-->
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/toolbar_left_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="返回"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/txt_16"
+        android:visibility="gone"
+        />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"

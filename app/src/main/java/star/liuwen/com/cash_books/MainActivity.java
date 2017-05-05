@@ -1,9 +1,7 @@
 package star.liuwen.com.cash_books;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -11,6 +9,7 @@ import java.util.List;
 
 import star.liuwen.com.cash_books.Activity.IncomeAndCostActivity;
 import star.liuwen.com.cash_books.Base.App;
+import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Fragment.HomeFragment;
 import star.liuwen.com.cash_books.Fragment.MyFragment;
 import star.liuwen.com.cash_books.Fragment.ReportFragment;
@@ -20,7 +19,7 @@ import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.tab.BarEntity;
 import star.liuwen.com.cash_books.View.tab.BottomTabBar;
 
-public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSelectListener {
+public class MainActivity extends BaseActivity implements BottomTabBar.OnSelectListener {
     private BottomTabBar tb;
     private List<BarEntity> bars;
     private HomeFragment homeFragment;
@@ -30,15 +29,14 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
     private FragmentManager manager;
     private long firstTime = 0;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
-        initData();
+    public int activityLayoutRes() {
+        return R.layout.activity_main;
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         manager = getSupportFragmentManager();
         tb = (BottomTabBar) findViewById(R.id.tb);
         tb.setManager(manager);
@@ -53,8 +51,11 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
     }
 
 
-    private void initData() {
-    }
+//    @Override
+//    protected void protectApp() {
+//        ToastUtils.showToast(getApplicationContext(), "应用被回收重启流程");
+//        startActivity(new Intent(this, LoadingActivity.class));
+//    }
 
     /**
      * 因为MainActivity使用了singleTask或者singleInstance的启动模式 所以只有一个实例
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements BottomTabBar.OnSe
         } else if (id == 2) {
             onSelect(1);
         }
+
     }
 
     @Override

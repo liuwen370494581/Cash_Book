@@ -1,5 +1,6 @@
 package star.liuwen.com.cash_books.Base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,8 @@ import android.widget.TextView;
 
 import com.squareup.leakcanary.RefWatcher;
 
+import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.ActivityKiller;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 
@@ -34,7 +35,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         rightTxt = (TextView) findViewById(R.id.toolbar_righ_tv);
         initView();
         ActivityKiller.getInstance().addActivity(this);
+    }
 
+    protected void protectApp() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Config.KEY_HOME_ACTION, Config.ACTION_RESTART_APP);
+        startActivity(intent);
     }
 
 
@@ -181,6 +187,29 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar_righ_iv.setImageResource(resId);
         toolbar_righ_iv.setOnClickListener(onClickListener);
     }
+
+
+    /**
+     * 左侧显示图片
+     *
+     * @param resId
+     * @param onClickListener
+     */
+    public void setLeftImages(int resId, View.OnClickListener onClickListener) {
+        TextView toolbar_left_tv = (TextView) findViewById(R.id.toolbar_left_tv3);
+        if (toolbar_left_tv == null) {
+            return;
+        }
+        toolbar_left_tv.setVisibility(View.GONE);
+        ImageView toolbar_left_iv = (ImageView) findViewById(R.id.toolbar_left_iv2);
+        if (toolbar_left_iv == null) {
+            return;
+        }
+        toolbar_left_iv.setVisibility(View.VISIBLE);
+        toolbar_left_iv.setImageResource(resId);
+        toolbar_left_iv.setOnClickListener(onClickListener);
+    }
+
 
     /**
      * 显示文字和图片，可以设置文字内容及字体颜色，图片资源

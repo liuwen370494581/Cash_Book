@@ -34,6 +34,7 @@ public class App extends Application {
     public NetworkUtils.NetworkType mNetType;
     private NetStateReceiver netStateReceiver;
 
+
     @Override
     public void onCreate() {
         super.onCreate();

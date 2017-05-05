@@ -164,6 +164,29 @@ public abstract class BaseFragment extends Fragment {
         toolbar_righ_iv.setOnClickListener(onClickListener);
     }
 
+
+    /**
+     * 左侧显示图片
+     *
+     * @param resId
+     * @param onClickListener
+     */
+    public void setLeftImages(int resId, View.OnClickListener onClickListener) {
+        TextView toolbar_left_tv = (TextView) view.findViewById(R.id.toolbar_left_tv3);
+        if (toolbar_left_tv == null) {
+            return;
+        }
+        toolbar_left_tv.setVisibility(View.GONE);
+        ImageView toolbar_left_iv = (ImageView) view.findViewById(R.id.toolbar_left_iv2);
+        if (toolbar_left_iv == null) {
+            return;
+        }
+        toolbar_left_iv.setVisibility(View.VISIBLE);
+        toolbar_left_iv.setImageResource(resId);
+        toolbar_left_iv.setOnClickListener(onClickListener);
+    }
+
+
     /**
      * 显示文字和图片，可以设置文字内容及字体颜色，图片资源
      *

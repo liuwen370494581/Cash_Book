@@ -7,12 +7,10 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import star.liuwen.com.cash_books.Adapter.MyPagerAdapter;
-import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
+import star.liuwen.com.cash_books.Utils.AppStatusManager;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 
 /**
@@ -41,6 +39,7 @@ public class LoadingActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        AppStatusManager.getInstance().setAppStatus(Config.STATUS_NORMAL);//进入应用初始化设置未登录
         super.onCreate(savedInstanceState);
         mIsFirst = SharedPreferencesUtil.getBooleanPreferences(this, Config.FistStar, true);
         if (mIsFirst) {

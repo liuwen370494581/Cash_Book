@@ -1,8 +1,11 @@
 package star.liuwen.com.cash_books.Activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -408,4 +411,9 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     }
 
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.e("MainActivity", "onSaveInstanceState被调用了");
+    }
 }

@@ -10,8 +10,8 @@ android {
         applicationId "star.liuwen.com.cash_books"
         minSdkVersion 22
         targetSdkVersion 23
-        versionCode 72
-        versionName "1.7.2 "
+        versionCode 73
+        versionName "1.7.3 "
 
     }
     buildTypes {
@@ -48,6 +48,8 @@ dependencies {
     //rxBus;
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
+    //搜索框
+    compile 'com.wenwenwen888:searchbox:1.0.0'
 
     //内存检测工具
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
