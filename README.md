@@ -3,7 +3,7 @@
 
 
 
-![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-173614_%E5%89%AF%E6%9C%AC.jpg)    ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1256_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1258_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1259_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172347_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-173614_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172515_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172358_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172406_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172457_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1424_%E5%89%AF%E6%9C%AC.jpg)    
+![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-173614_%E5%89%AF%E6%9C%AC.jpg)    ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1256_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1258_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1259_%E5%89%AF%E6%9C%AC.jpg)       ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172347_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172515_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172358_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172406_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/S70413-172457_%E5%89%AF%E6%9C%AC.jpg)  ![](https://github.com/liuwen370494581/Cash_Book/blob/master/image/IMG_1424_%E5%89%AF%E6%9C%AC.jpg)    
 
 
 
@@ -27,3 +27,5 @@
 * 2017-4-18 v1.62 更新日志： 添加了轻量级9宫格解锁页面 app可以保护隐私拉.
 * 2017-4-19 v1.63 更新日志： 更新了首页UI 让其显示更加美观，添加了九宫格解锁跳转登陆页面的逻辑。
 * 2017-4-21 v1.65 更新日志： 消费和收入终于和账户里的余额关联了 并修复了 如果是添加了相同账户 点击item 数据相同的bug 
+* 2017-5-08 v1.74 更新日志： 首页新增搜索功能，搜索可包含多个关键词，细节优化
+
