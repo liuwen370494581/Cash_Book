@@ -1,6 +1,7 @@
 package star.liuwen.com.cash_books.Fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +31,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
 import star.liuwen.com.cash_books.Activity.CalendarActivity;
+import star.liuwen.com.cash_books.Activity.SearchResultActivity;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
@@ -39,7 +41,6 @@ import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
-import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.bean.AccountModel;
@@ -101,7 +102,10 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
      */
     @Override
     public void OnSearchClick(String keyword) {
-        ToastUtils.showToast(getActivity(), keyword);
+        Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+        intent.putExtra(Config.TxtSearchResult, keyword);
+        startActivity(intent);
+        ((Activity) getContext()).overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     @Override

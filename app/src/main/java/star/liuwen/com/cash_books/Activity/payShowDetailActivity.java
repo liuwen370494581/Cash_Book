@@ -52,7 +52,4 @@ public class PayShowDetailActivity extends BaseActivity {
     }
 
 
-    private void deleteBaseModel() {
-
-    }
 }

@@ -253,6 +253,33 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 });
             }
         });
+
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxPaySettingToPayShowActivityAndWalletFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                mList.clear();
+                mAdapter.clear();
+                Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                        mList = DaoChoiceAccount.query();
+                        subscriber.onNext(mList);
+                    }
+                }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(List<ChoiceAccount> accounts) {
+                        mAdapter.setData(accounts);
+                        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                        for (int i = 0; i < accounts.size(); i++) {
+                            yuer = yuer + accounts.get(i).getMoney();
+                        }
+                        tvYuer.setText(String.format("%.2f", yuer));
+                        //因为余额的数值会添加要设为0重新开始算
+                        yuer = 0;
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -290,13 +317,17 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         protected void fillData(BGAViewHolderHelper helper, int position, ChoiceAccount model) {
 
             helper.setBackgroundColorRes(R.id.qb_ry_xinyka, model.getColor());
-            if (model.mAccountType.equals(Config.XYK)) {
+            if (model.getIssuingBank() == null || model.getIssuingBank().equals("")) {
                 helper.setText(R.id.qb_txt_xinyka, model.getAccountName()).setImageResource(R.id.qb_image_xinyka, model.getUrl());
+                helper.setText(R.id.qb_txt_xinyka_yuer, model.getAccountName() + "额度");
+            } else {
+                helper.setText(R.id.qb_txt_xinyka_yuer, model.getIssuingBank() + "额度");
+                helper.setText(R.id.qb_txt_xinyka, model.getIssuingBank()).setImageResource(R.id.qb_image_xinyka, model.getUrl());
+            }
+            if (model.mAccountType.equals(Config.XYK)) {
                 helper.setText(R.id.qb_txt_xinyka_yuer, "剩余额度" + String.format("%.2f", model.getDebt()) + "元");
                 helper.setText(R.id.xinyka_jia, String.format("%.2f", model.getMoney()));
             } else {
-                helper.setText(R.id.qb_txt_xinyka, model.getAccountName()).setImageResource(R.id.qb_image_xinyka, model.getUrl());
-                helper.setText(R.id.qb_txt_xinyka_yuer, model.getMAccountType() + "额度");
                 helper.setText(R.id.xinyka_jia, String.format("%.2f", model.getMoney()));
             }
         }

@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
@@ -203,7 +200,7 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
                 return;
             }
         }
-        int y = 1 + (int) (Math.random() * 10000000);
+        int y = 1 + (int) (Math.random() * 1000);
         final ChoiceAccount account = new ChoiceAccount(DaoChoiceAccount.getCount() + y,
                 model.getWalletUrl(),
                 isAccountName ? TextUtils.isEmpty(tvAccount.trim()) ? "" : tvAccount : model.getPlanName(),
@@ -298,6 +295,7 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
                 break;
             case ChoiceIssuingBank:
                 txtBank.setText(data.getExtras().getString("bank"));
+                txtAccount.setText(data.getExtras().getString("bank"));
                 break;
         }
     }

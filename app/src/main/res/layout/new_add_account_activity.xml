@@ -38,7 +38,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="现金"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 
@@ -70,7 +70,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="广发银行"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 
@@ -102,7 +102,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:padding="6dp"
-            android:text="现金"
+            android:text=""
             android:textColor="@color/text_color_99"/>
     </RelativeLayout>
 

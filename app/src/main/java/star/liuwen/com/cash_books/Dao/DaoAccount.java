@@ -69,6 +69,26 @@ public class DaoAccount {
 
 
     /**
+     * 根据关键字(消费金额 是否支出或者是消费，账户类型,消费种类)查询
+     *
+     * @param keyWord
+     * @return
+     */
+    public static List<AccountModel> queryByKeyWord(String keyWord) {
+        List<AccountModel> list = new ArrayList<>();
+        list = App.getDaoInstant().getAccountModelDao().queryBuilder().whereOr(AccountModelDao.Properties.AccountType.eq(keyWord), AccountModelDao.Properties.ConsumeType.eq(keyWord),
+                AccountModelDao.Properties.Money.eq(keyWord), AccountModelDao.Properties.ZhiChuShouRuType.eq(keyWord))
+                .build().list();
+        Collections.sort(list, new Comparator<AccountModel>() {
+            @Override
+            public int compare(AccountModel model1, AccountModel model2) {
+                return model2.getTimeMinSec().compareTo(model1.getTimeMinSec());
+            }
+        });
+        return list;
+    }
+
+    /**
      * 根据具体的某一天日期来查询 eg:2017-4-25
      *
      * @param date

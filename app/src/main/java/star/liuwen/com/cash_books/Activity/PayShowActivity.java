@@ -19,10 +19,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import cn.bingoogolapple.androidcommon.adapter.BGADivider;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -125,7 +122,15 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             ryBg.setBackgroundResource(model.getColor());
             StatusBarUtils.setWindowStatusBarColor(this, model.getColor());
             setTitleBg(model.getColor());
-            setTitle(model.getAccountName());
+            if (model.getMAccountType().equals(Config.XYK) || model.getMAccountType().equals(Config.CXK)) {
+                if (model.getIssuingBank().equals("")) {
+                    setTitle(model.getAccountName());
+                } else {
+                    setTitle(model.getIssuingBank());
+                }
+            } else {
+                setTitle(model.getAccountName());
+            }
         }
         mAdapter.setOnRVItemClickListener(this);
         initData();
@@ -133,35 +138,30 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
 
 
     private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxPayShowDetailToPayShowActivity, new RxBusResult() {
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxPaySettingToPayShowActivityAndWalletFragment, new RxBusResult() {
             @Override
             public void onRxBusResult(Object o) {
-                HashMap<Integer, BaseModel> hashMap = (HashMap<Integer, BaseModel>) o;
-                Set<Map.Entry<Integer, BaseModel>> maps = hashMap.entrySet();
-                long choiceAccountId = 1l;
-                for (Map.Entry<Integer, BaseModel> entry : maps) {
-                    DaoAccountBalance.deleteByModel(entry.getValue());
-                    mAdapter.removeItem(entry.getKey());
-                    choiceAccountId = entry.getValue().getChoiceAccountId();
-                }
-                baseList = DaoAccountBalance.queryById(choiceAccountId);
-                if (baseList.size() == 0) {
-                    txtLiuChu.setText("0");
-                    txtLiuRu.setText("0");
-                    tvAccount.setText("0");
-                    mViewStub.setVisibility(View.VISIBLE);
-                } else {
-                    for (BaseModel model : baseList) {
-                        if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
-                            zhiChu += model.getMoney();
-                            txtLiuChu.setText(String.format("%.2f", zhiChu));
+                final long id = (long) o;
+                Observable.create(new Observable.OnSubscribe<ChoiceAccount>() {
+                    @Override
+                    public void call(Subscriber<? super ChoiceAccount> subscriber) {
+                        model = DaoChoiceAccount.queryByAccountId(id).get(0);
+                        subscriber.onNext(model);
+                    }
+                }).compose(RxUtil.<ChoiceAccount>applySchedulers()).subscribe(new Action1<ChoiceAccount>() {
+                    @Override
+                    public void call(ChoiceAccount account) {
+                        if (account.getMAccountType().equals(Config.XYK) || account.getMAccountType().equals(Config.CXK)) {
+                            if (account.getIssuingBank().equals("")) {
+                                setTitle(account.getAccountName());
+                            } else {
+                                setTitle(account.getIssuingBank());
+                            }
                         } else {
-                            liuRu += model.getMoney();
-                            txtLiuRu.setText(String.format("%.2f", liuRu));
+                            setTitle(account.getAccountName());
                         }
                     }
-                }
-
+                });
             }
         });
     }
@@ -343,7 +343,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxPayShowDetailToPayShowActivity);
+        RxBus.getInstance().removeObserverable(Config.RxPaySettingToPayShowActivityAndWalletFragment);
     }
 
     private class PaySHowAdapter extends BGARecyclerViewAdapter<BaseModel> {

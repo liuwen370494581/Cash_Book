@@ -237,7 +237,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         }
 
         homListData.add(new AccountModel(TextUtils.isEmpty(AccountType) ? (choiceAccount.isEmpty() ? "账户" : choiceAccount) : AccountType
-                , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : choiceAccountDate,
+                , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : AccountData,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.other) : AccountConsumeType,
                 AccountUrl == null ? R.mipmap.icon_shouru_type_qita : AccountUrl, DateTimeUtil.getCurrentTime_Today(),
                 Config.SHOU_RU, shouRuId));

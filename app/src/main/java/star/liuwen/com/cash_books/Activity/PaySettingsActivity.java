@@ -23,6 +23,7 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
     private TextView txtBank, txtAccount, txtType, txtMoney, txtCreditLimit, txtDebt, txtDebtData;
     private ChoiceAccount model;
     private DatePickerDialog dialog;
+    private String backData;
 
     @Override
     public int activityLayoutRes() {
@@ -90,20 +91,20 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
             txtMoney.setText(model.getMoney() + "");
             if (model.mAccountType.equals(Config.XYK)) {
                 reMoney.setVisibility(View.GONE);
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
-                txtBank.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                txtAccount.setText(model.getAccountName());
+                txtBank.setText(model.getIssuingBank());
                 txtCreditLimit.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtCreditLimit, "").isEmpty() ? getString(R.string.ling) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtCreditLimit, ""));
                 txtDebt.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtDebt, "").isEmpty() ? getString(R.string.ling) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtDebt, ""));
             } else if (model.mAccountType.equals(Config.CXK)) {
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
-                txtBank.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? getString(R.string.empty_string) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                txtAccount.setText(model.getAccountName());
+                txtBank.setText(model.getIssuingBank());
                 setAccountVisible();
             } else if (model.mAccountType.equals(Config.ZFB)) {
                 reBank.setVisibility(View.GONE);
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                txtAccount.setText(model.getAccountName());
                 setAccountVisible();
             } else if (model.mAccountType.equals(Config.CASH)) {
-                txtAccount.setText(SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountMoney, "").isEmpty() ? model.getAccountName() : SharedPreferencesUtil.getStringPreferences(this, Config.TxtAccountName, ""));
+                txtAccount.setText(model.getAccountName());
                 reBank.setVisibility(View.GONE);
                 setAccountVisible();
             } else if (model.mAccountType.equals(Config.JC)) {
@@ -111,6 +112,22 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
                 setAccountVisible();
             } else if (model.mAccountType.equals(Config.JR)) {
                 reBank.setVisibility(View.GONE);
+                setAccountVisible();
+            } else if (model.mAccountType.equals(Config.WEIXIN)) {
+                reBank.setVisibility(View.GONE);
+                txtAccount.setText(model.getAccountName());
+                setAccountVisible();
+            } else if (model.mAccountType.equals(Config.CZK)) {
+                reBank.setVisibility(View.GONE);
+                txtAccount.setText(model.getAccountName());
+                setAccountVisible();
+            } else if (model.mAccountType.equals(Config.INTENTACCOUNT)) {
+                reBank.setVisibility(View.GONE);
+                txtAccount.setText(model.getAccountName());
+                setAccountVisible();
+            } else if (model.mAccountType.equals(Config.TOUZI)) {
+                reBank.setVisibility(View.GONE);
+                txtAccount.setText(model.getAccountName());
                 setAccountVisible();
             }
         }
@@ -160,39 +177,40 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         if (data == null) {
             return;
         }
+
         switch (requestCode) {
             case ACCOUNT:
                 txtAccount.setText(data.getExtras().getString(Config.TextInPut));
                 if (model.getMAccountType().equals(Config.CASH)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(0);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
                 } else if (model.getMAccountType().equals(Config.CXK)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(1);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
                 } else if (model.getMAccountType().equals(Config.XYK)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(2);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
                 } else if (model.getMAccountType().equals(Config.ZFB)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(3);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
                 } else if (model.getMAccountType().equals(Config.JC)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(4);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
                 } else if (model.getMAccountType().equals(Config.JR)) {
-                    ChoiceAccount model = DaoChoiceAccount.query().get(5);
-                    model.setAccountName(data.getExtras().getString(Config.TextInPut));
-                    DaoChoiceAccount.updateAccount(model);
-                    RxBus.getInstance().post(Config.CASH, true);
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
+                } else if (model.getMAccountType().equals(Config.TOUZI)) {
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
+                } else if (model.getMAccountType().equals(Config.CZK)) {
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
+                } else if (model.getMAccountType().equals(Config.INTENTACCOUNT)) {
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
+                } else if (model.getMAccountType().equals(Config.WEIXIN)) {
+                    backData = data.getExtras().getString(Config.TextInPut);
+                    updateChoiceAccountCommon(true);
                 }
                 break;
             case MONEY:
@@ -200,13 +218,39 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case CreditLimit:
                 txtCreditLimit.setText(data.getExtras().getString(Config.TextInPut));
+
                 break;
             case Debt:
                 txtDebt.setText(data.getExtras().getString(Config.TextInPut));
                 break;
             case ChoiceIssuingBank:
                 txtBank.setText(data.getExtras().getString("bank"));
+                txtAccount.setText(data.getExtras().getString("bank"));
+                SharedPreferencesUtil.setStringPreferences(this, Config.TxtIssuingBank, data.getExtras().getString("bank"));
+                if (model.getMAccountType().equals(Config.CXK)) {
+                    backData = data.getExtras().getString("bank");
+                    updateChoiceAccountCommon(false);
+                } else if (model.getMAccountType().equals(Config.XYK)) {
+                    backData = data.getExtras().getString("bank");
+                    updateChoiceAccountCommon(false);
+                }
                 break;
         }
+    }
+
+    private void updateChoiceAccountCommon(boolean isIssubank) {
+        if (isIssubank) {
+            ChoiceAccount choiceModel = DaoChoiceAccount.queryByAccountId(model.getId()).get(0);
+            choiceModel.setAccountName(backData);
+            DaoChoiceAccount.updateAccount(choiceModel);
+            RxBus.getInstance().post(Config.RxPaySettingToPayShowActivityAndWalletFragment, model.getId());
+        } else {
+            ChoiceAccount choiceModel = DaoChoiceAccount.queryByAccountId(model.getId()).get(0);
+            choiceModel.setIssuingBank(backData);
+            choiceModel.setAccountName(backData);
+            DaoChoiceAccount.updateAccount(choiceModel);
+            RxBus.getInstance().post(Config.RxPaySettingToPayShowActivityAndWalletFragment, model.getId());
+        }
+
     }
 }

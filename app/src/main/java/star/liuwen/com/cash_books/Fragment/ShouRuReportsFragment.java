@@ -114,14 +114,17 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
             @Override
             public void onRxBusResult(Object o) {
                 mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
-                mViewStub.setVisibility(View.GONE);
-                mAdapter.setData(mList);
-                mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                money = new float[mList.size()];
-                for (int i = 0; i < mList.size(); i++) {
-                    money[i] = (float) mList.get(i).getMoney();
+                if (mList.size() == 0) {
+                    mViewStub.setVisibility(View.VISIBLE);
+                } else {
+                    mViewStub.setVisibility(View.GONE);
+                    mAdapter.setData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    money = new float[mList.size()];
+                    for (int i = 0; i < mList.size(); i++) {
+                        money[i] = (float) mList.get(i).getMoney();
+                    }
                 }
-
                 mPieChart.setRadius(230);
                 mPieChart.setDescr("总收入");
                 mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
@@ -130,7 +133,6 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
                     }
                 });
             }
-
         });
         RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
             @Override

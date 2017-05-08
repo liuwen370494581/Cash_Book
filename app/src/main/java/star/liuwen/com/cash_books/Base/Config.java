@@ -30,8 +30,8 @@ public class Config {
     public final static String isOpenCodedLock = "isOpenCodedLock";
     public final static String ChangeBg = "ChangeBg";
 
-    public final static String ZHI_CHU = "ZHICHU";
-    public final static String SHOU_RU = "SHOURU";
+    public final static String ZHI_CHU = "支出";
+    public final static String SHOU_RU = "收入";
     public final static String CASH = "现金";
     public final static String CXK = "储蓄卡";
     public final static String XYK = "信用卡";
@@ -97,11 +97,12 @@ public class Config {
     public static final String TxtChoiceAccountDate = "TxtChoiceAccountDate";
     public static final String TxtForgetGesturePassword = "TxtForgetGesturePassword";
     public static final String TxtZhiChuId = "TxtZhiChuId";
+    public static final String TxtSearchResult = "TxtSearchResult";
+    public static final String TxtIssuingBank = "TxtIssuingBank";
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";
     public static final String ModelChoiceAccount = "ModelChoiceAccount";
-    public static final String Position = "Position";
 
     public static final int STATUS_FORCE_KILLED = -1;//程序被crash
     public static final int STATUS_NORMAL = 1; //正常状态
@@ -120,9 +121,9 @@ public class Config {
 
     public static final String RxModelToWalletFragment = "RxModelToWalletFragment";
     public static final String RxPaySettingToWalletFragment = "RxPaySettingToWalletFragment";
-    public static final String RxPayShowDetailToPayShowActivity = "RxPayShowDetailToPayShowActivity";
     public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
     public static final String RxUserInFoToMyFragment = "RxUserInFoToMyFragment";
-    public static final String RxZhiChuFragmentToWalletFragment = "RxZhiChuFragmentToWalletFragment";
+    public static final String RxPaySettingToPayShowActivityAndWalletFragment = "RxPaySettingToPayShowActivityAndWalletFragment";
+
 
 }

@@ -33,6 +33,5 @@
         android:id="@+id/view_stub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
         android:layout="@layout/accout_no_result"/>
 </LinearLayout>
