@@ -10,6 +10,7 @@ import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.bean.AccountWealthModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.IndexModel;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
@@ -193,7 +194,6 @@ public class DataEnige {
     }
 
 
-
     public static void InsertShouRuData() {
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_gongzi, "工资"));
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_shenghuofei, "生活费"));
@@ -274,7 +274,6 @@ public class DataEnige {
         list.add(new IndexModel("以色列谢克尔", "ILS"));
         return list;
     }
-
 
 
     public static List<IndexModel> getP2PData() {
@@ -388,5 +387,18 @@ public class DataEnige {
         list.add("28日");
         list.add("月末");
         return list;
+    }
+
+    public static List<AccountWealthModel> getWealthData() {
+        List<AccountWealthModel> list = new ArrayList<>();
+        list.add(new AccountWealthModel("新手专享", "口袋富宝新手专享(银行定期收益6.7倍)", 10.00, "30天", Config.ZHI_CHU));
+        list.add(new AccountWealthModel("优选活期", "口袋活期宝(随存随取,按日计息)", 4.00, "活期", Config.ZHI_CHU));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝1号(银行定期收益4.1倍)", 6.20, "45天", Config.ZHI_CHU));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝2号(银行定期收益4.3倍)", 6.40, "90天", Config.ZHI_CHU));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝3号(银行定期收益4.7倍)", 7.00, "180天", Config.ZHI_CHU));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝女性专享(银行定期收益5.3倍)", 7.00, "180天", Config.ZHI_CHU));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝5号(银行定期收益6.3倍)", 9.50, "365天", Config.ZHI_CHU));
+        return list;
+
     }
 }

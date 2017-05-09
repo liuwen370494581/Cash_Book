@@ -5,24 +5,12 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-
-    <star.liuwen.com.cash_books.View.ScoreTrend
-        android:id="@+id/scoreTrend"
-        android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:background="@color/white"
-        />
-
-    <ViewStub
-        android:id="@+id/view_stub"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:layout="@layout/accout_no_result"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/zhichu_reports_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/item_trendfragment"/>
+  <TextView
+      android:textSize="@dimen/textSize_18"
+      android:textColor="@color/blue"
+      android:layout_marginTop="200dp"
+      android:layout_gravity="center"
+      android:text="该页面正在开发中"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
 </LinearLayout>

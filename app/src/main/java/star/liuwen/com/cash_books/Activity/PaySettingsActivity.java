@@ -8,6 +8,7 @@ import android.widget.TextView;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
+import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
@@ -39,12 +40,7 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         setRightImage(R.mipmap.account_add_shanchu, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxBus.getInstance().post(Config.RxPaySettingToWalletFragment, true);
-                DaoChoiceAccount.deleteChoiceAccountByModel(model);
-                Intent intent = new Intent(PaySettingsActivity.this, MainActivity.class);
-                intent.putExtra("id", 2);
-                startActivity(intent);
-
+                deleteChoiceAccount();
             }
         });
 
@@ -85,10 +81,11 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         reCreditLimit.setOnClickListener(this);
         reDebt.setOnClickListener(this);
         reDebtData.setOnClickListener(this);
+
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
         if (model != null) {
             txtType.setText(model.getMAccountType());
-            txtMoney.setText(model.getMoney() + "");
+            txtMoney.setText(String.format("%.2f", model.getMoney()));
             if (model.mAccountType.equals(Config.XYK)) {
                 reMoney.setVisibility(View.GONE);
                 txtAccount.setText(model.getAccountName());
@@ -131,6 +128,31 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
                 setAccountVisible();
             }
         }
+    }
+
+    private void deleteChoiceAccount() {
+        final TipandEditDialog dialog = new TipandEditDialog(this, "确定要删除这个账户吗");
+        dialog.show();
+        dialog.setLeftText(getString(R.string.cancel));
+        dialog.setLeftTextColor(getResources().getColor(R.color.jiechu));
+        dialog.setRightText(getString(R.string.sure));
+        dialog.setRightTextColor(getResources().getColor(R.color.blue));
+        dialog.setListener(new TipandEditDialog.ITipEndEditDialogListener() {
+            @Override
+            public void ClickLeft() {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void ClickRight() {
+                RxBus.getInstance().post(Config.RxPaySettingToWalletFragment, true);
+                DaoChoiceAccount.deleteChoiceAccountByModel(model);
+                Intent intent = new Intent(PaySettingsActivity.this, MainActivity.class);
+                intent.putExtra("id", 2);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     /**

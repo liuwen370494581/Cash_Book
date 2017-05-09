@@ -10,8 +10,8 @@ android {
         applicationId "star.liuwen.com.cash_books"
         minSdkVersion 22
         targetSdkVersion 23
-        versionCode 73
-        versionName "1.7.4 "
+        versionCode 75
+        versionName "1.7.5 "
 
     }
     buildTypes {
@@ -40,6 +40,8 @@ dependencies {
     compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
     compile 'cn.bingoogolapple:bga-refreshlayout:1.0.7@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+    //banner
+    compile 'cn.bingoogolapple:bga-banner:2.1.0@aar'
 
     //日历选择器
     compile 'cn.aigestudio.datepicker:DatePicker:2.2.0'

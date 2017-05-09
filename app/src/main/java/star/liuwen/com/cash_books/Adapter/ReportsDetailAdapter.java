@@ -3,11 +3,8 @@ package star.liuwen.com.cash_books.Adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.List;
-
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
-import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.bean.AccountModel;
 
@@ -25,6 +22,7 @@ public class ReportsDetailAdapter extends BGARecyclerViewAdapter<AccountModel> {
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, AccountModel model) {
         if (needTitle(position)) {
+            //表示不相同的
             helper.setVisibility(R.id.item_data, View.VISIBLE);
             helper.setText(R.id.item_data, model.getData());
         } else {

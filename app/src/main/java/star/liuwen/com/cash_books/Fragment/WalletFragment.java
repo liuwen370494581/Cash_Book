@@ -325,8 +325,12 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 helper.setText(R.id.qb_txt_xinyka, model.getIssuingBank()).setImageResource(R.id.qb_image_xinyka, model.getUrl());
             }
             if (model.mAccountType.equals(Config.XYK)) {
-                helper.setText(R.id.qb_txt_xinyka_yuer, "剩余额度" + String.format("%.2f", model.getDebt()) + "元");
-                helper.setText(R.id.xinyka_jia, String.format("%.2f", model.getMoney()));
+                helper.setText(R.id.qb_txt_xinyka_yuer, "剩余额度" + String.format("%.2f",model.getMoney()-model.getDebt()) + "元");
+               if(model.getMoney()>model.getDebt()){
+                   helper.setText(R.id.xinyka_jia, String.format("%.2f", model.getMoney()));
+               }else {
+                   helper.setText(R.id.xinyka_jia, String.format("-%.2f", model.getMoney()));
+               }
             } else {
                 helper.setText(R.id.xinyka_jia, String.format("%.2f", model.getMoney()));
             }

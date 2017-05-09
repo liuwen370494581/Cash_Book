@@ -10,7 +10,9 @@ import java.util.List;
 import star.liuwen.com.cash_books.Activity.IncomeAndCostActivity;
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseActivity;
+import star.liuwen.com.cash_books.Fragment.CommunityFragment;
 import star.liuwen.com.cash_books.Fragment.HomeFragment;
+import star.liuwen.com.cash_books.Fragment.ManageMoneyFragment;
 import star.liuwen.com.cash_books.Fragment.MyFragment;
 import star.liuwen.com.cash_books.Fragment.ReportFragment;
 import star.liuwen.com.cash_books.Fragment.WalletFragment;
@@ -25,6 +27,8 @@ public class MainActivity extends BaseActivity implements BottomTabBar.OnSelectL
     private HomeFragment homeFragment;
     private WalletFragment walletFragment;
     private ReportFragment reportFragment;
+    private ManageMoneyFragment mManageMoneyFragment;
+    private CommunityFragment mCommunityFragment;
     private MyFragment myFragment;
     private FragmentManager manager;
     private long firstTime = 0;
@@ -44,8 +48,10 @@ public class MainActivity extends BaseActivity implements BottomTabBar.OnSelectL
         bars = new ArrayList<>();
         bars.add(new BarEntity("明细", R.mipmap.shiguangzhou_lan, R.mipmap.shiguangzhou));
         bars.add(new BarEntity("钱包", R.mipmap.qianbao_lan, R.mipmap.qianbao));
-        bars.add(new BarEntity("开始记账", 0, 0));
         bars.add(new BarEntity("报表", R.mipmap.baobiao_lan, R.mipmap.baobiao));
+        bars.add(new BarEntity("开始记账", 0, 0));
+        bars.add(new BarEntity("理财", R.mipmap.zongxiaofei, R.mipmap.zhuanzhang_2));
+        bars.add(new BarEntity("社区", R.mipmap.jiyibi_icon_beizhu_down, R.mipmap.jiyibi_icon_beizhu));
         bars.add(new BarEntity("我的", R.mipmap.tixing_lan, R.mipmap.tixing));
         tb.setBars(bars);
     }
@@ -114,14 +120,26 @@ public class MainActivity extends BaseActivity implements BottomTabBar.OnSelectL
                 tb.switchContent(walletFragment);
                 break;
             case 2:
-                break;
-            case 3:
                 if (reportFragment == null) {
                     reportFragment = new ReportFragment();
                 }
                 tb.switchContent(reportFragment);
                 break;
+            case 3:
+                break;
             case 4:
+                if (mManageMoneyFragment == null) {
+                    mManageMoneyFragment = new ManageMoneyFragment();
+                }
+                tb.switchContent(mManageMoneyFragment);
+                break;
+            case 5:
+                if (mCommunityFragment == null) {
+                    mCommunityFragment = new CommunityFragment();
+                }
+                tb.switchContent(mCommunityFragment);
+                break;
+            case 6:
                 if (myFragment == null) {
                     myFragment = new MyFragment();
                 }

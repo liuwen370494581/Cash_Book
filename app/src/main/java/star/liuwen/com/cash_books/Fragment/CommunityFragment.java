@@ -10,11 +10,10 @@ import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.R;
 
 /**
- * Created by liuwen on 2017/3/30.
+ * Created by liuwen on 2017/5/9.
+ * 社区交流页面
  */
-public class TrendFragment extends BaseFragment {
-
-
+public class CommunityFragment extends BaseFragment {
     @Override
     public void lazyInitData() {
 
@@ -24,15 +23,15 @@ public class TrendFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        setContentView(R.layout.trend_fragment);
+        setContentView(R.layout.fragment_community);
         initView();
         initData();
         return getContentView();
     }
 
     private void initView() {
-
     }
+
 
     private void initData() {
 

@@ -68,6 +68,7 @@ public class IncomeAndCostActivity extends BaseActivity implements View.OnClickL
         super.onDestroy();
         RxBus.getInstance().removeObserverable("AccountModel");
         RxBus.getInstance().removeObserverable(Config.RxToZhiChuFragment);
+        RxBus.getInstance().release();
     }
 
     @Override

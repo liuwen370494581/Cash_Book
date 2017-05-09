@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:padding="8dp"
+        android:text="新手专享"
+        android:textSize="@dimen/textSize_12"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@color/white"
+        android:padding="8dp">
+
+        <TextView
+            android:textSize="@dimen/textSize_14"
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="口袋富宝新手专享(银行定期收益6.7倍)"
+            android:textColor="@color/wealth_color"/>
+
+        <TextView
+            android:textSize="@dimen/textSize_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/txt_name"
+            android:text="热/新"
+            android:textColor="@color/jiechu"/>
+
+        <TextView
+            android:id="@+id/txt_shouyilv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="3dp"
+            android:text="10.00%"
+            android:textColor="@color/wealth_color"
+            android:textSize="32sp"/>
+
+        <TextView
+            android:textSize="@dimen/textSize_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_shouyilv"
+            android:layout_marginLeft="15dp"
+            android:text="年化收益率"
+            android:textColor="@color/text_color_99"/>
+
+        <TextView
+            android:id="@+id/txt_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="3dp"
+            android:text="30天"
+            android:textColor="@color/text_color_33"
+            android:textSize="@dimen/textSize_20"/>
+
+        <TextView
+            android:textSize="@dimen/textSize_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_shouyilv"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:text="封闭期"
+            android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+</LinearLayout>
