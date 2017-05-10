@@ -8,13 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import cn.bingoogolapple.androidcommon.adapter.BGADivider;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import cn.bingoogolapple.bgabanner.BGABanner;
+import cn.bingoogolapple.bgabanner.transformer.TransitionEffect;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import star.liuwen.com.cash_books.Base.BaseFragment;
+import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
@@ -32,6 +38,7 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
     private RecyclerView mRecyclerView;
     private AccountingWealthAdapter mAdapter;
     private BGABanner mBGABanner;
+    private int resViews[] = {R.mipmap.welcome_pic_1, R.mipmap.welcome_pic_2, R.mipmap.welcome_pic_3, R.mipmap.welcome_pic_4};
 
 
     @Override
@@ -75,6 +82,15 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
         mAdapter.setData(DataEnige.getWealthData());
         mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         mRecyclerView.addItemDecoration(BGADivider.newShapeDivider());
+        mBGABanner.setData(DataEnige.getBannerDataUrl(), DataEnige.getBannerDataTips());
+        //设置动画翻转
+        mBGABanner.setTransitionEffect(TransitionEffect.Fade);
+        mBGABanner.setAdapter(new BGABanner.Adapter() {
+            @Override
+            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                Glide.with(banner.getContext()).load(model).placeholder(R.mipmap.background).error(R.mipmap.background).dontAnimate().thumbnail(0.1f).into((ImageView) view);
+            }
+        });
     }
 
     private void initView() {
@@ -107,6 +123,7 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
     }
 
     private class AccountingWealthAdapter extends BGARecyclerViewAdapter<AccountWealthModel> {
+        private DonutProgress mProgress;
 
         public AccountingWealthAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_accouting_wealth);
@@ -121,8 +138,21 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
                 helper.setVisibility(R.id.item_data, View.GONE);
             }
             helper.setText(R.id.txt_name, model.getWealthName());
-            helper.setText(R.id.txt_shouyilv, String.format("%.2f",model.getWealthPercent())+"%");
+            helper.setText(R.id.txt_shouyilv, String.format("%.2f", model.getWealthPercent()) + "%");
             helper.setText(R.id.txt_day, model.getWealthDay());
+            helper.setText(R.id.txt_bao, model.getWealthBaoOrNewOrHot());
+            helper.setText(R.id.txt_year_shouyilv, model.getWealthYearYield());
+            helper.setText(R.id.txt_time, model.getWealthIsHuoqiOrDingQi());
+            mProgress = (DonutProgress) helper.getView(R.id.double_progress).findViewById(R.id.double_progress);
+            mProgress.setProgress((float) model.getWealthPlan());
+
+            if (model.getWealthIsHuoqiOrDingQi().equals(Config.HUOQI)) {
+                helper.setVisibility(R.id.double_progress, View.GONE);
+                helper.setVisibility(R.id.re_save_money, View.VISIBLE);
+            } else {
+                helper.setVisibility(R.id.double_progress, View.VISIBLE);
+                helper.setVisibility(R.id.re_save_money, View.GONE);
+            }
 
         }
 

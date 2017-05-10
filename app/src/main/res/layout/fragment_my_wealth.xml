@@ -1,7 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/background"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/wealth_color">
+
+        <TextView
+            android:id="@+id/my_txt_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:text="0.00"
+            android:textColor="@color/white"
+            android:textSize="40sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="总资产(元)"
+            android:textColor="@color/text_color_bg"
+            android:textSize="@dimen/textSize_12"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/wealth_color2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昨日收益(元)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_12"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_20"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ly_01"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/text_color_bg"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/ly_01"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昨日收益(元)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_12"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_20"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="口袋活期宝"
+                android:textColor="@color/text_color_66"
+                android:textSize="@dimen/textSize_14"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/text_color_99"
+                android:textSize="@dimen/textSize_12"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ly_02"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/text_color_bg"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/ly_02"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="定期"
+                android:textColor="@color/text_color_66"
+                android:textSize="@dimen/textSize_14"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/text_color_99"
+                android:textSize="@dimen/textSize_12"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_hongbao"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="我的红包"
+            android:textSize="@dimen/txt_16"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_new_activity"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="最新活动"
+            android:textSize="@dimen/txt_16"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_invite_friends"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="邀请好友"
+            android:textSize="@dimen/txt_16"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_my_bank"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="我的银行卡"
+            android:textSize="@dimen/txt_16"/>
+    </RelativeLayout>
+
 
 </LinearLayout>

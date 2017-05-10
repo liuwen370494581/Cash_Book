@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -20,23 +21,25 @@
         android:padding="8dp">
 
         <TextView
-            android:textSize="@dimen/textSize_14"
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="口袋富宝新手专享(银行定期收益6.7倍)"
-            android:textColor="@color/wealth_color"/>
+            android:textColor="@color/wealth_color"
+            android:textSize="@dimen/textSize_14"/>
 
         <TextView
-            android:textSize="@dimen/textSize_14"
+            android:id="@+id/txt_bao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="3dp"
             android:layout_toRightOf="@id/txt_name"
-            android:text="热/新"
-            android:textColor="@color/jiechu"/>
+            android:background="@color/jiechu"
+            android:text="爆"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_12"/>
 
         <TextView
             android:id="@+id/txt_shouyilv"
@@ -44,7 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:padding="3dp"
             android:text="10.00%"
@@ -52,13 +54,14 @@
             android:textSize="32sp"/>
 
         <TextView
-            android:textSize="@dimen/textSize_14"
+            android:id="@+id/txt_year_shouyilv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_shouyilv"
             android:layout_marginLeft="15dp"
             android:text="年化收益率"
-            android:textColor="@color/text_color_99"/>
+            android:textColor="@color/text_color_99"
+            android:textSize="13sp"/>
 
         <TextView
             android:id="@+id/txt_day"
@@ -66,21 +69,55 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
             android:padding="3dp"
             android:text="30天"
             android:textColor="@color/text_color_33"
             android:textSize="@dimen/textSize_20"/>
 
         <TextView
-            android:textSize="@dimen/textSize_14"
+            android:id="@+id/txt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_shouyilv"
             android:layout_centerInParent="true"
             android:layout_marginLeft="15dp"
             android:text="封闭期"
-            android:textColor="@color/text_color_99"/>
+            android:textColor="@color/text_color_99"
+            android:textSize="13sp"/>
+
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/double_progress"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:drawablePadding="10dp"
+            android:padding="3dp"
+            android:visibility="gone"
+            custom:donut_finished_color="@color/wealth_color"
+            custom:donut_finished_stroke_width="2dp"
+            custom:donut_progress="10"
+            custom:donut_text_color="@color/wealth_color"
+            custom:donut_text_size="13sp"
+            custom:donut_unfinished_stroke_width="2dp"/>
+
+        <RelativeLayout
+            android:id="@+id/re_save_money"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/save_money_shape"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txt_save_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="立即存入"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14"/>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

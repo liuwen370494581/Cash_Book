@@ -43,6 +43,8 @@ public class Config {
     public final static String CZK = "储值卡";
     public final static String TOUZI = "投资账户";
     public final static String INTENTACCOUNT = "网络账户";
+    public final static String HUOQI = "随存随取";
+    public final static String DINGQI = "封闭期";
 
     public final static String ChoiceAccount = "ChoiceAccount";
     public final static String AccountModel = "AccountModel";

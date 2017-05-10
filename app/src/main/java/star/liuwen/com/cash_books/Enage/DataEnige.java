@@ -391,14 +391,35 @@ public class DataEnige {
 
     public static List<AccountWealthModel> getWealthData() {
         List<AccountWealthModel> list = new ArrayList<>();
-        list.add(new AccountWealthModel("新手专享", "口袋富宝新手专享(银行定期收益6.7倍)", 10.00, "30天", Config.ZHI_CHU));
-        list.add(new AccountWealthModel("优选活期", "口袋活期宝(随存随取,按日计息)", 4.00, "活期", Config.ZHI_CHU));
-        list.add(new AccountWealthModel("精选定期", "口袋富宝1号(银行定期收益4.1倍)", 6.20, "45天", Config.ZHI_CHU));
-        list.add(new AccountWealthModel("精选定期", "口袋富宝2号(银行定期收益4.3倍)", 6.40, "90天", Config.ZHI_CHU));
-        list.add(new AccountWealthModel("精选定期", "口袋富宝3号(银行定期收益4.7倍)", 7.00, "180天", Config.ZHI_CHU));
-        list.add(new AccountWealthModel("精选定期", "口袋富宝女性专享(银行定期收益5.3倍)", 7.00, "180天", Config.ZHI_CHU));
-        list.add(new AccountWealthModel("精选定期", "口袋富宝5号(银行定期收益6.3倍)", 9.50, "365天", Config.ZHI_CHU));
+        list.add(new AccountWealthModel("新手专享", "口袋富宝新手专享(银行定期收益6.7倍)", 10.00, "30天", "爆", "年化收益率", Config.DINGQI, 57));
+        list.add(new AccountWealthModel("优选活期", "口袋活期宝(随存随取,按日计息)", 4.00, "活期", "新", "7日年化收益率", Config.HUOQI, 57));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝1号(银行定期收益4.1倍)", 6.20, "45天", "新", "年化收益率", Config.DINGQI, 52));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝2号(银行定期收益4.3倍)", 6.40, "90天", "热", "年化收益率", Config.DINGQI, 76));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝3号(银行定期收益4.7倍)", 7.00, "180天", "热", "年化收益率", Config.DINGQI, 53));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝女性专享(银行定期收益5.3倍)", 7.00, "180天", "爆", "年化收益率", Config.DINGQI, 59));
+        list.add(new AccountWealthModel("精选定期", "口袋富宝5号(银行定期收益6.3倍)", 9.50, "365天", "热", "年化收益率", Config.DINGQI, 41));
         return list;
 
     }
+
+
+    public static List<String> getBannerDataUrl() {
+        List<String> list = new ArrayList<>();
+        list.add("http://img2.3lian.com/2014/c7/25/d/40.jpg");
+        list.add("http://img2.3lian.com/2014/c7/25/d/41.jpg");
+        list.add("http://imgsrc.baidu.com/forum/pic/item/b64543a98226cffc8872e00cb9014a90f603ea30.jpg");
+        list.add("http://imgsrc.baidu.com/forum/pic/item/261bee0a19d8bc3e6db92913828ba61eaad345d4.jpg");
+        return list;
+    }
+
+    public static List<String> getBannerDataTips() {
+        List<String> list = new ArrayList<>();
+        list.add("标题1");
+        list.add("标题2");
+        list.add("标题3");
+        list.add("标题4");
+        return list;
+    }
+
+
 }
