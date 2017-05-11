@@ -12,6 +12,7 @@ import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.bean.AccountWealthModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
+import star.liuwen.com.cash_books.bean.ColorModel;
 import star.liuwen.com.cash_books.bean.IndexModel;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
@@ -421,5 +422,32 @@ public class DataEnige {
         return list;
     }
 
+    public static List<ColorModel> getColorData() {
+        List<ColorModel> list = new ArrayList<>();
+        list.add(new ColorModel(R.color.xianjian));
+        list.add(new ColorModel(R.color.wealth_color));
+        list.add(new ColorModel(R.color.zaocan));
+        list.add(new ColorModel(R.color.weixin));
+        list.add(new ColorModel(R.color.zhongfan));
+        list.add(new ColorModel(R.color.zhifubao));
+        list.add(new ColorModel(R.color.chuzhiKa));
+        list.add(new ColorModel(R.color.chuxuka));
+        list.add(new ColorModel(R.color.weixin));
+        list.add(new ColorModel(R.color.xinyongka));
+        list.add(new ColorModel(R.color.maicai));
+        list.add(new ColorModel(R.color.majiang));
+        list.add(new ColorModel(R.color.baoxiao));
+        list.add(new ColorModel(R.color.tuikuan));
+        list.add(new ColorModel(R.color.jiechu));
+        list.add(new ColorModel(R.color.jieru));
+        list.add(new ColorModel(R.color.feijipiao));
+        list.add(new ColorModel(R.color.jiushui));
+        list.add(new ColorModel(R.color.tingche));
+        list.add(new ColorModel(R.color.gongzi));
+        list.add(new ColorModel(R.color.touzi));
+        return list;
+
+
+    }
 
 }

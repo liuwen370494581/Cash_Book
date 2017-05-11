@@ -280,6 +280,33 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 });
             }
         });
+
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxChoiceColorToPaySettingAndPayShowAndWalletFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                mList.clear();
+                mAdapter.clear();
+                Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
+                        mList = DaoChoiceAccount.query();
+                        subscriber.onNext(mList);
+                    }
+                }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
+                    @Override
+                    public void call(List<ChoiceAccount> accounts) {
+                        mAdapter.setData(accounts);
+                        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
+                        for (int i = 0; i < accounts.size(); i++) {
+                            yuer = yuer + accounts.get(i).getMoney();
+                        }
+                        tvYuer.setText(String.format("%.2f", yuer));
+                        //因为余额的数值会添加要设为0重新开始算
+                        yuer = 0;
+                    }
+                });
+            }
+        });
     }
 
     @Override

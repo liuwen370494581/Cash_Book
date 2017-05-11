@@ -116,7 +116,6 @@ public class Config {
 
 
     //RxBus标识符
-    public static final String RxToReports = "RxToReports";
     public static final String RxToZhiChuFragment = "RxToZhiChu";
     public static final String RxToSHouRuFragment = "RxToSHouRu";
     public static final String RxPayShowActivityToWalletFragment = "RxPayShowActivityToWalletFragment";
@@ -126,6 +125,7 @@ public class Config {
     public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
     public static final String RxUserInFoToMyFragment = "RxUserInFoToMyFragment";
     public static final String RxPaySettingToPayShowActivityAndWalletFragment = "RxPaySettingToPayShowActivityAndWalletFragment";
+    public static final String RxChoiceColorToPaySettingAndPayShowAndWalletFragment = "RxChoiceColorToPaySettingAndPayShowAndWalletFragment";
 
 
 }

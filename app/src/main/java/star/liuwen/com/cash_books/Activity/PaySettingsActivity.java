@@ -12,6 +12,7 @@ import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.RxBus.RxBus;
+import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.View.DatePickerDialog;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
@@ -20,7 +21,7 @@ import star.liuwen.com.cash_books.bean.ChoiceAccount;
  * Created by liuwen on 2017/2/17.
  */
 public class PaySettingsActivity extends BaseActivity implements View.OnClickListener {
-    private RelativeLayout reBank, reAccount, reType, reMoney, reCreditLimit, reDebt, reDebtData;
+    private RelativeLayout reBank, reAccount, reType, reMoney, reCreditLimit, reDebt, reDebtData, reChoiceColor, reColorBg;
     private TextView txtBank, txtAccount, txtType, txtMoney, txtCreditLimit, txtDebt, txtDebtData;
     private ChoiceAccount model;
     private DatePickerDialog dialog;
@@ -51,6 +52,8 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         reCreditLimit = (RelativeLayout) findViewById(R.id.re_setting_Credit_limit);
         reDebt = (RelativeLayout) findViewById(R.id.re_setting_debt);
         reDebtData = (RelativeLayout) findViewById(R.id.re_setting_debt_date);
+        reChoiceColor = (RelativeLayout) findViewById(R.id.re_setting_choice_account_color);
+        reColorBg = (RelativeLayout) findViewById(R.id.re_setting_color_bg);
 
         txtBank = (TextView) findViewById(R.id.setting_txt_bank);
         txtAccount = (TextView) findViewById(R.id.setting_txt_account);
@@ -81,11 +84,14 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         reCreditLimit.setOnClickListener(this);
         reDebt.setOnClickListener(this);
         reDebtData.setOnClickListener(this);
+        reChoiceColor.setOnClickListener(this);
+        initData();
 
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
         if (model != null) {
             txtType.setText(model.getMAccountType());
             txtMoney.setText(String.format("%.2f", model.getMoney()));
+            reColorBg.setBackgroundResource(model.getColor());
             if (model.mAccountType.equals(Config.XYK)) {
                 reMoney.setVisibility(View.GONE);
                 txtAccount.setText(model.getAccountName());
@@ -128,6 +134,15 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
                 setAccountVisible();
             }
         }
+    }
+
+    private void initData() {
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxChoiceColorToPaySettingAndPayShowAndWalletFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                reColorBg.setBackgroundResource((Integer) o);
+            }
+        });
     }
 
     private void deleteChoiceAccount() {
@@ -184,6 +199,10 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
             startActivityForResult(intent, Debt);
         } else if (v == reDebtData) {
             dialog.show();
+        } else if (v == reChoiceColor) {
+            Intent colorIntent = new Intent(PaySettingsActivity.this, ChoiceAccountColorActivity.class);
+            colorIntent.putExtra(Config.ModelWallet, model);
+            startActivity(colorIntent);
         }
     }
 

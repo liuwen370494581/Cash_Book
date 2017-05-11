@@ -15,6 +15,7 @@ import android.view.ViewStub;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
@@ -29,6 +30,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
+import star.liuwen.com.cash_books.Activity.BudgetActivity;
 import star.liuwen.com.cash_books.Activity.CalendarActivity;
 import star.liuwen.com.cash_books.Activity.SearchResultActivity;
 import star.liuwen.com.cash_books.Base.BaseFragment;
@@ -47,7 +49,7 @@ import star.liuwen.com.cash_books.bean.AccountModel;
 /**
  * 明细
  */
-public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener, BGAOnRVItemLongClickListener, IOnSearchClickListener {
+public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnRVItemClickListener, BGAOnRVItemLongClickListener, IOnSearchClickListener, View.OnClickListener {
     private RecyclerView mRecyclerView;
     private HomesAdapter mAdapter;
 
@@ -65,6 +67,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     private AccountModel model;
 
     private SearchFragment searchFragment;//增加了主页搜索功能
+    private CircleProgress mCircleProgress; //预算
 
 
     @Override
@@ -129,6 +132,12 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         tvZhiChuMonth = (TextView) headView.findViewById(R.id.home_zhichu_month);
         tvShouRuData = (NumberAnimTextView) headView.findViewById(R.id.home_shouru_data);
         tvZhiChuData = (NumberAnimTextView) headView.findViewById(R.id.home_zhichu_data);
+        mCircleProgress = (CircleProgress) headView.findViewById(R.id.f_h_image);
+        mCircleProgress.setProgress(0);
+        mCircleProgress.setPrefixText(DateTimeUtil.getCurrentMonth());
+        mCircleProgress.setUnfinishedColor(R.color.white);
+        mCircleProgress.setOnClickListener(this);
+
         tvShouRuMonth.setText(String.format("%s收入", DateTimeUtil.getCurrentMonth()));
         tvZhiChuMonth.setText(String.format("%s支出", DateTimeUtil.getCurrentMonth()));
 
@@ -382,6 +391,13 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
         );
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == mCircleProgress) {
+            startActivity(new Intent(getActivity(), BudgetActivity.class));
+        }
     }
 
 

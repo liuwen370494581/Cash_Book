@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="true"
@@ -38,12 +39,15 @@
                 android:textSize="@dimen/textSize_18"/>
         </LinearLayout>
 
-        <ImageView
+        <com.github.lzyzsd.circleprogress.CircleProgress
+            custom:circle_prefix_text="月预算"
             android:id="@+id/f_h_image"
             android:layout_width="52dp"
             android:layout_height="52dp"
+            custom:circle_text_size="11sp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/yundongjianshen"/>
+            custom:circle_progress="20"/>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -66,5 +70,4 @@
                 android:textSize="@dimen/textSize_18"/>
         </LinearLayout>
     </RelativeLayout>
-
 </RelativeLayout>

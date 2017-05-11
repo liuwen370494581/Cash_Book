@@ -300,6 +300,9 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 window.dismiss();
                 zhichuId = mPopWindowAdapter.getItem(position).getId();
                 AccountType = mPopWindowAdapter.getItem(position).getAccountName();
+                choiceAccount = mPopWindowAdapter.getItem(position).getAccountName();
+                //显示选中的账户
+                mPopWindowAdapter.setShowGou(choiceAccount);
                 tvZhanghu.setText(AccountType);
                 //选择账户余额，方便计算
                 choiceAccountYuer(zhichuId);
@@ -315,6 +318,8 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 backgroundAlpha(1f);
             }
         });
+        //显示选中的账户
+        mPopWindowAdapter.setShowGou(choiceAccount);
     }
 
     //选择账户余额 是为了计算账户有多少余额

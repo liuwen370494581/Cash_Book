@@ -62,5 +62,13 @@
             android:layout_toRightOf="@id/layout_cash_limit"
             android:text="欠款：2500"
             android:textColor="@color/text_color_99"/>
+        <ImageView
+            android:id="@+id/pop_gou"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/icon_account_color_gou"
+            android:layout_width="22dp"
+            android:layout_height="22dp"/>
     </RelativeLayout>
 </LinearLayout>

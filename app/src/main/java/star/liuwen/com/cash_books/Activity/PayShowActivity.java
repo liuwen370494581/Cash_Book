@@ -164,6 +164,16 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
                 });
             }
         });
+
+        RxBus.getInstance().toObserverableOnMainThread(Config.RxChoiceColorToPaySettingAndPayShowAndWalletFragment, new RxBusResult() {
+            @Override
+            public void onRxBusResult(Object o) {
+                int color = (int) o;
+                ryBg.setBackgroundResource(color);
+                StatusBarUtils.setWindowStatusBarColor(PayShowActivity.this, color);
+                setTitleBg(color);
+            }
+        });
     }
 
 

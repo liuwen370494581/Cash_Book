@@ -208,5 +208,14 @@
             android:name=".Activity.SearchResultActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--选择颜色页面-->
+        <activity
+            android:name=".Activity.ChoiceAccountColorActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activity.BudgetActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

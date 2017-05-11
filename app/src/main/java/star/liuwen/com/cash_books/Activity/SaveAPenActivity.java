@@ -260,6 +260,7 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 window.dismiss();
                 AccountType = mPopWindowAdapter.getItem(position).getAccountName();
+                mPopWindowAdapter.setShowGou(AccountType);
                 txtAccount.setText(AccountType);
             }
         });
@@ -271,6 +272,9 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
                 backgroundAlpha(1f);
             }
         });
+
+
+        mPopWindowAdapter.setShowGou(AccountType);
 
     }
 

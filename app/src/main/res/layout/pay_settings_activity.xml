@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/background"
@@ -205,7 +206,7 @@
         android:id="@+id/re_setting_debt_date"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white">
 
         <TextView
@@ -231,5 +232,42 @@
             android:padding="6dp"
             android:text=""
             android:textColor="@color/text_color_99"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_setting_choice_account_color"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="选择账户颜色"
+            android:textSize="@dimen/txt_16"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="5dp">
+
+            <RelativeLayout
+                android:id="@+id/re_setting_color_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/xinyongka">
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
     </RelativeLayout>
 </LinearLayout>
