@@ -432,7 +432,7 @@ public class DataEnige {
         list.add(new ColorModel(R.color.zhifubao));
         list.add(new ColorModel(R.color.chuzhiKa));
         list.add(new ColorModel(R.color.chuxuka));
-        list.add(new ColorModel(R.color.weixin));
+        list.add(new ColorModel(R.color.intentAccount));
         list.add(new ColorModel(R.color.xinyongka));
         list.add(new ColorModel(R.color.maicai));
         list.add(new ColorModel(R.color.majiang));
@@ -445,6 +445,7 @@ public class DataEnige {
         list.add(new ColorModel(R.color.tingche));
         list.add(new ColorModel(R.color.gongzi));
         list.add(new ColorModel(R.color.touzi));
+        list.add(new ColorModel(R.color.touziLicai));
         return list;
 
 

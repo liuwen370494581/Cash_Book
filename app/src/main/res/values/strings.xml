@@ -57,6 +57,7 @@
     <string name="edit_remark">编辑备注</string>
     <string name="edit_renickName">编辑昵称</string>
     <string name="edit_reSignature">编辑签名</string>
+    <string name="edit_yusuan">编辑预算</string>
     <string name="edit_setCashYuEr">输入现金余额</string>
     <string name="edit_setCxkYuEr">输入储蓄卡余额</string>
     <string name="edit_setXykYuEr">输入信用卡额度</string>

@@ -28,6 +28,7 @@ public class Config {
 
     public final static String isRemindPush = "isRemindPush";
     public final static String isOpenCodedLock = "isOpenCodedLock";
+    public final static String isBudgetPush = "isBudgetPush";
     public final static String ChangeBg = "ChangeBg";
 
     public final static String ZHI_CHU = "支出";
@@ -101,6 +102,7 @@ public class Config {
     public static final String TxtZhiChuId = "TxtZhiChuId";
     public static final String TxtSearchResult = "TxtSearchResult";
     public static final String TxtIssuingBank = "TxtIssuingBank";
+    public static final String TxtBudgetYuSuan = "TxtBudgetYuSuan";
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelSaveAPen = "ModeSaveAPen";

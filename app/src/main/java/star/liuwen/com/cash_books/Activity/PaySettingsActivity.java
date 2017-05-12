@@ -279,6 +279,12 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+      //  RxBus.getInstance().release();
+    }
+
     private void updateChoiceAccountCommon(boolean isIssubank) {
         if (isIssubank) {
             ChoiceAccount choiceModel = DaoChoiceAccount.queryByAccountId(model.getId()).get(0);

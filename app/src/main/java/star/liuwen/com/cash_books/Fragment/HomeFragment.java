@@ -133,7 +133,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         tvShouRuData = (NumberAnimTextView) headView.findViewById(R.id.home_shouru_data);
         tvZhiChuData = (NumberAnimTextView) headView.findViewById(R.id.home_zhichu_data);
         mCircleProgress = (CircleProgress) headView.findViewById(R.id.f_h_image);
-        mCircleProgress.setProgress(0);
+        mCircleProgress.setProgress(Integer.valueOf("10").intValue());
         mCircleProgress.setPrefixText(DateTimeUtil.getCurrentMonth());
         mCircleProgress.setUnfinishedColor(R.color.white);
         mCircleProgress.setOnClickListener(this);

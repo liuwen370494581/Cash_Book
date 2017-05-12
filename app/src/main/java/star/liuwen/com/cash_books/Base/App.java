@@ -24,6 +24,7 @@ public class App extends Application {
     public static int position;//账户position;
     public static boolean isRemindPush = false;
     public static boolean isOpenCodedLock = false;
+    public static boolean isOpenBudget = false;
     public static String cycleData = "";
     public static String cycleTime = "";
 

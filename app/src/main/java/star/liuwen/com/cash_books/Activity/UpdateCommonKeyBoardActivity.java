@@ -3,9 +3,7 @@ package star.liuwen.com.cash_books.Activity;
 import android.content.Intent;
 import android.inputmethodservice.KeyboardView;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
@@ -14,12 +12,10 @@ import android.widget.EditText;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
-import star.liuwen.com.cash_books.GraphicLock.AppUtil;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.ApkInfoUtils;
 import star.liuwen.com.cash_books.Utils.KeyboardUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 
 /**
@@ -108,6 +104,11 @@ public class UpdateCommonKeyBoardActivity extends BaseActivity {
             edMoney.setHint(SharedPreferencesUtil.getStringPreferences(this, Config.TxtSigNature, "").isEmpty() ? getString(R.string.edit_reSignature) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtSigNature, ""));
             position = 12;
             isShowInput = false;
+        } else if (values.equals("Budget")) {
+            setTitle(getString(R.string.edit_yusuan));
+            position = 13;
+            edMoney.setHint(SharedPreferencesUtil.getStringPreferences(this, Config.TxtBudgetYuSuan, "").isEmpty() ? getString(R.string.edit_yusuan) : SharedPreferencesUtil.getStringPreferences(this, Config.TxtBudgetYuSuan, ""));
+            isShowInput = true;
         }
 
         setListener(isShowInput);
@@ -270,6 +271,12 @@ public class UpdateCommonKeyBoardActivity extends BaseActivity {
                 intent.putExtra(Config.TextInPut, textInput);
                 setResult(0, intent);
                 SharedPreferencesUtil.setStringPreferences(this, Config.TxtSigNature, textInput);
+                finish();
+                break;
+            case 13:
+                intent.putExtra(Config.TextInPut, textInput);
+                setResult(0, intent);
+                SharedPreferencesUtil.setStringPreferences(this, Config.TxtBudgetYuSuan, textInput);
                 finish();
                 break;
 

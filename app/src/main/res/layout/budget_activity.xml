@@ -1,9 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
 
     <include layout="@layout/common_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="1dp"
+            android:drawablePadding="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="8dp"
+            android:text="开启预算"
+            android:textColor="@color/text_color_33"
+            android:textSize="@dimen/textSize_16"/>
+
+        <ImageView
+            android:id="@+id/budget_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:onClick="toSwitchPush"
+            android:src="@mipmap/more_push_on"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_budget_month"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:text="月预算"
+            android:textSize="@dimen/txt_16"/>
+
+        <TextView
+            android:id="@+id/budget_txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:textColor="@color/text_color_99"
+            android:textSize="@dimen/txt_15"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_budget_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/budget_txt_yusuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/circle_progress"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:padding="6dp"
+            android:text="本月剩余预算"
+            android:textSize="@dimen/textSize_18"/>
+
+        <com.github.lzyzsd.circleprogress.CircleProgress
+            android:id="@+id/circle_progress"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            custom:circle_prefix_text="月预算"
+            custom:circle_progress="20"/>
+    </RelativeLayout>
 </LinearLayout>

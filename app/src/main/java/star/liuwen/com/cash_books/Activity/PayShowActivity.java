@@ -177,6 +177,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     }
 
 
+
     private void PayShowList(long id, String startTime, String endTime) {
         baseList.clear();
         mList = DaoAccount.queryByIdAndDate(id, startTime, endTime);
