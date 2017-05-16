@@ -368,7 +368,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                                    mAdapter.removeItem(position);
                                    DaoAccount.deleteAccountById(DaoAccount.query().get(position).getId());
                                    EventBusUtil.sendEvent(new Event(C.EventCode.HomeFragmentToReports, true));
-                                   //   RxBus.getInstance().post(Config.RxHomeFragmentToReportsFragment, true);
                                    mList = DaoAccount.query();
                                    if (DaoAccount.query().size() == 0) {
                                        mAdapter.clear();

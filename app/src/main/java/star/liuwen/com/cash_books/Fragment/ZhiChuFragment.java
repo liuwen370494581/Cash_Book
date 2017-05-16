@@ -242,8 +242,8 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : AccountData,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
                 AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU, zhichuId));
-        EventBusUtil.sendEvent(new Event(C.EventCode.ZhiChuToHomeFragment, homListData));
         updateChoiceAccountYuer(zhichuId);
+        EventBusUtil.sendEvent(new Event(C.EventCode.ZhiChuToHomeFragment, homListData));
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);

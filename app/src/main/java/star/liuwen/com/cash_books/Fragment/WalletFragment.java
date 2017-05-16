@@ -185,13 +185,13 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             @Override
             public void call(List<ChoiceAccount> accounts) {
                 mAdapter.setData(accounts);
-                mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
                 for (int i = 0; i < accounts.size(); i++) {
-                    yuer = yuer + accounts.get(i).getMoney();
+                    yuer += accounts.get(i).getMoney();
                 }
                 tvYuer.setText(String.format("%.2f", yuer));
                 //因为余额的数值会添加要设为0重新开始算
                 yuer = 0;
+                mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear()));
             }
         });
     }
