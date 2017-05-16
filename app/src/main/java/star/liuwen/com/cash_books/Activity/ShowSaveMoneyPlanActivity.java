@@ -21,14 +21,18 @@ import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoSaveMoneyPlan;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
@@ -68,7 +72,6 @@ public class ShowSaveMoneyPlanActivity extends BaseActivity implements BGAOnRVIt
         url = (ImageView) findViewById(R.id.show_money_image_url);
         mSeekBar = (SeekBar) findViewById(R.id.id_seekbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.show_money_recyclerView);
-        initData();
 
         PlanSaveMoneyModel model = (PlanSaveMoneyModel) getIntent().getExtras().getSerializable(Config.PlanSaveMoneyModel);
         if (model != null) {
@@ -111,17 +114,21 @@ public class ShowSaveMoneyPlanActivity extends BaseActivity implements BGAOnRVIt
         txtMoney.setNumberString(SharedPreferencesUtil.getStringPreferences(this, Config.PlanMoney, "").isEmpty() ? getString(R.string.ling) : SharedPreferencesUtil.getStringPreferences(this, Config.PlanMoney, ""));
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.ModelSaveAPen, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                mList = (List<SaveMoneyPlanModel>) o;
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.SaveAPenActivityToShowSaveMoneyPlay:
+                mList = (List<SaveMoneyPlanModel>) event.getData();
                 mAdapter.addMoreData(mList);
                 for (int i = 0; i < mList.size(); i++) {
                     add = add + mList.get(i).getSaveMoney();
                     mPlanModel = mList.get(i);
                 }
-
                 String money = SharedPreferencesUtil.getStringPreferences(ShowSaveMoneyPlanActivity.this, Config.PlanMoney, "");
                 mSeekBar.setProgress(new Double((add / Double.parseDouble(money)) * 100).intValue());
                 txtPercent.setNumberString(String.format("%.2f", add));
@@ -131,12 +138,22 @@ public class ShowSaveMoneyPlanActivity extends BaseActivity implements BGAOnRVIt
                 mPlanModel.setAddPercent(new Double((add / Double.parseDouble(money)) * 100).intValue());
                 mPlanModel.setAdd(add);
                 mPlanModel.setId(DaoSaveMoneyPlan.getCount() + 1);
-                DaoSaveMoneyPlan.insertSaveMoney(mPlanModel);
-                mRecyclerView.setAdapter(mAdapter);
-
-            }
-        });
+                Observable.create(new Observable.OnSubscribe<SaveMoneyPlanModel>() {
+                    @Override
+                    public void call(Subscriber<? super SaveMoneyPlanModel> subscriber) {
+                        DaoSaveMoneyPlan.insertSaveMoney(mPlanModel);
+                        subscriber.onNext(mPlanModel);
+                    }
+                }).compose(RxUtil.<SaveMoneyPlanModel>applySchedulers()).subscribe(new Action1<SaveMoneyPlanModel>() {
+                    @Override
+                    public void call(SaveMoneyPlanModel model) {
+                        mRecyclerView.setAdapter(mAdapter);
+                    }
+                });
+                break;
+        }
     }
+
 
     public void Save(View view) {
         startActivity(new Intent(this, SaveAPenActivity.class));

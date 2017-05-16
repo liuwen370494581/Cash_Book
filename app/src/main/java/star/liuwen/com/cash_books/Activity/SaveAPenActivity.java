@@ -25,8 +25,10 @@ import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoSaveMoneyPlan;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -155,7 +157,7 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
         model.setRemark(remarks);
         model.setId(DaoSaveMoneyPlan.getCount());
         mList.add(model);
-        RxBus.getInstance().post(Config.ModelSaveAPen, mList);
+        EventBusUtil.sendEvent(new Event(C.EventCode.SaveAPenActivityToShowSaveMoneyPlay, mList));
         this.finish();
     }
 
@@ -316,12 +318,6 @@ public class SaveAPenActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.ModelSaveAPen);
-    }
 }
 
 

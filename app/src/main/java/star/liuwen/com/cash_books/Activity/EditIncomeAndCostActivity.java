@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemLongClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import rx.Observable;
@@ -23,10 +22,11 @@ import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
-import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.Enage.DataEnige;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
@@ -100,7 +100,7 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             }).compose(RxUtil.<ZhiChuModel>applySchedulers()).subscribe(new Action1<ZhiChuModel>() {
                 @Override
                 public void call(ZhiChuModel zhichuModel) {
-                    RxBus.getInstance().post(Config.RxToZhiChuFragment, zhichuModel);
+                    EventBusUtil.sendEvent(new Event(C.EventCode.EditIncomeAndCostActivityToZhiChuFragment, zhichuModel));
                     finish();
                 }
             });
@@ -120,18 +120,13 @@ public class EditIncomeAndCostActivity extends BaseActivity implements BGAOnRVIt
             }).compose(RxUtil.<ShouRuModel>applySchedulers()).subscribe(new Action1<ShouRuModel>() {
                 @Override
                 public void call(ShouRuModel shouRuModel) {
-                    RxBus.getInstance().post(Config.RxToSHouRuFragment, shouRuModel);
+                    EventBusUtil.sendEvent(new Event(C.EventCode.EditIncomeAndCostActivityToShouRuFragment, shouRuModel));
                     finish();
                 }
             });
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxToSHouRuFragment);
-    }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {

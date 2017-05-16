@@ -1,7 +1,6 @@
 package star.liuwen.com.cash_books.Activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,9 +12,9 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Enage.DataEnige;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
 
 /**
@@ -58,20 +57,23 @@ public class PlanSaveMoneyActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        initData();
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.Game, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                boolean close = (boolean) o;
-                if (close) {
-                    PlanSaveMoneyActivity.this.finish();
-                }
-            }
-        });
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.Close:
+                //接收计划页面传递过来 当确定建立一个计划 需要关闭页面
+                PlanSaveMoneyActivity.this.finish();
+                break;
+        }
+    }
+
 
     public class PlanSaveMoneyAdapter extends BGARecyclerViewAdapter<PlanSaveMoneyModel> {
 
@@ -88,9 +90,4 @@ public class PlanSaveMoneyActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().release();
-    }
 }

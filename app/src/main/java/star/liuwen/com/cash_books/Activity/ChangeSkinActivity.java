@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -19,8 +18,10 @@ import java.util.List;
 import star.liuwen.com.cash_books.Adapter.BgPicGridAdapter;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.bean.BgPicModel;
@@ -66,7 +67,7 @@ public class ChangeSkinActivity extends BaseActivity {
                 if (bitmap != null) {
                     mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
                 }
-                RxBus.getInstance().post(Config.isBgCash, path);
+                EventBusUtil.sendEvent(new Event(C.EventCode.UserPhoto, path));
             }
         });
         mGridView.setAdapter(mAdapter);
@@ -91,9 +92,4 @@ public class ChangeSkinActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.isBgCash);
-    }
 }

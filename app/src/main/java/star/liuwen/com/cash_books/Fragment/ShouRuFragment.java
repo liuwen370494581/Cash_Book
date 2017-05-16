@@ -45,10 +45,11 @@ import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
@@ -92,7 +93,6 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.fragment_shouru);
         initView();
-        initData();
         return getContentView();
     }
 
@@ -100,7 +100,6 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initAdapter();
-        initData();
     }
 
     private void initAdapter() {
@@ -182,24 +181,20 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         return true;
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxToSHouRuFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                ShouRuModel model = (ShouRuModel) o;
-                mAdapter.addItem(mList.size() - 1, model);
-
-            }
-        });
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable("AccountModel");
-        ToastUtils.removeToast();
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.EditIncomeAndCostActivityToShouRuFragment:
+                ShouRuModel model = (ShouRuModel) event.getData();
+                mAdapter.addItem(mList.size() - 1, model);
+                break;
+        }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -241,7 +236,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.other) : AccountConsumeType,
                 AccountUrl == null ? R.mipmap.icon_shouru_type_qita : AccountUrl, DateTimeUtil.getCurrentTime_Today(),
                 Config.SHOU_RU, shouRuId));
-        RxBus.getInstance().post("AccountModel", homListData);
+        EventBusUtil.sendEvent(new Event(C.EventCode.ZhiChuToHomeFragment, homListData));
         updateChoiceAccountYuer(shouRuId);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);

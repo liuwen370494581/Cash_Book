@@ -15,9 +15,11 @@ import rx.functions.Action1;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
@@ -74,6 +76,7 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
         txtCreditLimit = (TextView) findViewById(R.id.setting_txt_Credit_limit);
         txtDebt = (TextView) findViewById(R.id.setting_txt_debt);
         txtDebtData = (TextView) findViewById(R.id.setting_txt_debt_date);
+
 
         reBank.setOnClickListener(this);
         reAccount.setOnClickListener(this);
@@ -201,6 +204,7 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
             }
         }
         int y = 1 + (int) (Math.random() * 1000);
+
         final ChoiceAccount account = new ChoiceAccount(DaoChoiceAccount.getCount() + y,
                 model.getWalletUrl(),
                 isAccountName ? TextUtils.isEmpty(tvAccount.trim()) ? "" : tvAccount : model.getPlanName(),
@@ -219,7 +223,7 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
         }).compose(RxUtil.<ChoiceAccount>applySchedulers()).subscribe(new Action1<ChoiceAccount>() {
             @Override
             public void call(ChoiceAccount account) {
-                RxBus.getInstance().post(Config.RxModelToWalletFragment, account);
+                EventBusUtil.sendEvent(new Event(C.EventCode.newAddAccountActivityToWalletFragment, account));
                 Intent intent = new Intent(newAddAccountActivity.this, MainActivity.class);
                 intent.putExtra("id", 2);
                 startActivity(intent);
@@ -236,11 +240,6 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
         reDebtData.setVisibility(View.GONE);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxModelToWalletFragment);
-    }
 
     @Override
     public void onClick(View v) {

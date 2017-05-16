@@ -16,7 +16,6 @@ import star.liuwen.com.cash_books.Fragment.ManageMoneyFragment;
 import star.liuwen.com.cash_books.Fragment.MyFragment;
 import star.liuwen.com.cash_books.Fragment.ReportFragment;
 import star.liuwen.com.cash_books.Fragment.WalletFragment;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.tab.BarEntity;
 import star.liuwen.com.cash_books.View.tab.BottomTabBar;
@@ -54,6 +53,7 @@ public class MainActivity extends BaseActivity implements BottomTabBar.OnSelectL
         bars.add(new BarEntity("社区", R.mipmap.jiyibi_icon_beizhu_down, R.mipmap.jiyibi_icon_beizhu));
         bars.add(new BarEntity("我的", R.mipmap.tixing_lan, R.mipmap.tixing));
         tb.setBars(bars);
+
     }
 
 
@@ -79,7 +79,6 @@ public class MainActivity extends BaseActivity implements BottomTabBar.OnSelectL
         } else if (id == 2) {
             onSelect(1);
         }
-
     }
 
     @Override
@@ -91,7 +90,6 @@ public class MainActivity extends BaseActivity implements BottomTabBar.OnSelectL
         } else {
             App app = (App) getApplication();
             app.destroyReceiver();
-            RxBus.getInstance().release();
             ToastUtils.removeToast();
             finish();
         }

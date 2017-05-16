@@ -24,9 +24,9 @@ import cn.sharesdk.framework.ShareSDK;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.ActivityKiller;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
@@ -85,19 +85,26 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.UserPhoto:
+                Bitmap bitmap = BitMapUtils.getBitmapByPath(SettingActivity.this, event.getData().toString(), false);
+                mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
+                break;
+        }
+    }
+
     private void initDate() {
         mDownLoadUrl = "http://sap.dyajb.com/jiaju_share.html";
         mShareAppName = getString(R.string.app_name);
         mShareContent = getString(R.string.share_content);
         mFilePath = Config.SHARE_LOGO;
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.isBgCash, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                Bitmap bitmap = BitMapUtils.getBitmapByPath(SettingActivity.this, o.toString(), false);
-                mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
-            }
-        });
     }
 
     @Override
@@ -251,11 +258,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         getWindow().setAttributes(lp);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().release();
-    }
 
     private void copyShareImgToSD() {
         String fileName = "logo_asset.png";

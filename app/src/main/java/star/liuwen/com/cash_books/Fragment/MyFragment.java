@@ -24,9 +24,9 @@ import star.liuwen.com.cash_books.Activity.ShowSaveMoneyPlanActivity;
 import star.liuwen.com.cash_books.Activity.UserInfoActivity;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -46,7 +46,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void lazyInitData() {
-
     }
 
     @Nullable
@@ -56,7 +55,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         setContentView(R.layout.fragment_my);
         setTitle(getString(R.string.my_more));
         initView();
-        initData();
         return getContentView();
     }
 
@@ -104,51 +102,43 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.isBgCash, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                Bitmap bitmap = BitMapUtils.getBitmapByPath(getActivity(), o.toString(), false);
-                mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
-            }
-        });
 
-        RxBus.getInstance().toObserverableOnMainThread(Config.userUrl, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                mImageUrl.setImageBitmap((Bitmap) o);
-            }
-        });
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.userNickName, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                txtUserNickName.setText((CharSequence) o);
-            }
-        });
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.userSignature, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                txtSignature.setText((CharSequence) o);
-            }
-        });
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.PlanSaveMoneyModel, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                model = (PlanSaveMoneyModel) o;
-            }
-        });
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxUserInFoToMyFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                txtUserNickName.setText(getString(R.string.no_setting));
-            }
-        });
-
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.UserInFoToMyFragment:
+                //设置昵称
+                txtUserNickName.setText(getString(R.string.no_setting));
+                break;
+            case C.EventCode.UserPhoto:
+                //设置背景
+                Bitmap bitmap = BitMapUtils.getBitmapByPath(getActivity(), event.getData().toString(), false);
+                mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
+                break;
+            case C.EventCode.UserUrl:
+                //设置头像
+                mImageUrl.setImageBitmap((Bitmap) event.getData());
+                break;
+            case C.EventCode.UserSignature:
+                //设置签名
+                txtSignature.setText((CharSequence) event.getData());
+                break;
+            case C.EventCode.UserNickName:
+                //设置昵称
+                txtUserNickName.setText((CharSequence) event.getData());
+                break;
+            case C.EventCode.NewSaveMoneyPlanActivityToMyFragment:
+                model = (PlanSaveMoneyModel) event.getData();
+                break;
+
+        }
+    }
+
 
     @Override
     public void onClick(View v) {

@@ -8,10 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
-import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 
 /**
  * Created by liuwen on 2017/1/13.
@@ -58,17 +57,21 @@ public class SaveMoneyActivity extends BaseActivity {
                 }
             }
         });
-
-        initData();
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.Game, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.Close:
+                //接收计划页面传递过来 当确定建立一个计划 需要关闭页面
                 SaveMoneyActivity.this.finish();
-            }
-        });
+                break;
+        }
     }
 
 }

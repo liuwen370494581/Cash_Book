@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 import com.squareup.leakcanary.RefWatcher;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 
@@ -40,8 +45,48 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //加入EventBus
+        if (isRegisterEventBus()) {
+            EventBusUtil.register(this);
+        }
+    }
+
+    protected boolean isRegisterEventBus() {
+        return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventBusCome(Event event) {
+        if (event != null) {
+            receiveEvent(event);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onStickyEventBusCome(Event event) {
+        if (event != null) {
+            receiveStickyEvent(event);
+        }
+    }
+
+    /**
+     * 接收到分发到事件
+     *
+     * @param event 事件
+     */
+    protected void receiveEvent(Event event) {
 
     }
+
+    /**
+     * 接受到分发的粘性事件
+     *
+     * @param event 粘性事件
+     */
+    protected void receiveStickyEvent(Event event) {
+
+    }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -89,6 +134,10 @@ public abstract class BaseFragment extends Fragment {
         ToastUtils.removeToast();
         RefWatcher refWatcher = App.getRefWatcher(getActivity());
         refWatcher.watch(getActivity());
+        if (isRegisterEventBus()) {
+            EventBusUtil.unregister(this);
+        }
+
     }
 
     /**

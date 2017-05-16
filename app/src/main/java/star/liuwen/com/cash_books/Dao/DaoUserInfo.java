@@ -4,6 +4,7 @@ import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.bean.UserInfoModel;
+import star.liuwen.com.cash_books.bean.UserInfoModelDao;
 import star.liuwen.com.cash_books.bean.ZhiChuModel;
 
 /**
@@ -66,6 +67,18 @@ public class DaoUserInfo {
      */
     public static List<UserInfoModel> query() {
         return App.getDaoInstant().getUserInfoModelDao().queryBuilder().list();
+    }
+
+
+    //根據Id來查詢用戶的集合對象
+    public static List<UserInfoModel> queryById(long id) {
+        return App.getDaoInstant().getUserInfoModelDao().queryBuilder().where(UserInfoModelDao.Properties.Id.eq(id)).list();
+    }
+
+
+    //根據用戶名來查詢用戶的集合對象
+    public static List<UserInfoModel> queryByUserName(String name) {
+        return App.getDaoInstant().getUserInfoModelDao().queryBuilder().where(UserInfoModelDao.Properties.UserName.eq(name)).list();
     }
 
 

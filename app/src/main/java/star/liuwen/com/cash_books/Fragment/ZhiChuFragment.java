@@ -46,10 +46,11 @@ import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
@@ -101,7 +102,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initAdapter();
-        initData();
     }
 
     private void initAdapter() {
@@ -186,23 +186,22 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         return true;
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxToZhiChuFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                ZhiChuModel model = (ZhiChuModel) o;
-                mAdapter.addItem(mList.size() - 1, model);
-            }
-        });
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxToZhiChuFragment);
-        RxBus.getInstance().removeObserverable("AccountModel");
-        ToastUtils.removeToast();
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.EditIncomeAndCostActivityToZhiChuFragment:
+                ZhiChuModel model = (ZhiChuModel) event.getData();
+                mAdapter.addItem(mList.size() - 1, model);
+                break;
+        }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -243,7 +242,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 , TextUtils.isEmpty(AccountData) ? (choiceAccountDate.isEmpty() ? DateTimeUtil.getCurrentYear() : choiceAccountDate) : AccountData,
                 Double.parseDouble(mEdName), AccountConsumeType == null ? getString(R.string.yiban) : AccountConsumeType, AccountUrl == null ? R.mipmap.icon_shouru_type_qita :
                 AccountUrl, DateTimeUtil.getCurrentTime_Today(), Config.ZHI_CHU, zhichuId));
-        RxBus.getInstance().post("AccountModel", homListData);
+        EventBusUtil.sendEvent(new Event(C.EventCode.ZhiChuToHomeFragment, homListData));
         updateChoiceAccountYuer(zhichuId);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);

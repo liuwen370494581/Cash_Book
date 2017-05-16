@@ -29,8 +29,10 @@ import java.util.Date;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -129,8 +131,8 @@ public class newSaveMoneyPlanActivity extends BaseActivity implements View.OnCli
         Intent intent = new Intent(newSaveMoneyPlanActivity.this, ShowSaveMoneyPlanActivity.class);
         intent.putExtra(Config.PlanSaveMoneyModel, model);
         startActivity(intent);
-        RxBus.getInstance().post(Config.Game, true);
-        RxBus.getInstance().post(Config.PlanSaveMoneyModel, model);
+        EventBusUtil.sendEvent(new Event(C.EventCode.Close));
+        EventBusUtil.sendEvent(new Event(C.EventCode.NewSaveMoneyPlanActivityToMyFragment, model));
         newSaveMoneyPlanActivity.this.finish();
 
     }
@@ -232,7 +234,8 @@ public class newSaveMoneyPlanActivity extends BaseActivity implements View.OnCli
                              */
                             setPicToView(head);//保存在SD卡中
                             imageUrl.setImageBitmap(head);//用ImageView显示出来
-                            RxBus.getInstance().post(Config.TarGetUrl, head);
+                            EventBusUtil.sendEvent(new Event(C.EventCode.TarGetUrl, head));
+
                         }
                     }
                     break;
@@ -313,11 +316,4 @@ public class newSaveMoneyPlanActivity extends BaseActivity implements View.OnCli
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.TarGetUrl);
-        RxBus.getInstance().removeObserverable(Config.PlanSaveMoneyModel);
-        RxBus.getInstance().removeObserverable(Config.Game);
-    }
 }

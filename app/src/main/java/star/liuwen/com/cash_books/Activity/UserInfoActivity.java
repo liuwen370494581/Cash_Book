@@ -38,8 +38,10 @@ import javax.xml.parsers.SAXParserFactory;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.CircleImageView;
@@ -395,11 +397,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             public void ClickRight() {
                 SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.userSex);
                 SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.userSignature);
-                SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.UserName);
                 SharedPreferencesUtil.cleanSharePreferences(UserInfoActivity.this, Config.UserPassWord);
                 startActivity(new Intent(UserInfoActivity.this, LoginActivity.class));
-                RxBus.getInstance().post(Config.RxUserInFoToMyFragment, true);
-                finish();
+                EventBusUtil.sendEvent(new Event(C.EventCode.UserInFoToMyFragment, true));
+                UserInfoActivity.this.finish();
             }
         });
     }
@@ -434,7 +435,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                              */
                             setPicToView(head);//保存在SD卡中
                             userImage.setImageBitmap(head);//用ImageView显示出来
-                            RxBus.getInstance().post(Config.userUrl, head);
+                            EventBusUtil.sendEvent(new Event(C.EventCode.UserUrl, head));
                         }
                     }
                     break;
@@ -445,14 +446,14 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                     if (data != null) {
                         txtNickName.setText(data.getExtras().getString(Config.TextInPut));
                         SharedPreferencesUtil.setStringPreferences(UserInfoActivity.this, Config.userNickName, data.getExtras().getString(Config.TextInPut));
-                        RxBus.getInstance().post(Config.userNickName, data.getExtras().getString(Config.TextInPut));
+                        EventBusUtil.sendEvent(new Event(C.EventCode.UserNickName,data.getExtras().getString(Config.TextInPut)));
                     }
                     break;
                 case ReSignature:
                     if (data != null) {
                         txtSignature.setText(data.getExtras().getString(Config.TextInPut));
                         SharedPreferencesUtil.setStringPreferences(UserInfoActivity.this, Config.userSignature, data.getExtras().getString(Config.TextInPut));
-                        RxBus.getInstance().post(Config.userSignature, data.getExtras().getString(Config.TextInPut));
+                        EventBusUtil.sendEvent(new Event(C.EventCode.UserSignature,data.getExtras().getString(Config.TextInPut)));
                     }
             }
         }

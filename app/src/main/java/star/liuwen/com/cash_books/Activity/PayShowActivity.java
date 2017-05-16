@@ -33,9 +33,10 @@ import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
 import star.liuwen.com.cash_books.Dao.DaoAccountBalance;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.StatusBarUtils;
@@ -110,7 +111,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         if (model != null) {
             payShowId = model.getId();
-            payShowDate = model.getData();
+            payShowDate = model.getTimeMinSec();
             if (DaoAccount.queryByAccountType(model.getMAccountType()).size() != 0 || DaoChoiceAccount.query().size() != 0) {
                 PayShowList(payShowId, startTime, endTime);
             } else {
@@ -133,15 +134,19 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             }
         }
         mAdapter.setOnRVItemClickListener(this);
-        initData();
     }
 
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxPaySettingToPayShowActivityAndWalletFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                final long id = (long) o;
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.PaySettingToPayShowActivityAndWalletFragment:
+                final long id = (long) event.getData();
                 Observable.create(new Observable.OnSubscribe<ChoiceAccount>() {
                     @Override
                     public void call(Subscriber<? super ChoiceAccount> subscriber) {
@@ -162,20 +167,16 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
                         }
                     }
                 });
-            }
-        });
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxChoiceColorToPaySettingAndPayShowAndWalletFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                int color = (int) o;
+                break;
+            case C.EventCode.ChoiceColorToPaySettingAndPayShowAndWalletFragment:
+                int color = (int) event.getData();
                 ryBg.setBackgroundResource(color);
                 StatusBarUtils.setWindowStatusBarColor(PayShowActivity.this, color);
                 setTitleBg(color);
-            }
-        });
-    }
+                break;
 
+        }
+    }
 
 
     private void PayShowList(long id, String startTime, String endTime) {
@@ -303,7 +304,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         model.setMoney(Double.parseDouble(data));
         DaoChoiceAccount.updateAccount(model);
         //通知钱包页面数据发送改变
-        RxBus.getInstance().post(Config.RxPayShowActivityToWalletFragment, true);
+        EventBusUtil.sendEvent(new Event(C.EventCode.PayShowActivityToWalletFragment, true));
 
         //循环baseList的第一个数据来和插入的数据来比较
         for (int i = 0; i < baseList.size(); i++) {
@@ -351,11 +352,6 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxPaySettingToPayShowActivityAndWalletFragment);
-    }
 
     private class PaySHowAdapter extends BGARecyclerViewAdapter<BaseModel> {
         public PaySHowAdapter(RecyclerView recyclerView) {

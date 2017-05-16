@@ -24,9 +24,9 @@ import star.liuwen.com.cash_books.Adapter.ReportsDetailAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.PieChart.PieChart;
@@ -65,7 +65,6 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initAdapter();
-        initData();
     }
 
     private void initAdapter() {
@@ -117,35 +116,37 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
         mViewStub.setVisibility(View.GONE);
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread("AccountModel", new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                mList = DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU);
-                mViewStub.setVisibility(View.GONE);
-                headView.setVisibility(View.VISIBLE);
-                mAdapter.setData(mList);
-                mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
-                money = new float[mList.size()];
-                for (int i = 0; i < mList.size(); i++) {
-                    money[i] = (float) mList.get(i).getMoney();
-                }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.ZhiChuToHomeFragment:
+                mList = DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU);
+                if (mList.size() == 0) {
+                    mViewStub.setVisibility(View.VISIBLE);
+                } else {
+                    mViewStub.setVisibility(View.GONE);
+                    mAdapter.setData(mList);
+                    mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
+                    money = new float[mList.size()];
+                    for (int i = 0; i < mList.size(); i++) {
+                        money[i] = (float) mList.get(i).getMoney();
+                    }
+                }
                 mPieChart.setRadius(230);
                 mPieChart.setDescr("总支出");
                 mPieChart.initSrc(money, Config.reportsColor, new PieChart.OnItemClickListener() {
-
                     @Override
                     public void click(int position) {
-                        ToastUtils.showToast(getActivity(), "你点击了");
                     }
                 });
-            }
-        });
-
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
+                break;
+            case C.EventCode.HomeFragmentToReports:
                 mList.clear();
                 mAdapter.clear();
                 mList = DaoAccount.queryByZhiChuSHouRuType(Config.ZHI_CHU);
@@ -168,9 +169,8 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
                     mAdapter.setData(mList);
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
-            }
-        });
-
+                break;
+        }
     }
 
     @Override
@@ -205,10 +205,4 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable("AccountModel");
-        RxBus.getInstance().removeObserverable(Config.RxHomeFragmentToReportsFragment);
-    }
 }

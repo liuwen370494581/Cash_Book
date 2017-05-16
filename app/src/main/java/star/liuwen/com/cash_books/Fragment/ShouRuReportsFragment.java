@@ -23,9 +23,9 @@ import star.liuwen.com.cash_books.Adapter.ReportsDetailAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.PieChart.PieChart;
@@ -65,7 +65,6 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initAdapter();
-        initData();
     }
 
     private void initAdapter() {
@@ -109,10 +108,15 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
         mRecyclerView.addItemDecoration(BGADivider.newShapeDivider());
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread("AccountModel", new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.ZhiChuToHomeFragment:
                 mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
                 if (mList.size() == 0) {
                     mViewStub.setVisibility(View.VISIBLE);
@@ -132,11 +136,8 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
                     public void click(int position) {
                     }
                 });
-            }
-        });
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxHomeFragmentToReportsFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
+                break;
+            case C.EventCode.HomeFragmentToReports:
                 mList.clear();
                 mAdapter.clear();
                 mList = DaoAccount.queryByZhiChuSHouRuType(Config.SHOU_RU);
@@ -159,8 +160,8 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
                     mAdapter.setData(mList);
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
-            }
-        });
+                break;
+        }
     }
 
     private void initView() {
@@ -168,8 +169,6 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
         mViewStub = (ViewStub) getContentView().findViewById(R.id.view_stub);
         mViewStub.inflate();
         mViewStub.setVisibility(View.GONE);
-
-
     }
 
     @Override
@@ -203,10 +202,4 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
         pvTime.show();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable("AccountModel");
-        RxBus.getInstance().removeObserverable(Config.RxHomeFragmentToReportsFragment);
-    }
 }

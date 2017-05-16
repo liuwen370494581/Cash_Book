@@ -9,10 +9,11 @@ import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.View.DatePickerDialog;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
@@ -85,7 +86,6 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         reDebt.setOnClickListener(this);
         reDebtData.setOnClickListener(this);
         reChoiceColor.setOnClickListener(this);
-        initData();
 
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
         if (model != null) {
@@ -136,14 +136,21 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.RxChoiceColorToPaySettingAndPayShowAndWalletFragment, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                reColorBg.setBackgroundResource((Integer) o);
-            }
-        });
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.ChoiceColorToPaySettingAndPayShowAndWalletFragment:
+                reColorBg.setBackgroundResource((Integer) event.getData());
+                break;
+        }
+    }
+
 
     private void deleteChoiceAccount() {
         final TipandEditDialog dialog = new TipandEditDialog(this, "确定要删除这个账户吗");
@@ -160,7 +167,7 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void ClickRight() {
-                RxBus.getInstance().post(Config.RxPaySettingToWalletFragment, true);
+                EventBusUtil.sendEvent(new Event(C.EventCode.PaySettingToWalletFragment, true));
                 DaoChoiceAccount.deleteChoiceAccountByModel(model);
                 Intent intent = new Intent(PaySettingsActivity.this, MainActivity.class);
                 intent.putExtra("id", 2);
@@ -282,7 +289,7 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-      //  RxBus.getInstance().release();
+        //  RxBus.getInstance().release();
     }
 
     private void updateChoiceAccountCommon(boolean isIssubank) {
@@ -290,13 +297,13 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
             ChoiceAccount choiceModel = DaoChoiceAccount.queryByAccountId(model.getId()).get(0);
             choiceModel.setAccountName(backData);
             DaoChoiceAccount.updateAccount(choiceModel);
-            RxBus.getInstance().post(Config.RxPaySettingToPayShowActivityAndWalletFragment, model.getId());
+            EventBusUtil.sendEvent(new Event(C.EventCode.PaySettingToPayShowActivityAndWalletFragment, model.getId()));
         } else {
             ChoiceAccount choiceModel = DaoChoiceAccount.queryByAccountId(model.getId()).get(0);
             choiceModel.setIssuingBank(backData);
             choiceModel.setAccountName(backData);
             DaoChoiceAccount.updateAccount(choiceModel);
-            RxBus.getInstance().post(Config.RxPaySettingToPayShowActivityAndWalletFragment, model.getId());
+            EventBusUtil.sendEvent(new Event(C.EventCode.PaySettingToPayShowActivityAndWalletFragment, model.getId()));
         }
 
     }

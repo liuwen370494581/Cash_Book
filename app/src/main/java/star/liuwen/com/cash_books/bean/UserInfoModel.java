@@ -13,14 +13,30 @@ import java.io.Serializable;
 public class UserInfoModel implements Serializable {
     private static final long serialVersionUID = 1L;//为了避免反序列化失败 加的一个uid
     @Id(autoincrement = true)
-    private Long id; //用户id
+    private Long id; //用户id 主键 作为其他类的外检 根据这个ID来查询用户下的所有数据是否存在
     private String userName;//用户名
     private String password;//密码
     private String signature;//签名
     private String sex; //性别
     private String location;//所在地
+    private String bgPath;//背景图片
+    private String userPhoto;//用户头像
 
     public UserInfoModel() {
+    }
+
+    @Generated(hash = 1209768052)
+    public UserInfoModel(Long id, String userName, String password,
+            String signature, String sex, String location, String bgPath,
+            String userPhoto) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.signature = signature;
+        this.sex = sex;
+        this.location = location;
+        this.bgPath = bgPath;
+        this.userPhoto = userPhoto;
     }
 
     public String getLocation() {
@@ -71,15 +87,19 @@ public class UserInfoModel implements Serializable {
         this.id = id;
     }
 
-    @Generated(hash = 953430471)
-    public UserInfoModel(Long id, String userName, String password,
-                         String signature, String sex, String location) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.signature = signature;
-        this.sex = sex;
-        this.location = location;
+    public String getBgPath() {
+        return bgPath;
     }
 
+    public void setBgPath(String bgPath) {
+        this.bgPath = bgPath;
+    }
+
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
+    }
 }

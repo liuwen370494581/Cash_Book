@@ -1,12 +1,10 @@
 package star.liuwen.com.cash_books.Activity;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -27,11 +25,15 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
+import star.liuwen.com.cash_books.Base.App;
+import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoUserInfo;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.Utils.ApkInfoUtils;
 import star.liuwen.com.cash_books.Utils.CheckGetUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
@@ -44,7 +46,7 @@ import star.liuwen.com.cash_books.bean.UserInfoModel;
 /**
  * Created by liuwen on 2017/2/9.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText txtUsername, txtPassword, txtPasswordRepeat;
     private ImageView imageUsername, imagePassword, imagePasswordRepeat;
     private CheckBox showpassword;
@@ -59,17 +61,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout lyShowSmsCode, lyShowUser;
     private boolean isShowBack = true;
     private boolean IsForgetGesturePassword = false;
+    private long firstTime = 0;
+
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public int activityLayoutRes() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
-        initView();
-
+        return R.layout.login_activity;
     }
 
+
+    @Override
     public void initView() {
         txtUsername = (EditText) findViewById(R.id.login_username);
         txtPassword = (EditText) findViewById(R.id.login_password);
@@ -106,8 +109,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (bt != null) {
             userImage.setImageBitmap(bt);
         }
-
-
     }
 
     private void setListener() {
@@ -178,37 +179,48 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         this.finish();
     }
 
-    //登陆
+    //登陆和註冊
     public void login(View view) {
         String tvUserName = txtUsername.getText().toString().trim();
         String tvPassword = txtPassword.getText().toString().trim();
         String tvSmsCode = txtPasswordRepeat.getText().toString().trim();
 
-        if (TextUtils.isEmpty(tvUserName)) {
+        if (TextUtils.isEmpty(tvUserName.trim())) {
             ToastUtils.showToast(this, "用户名不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(tvPassword)) {
+        if (TextUtils.isEmpty(tvPassword.trim())) {
             ToastUtils.showToast(this, "密码不能为空");
             return;
         }
 
         if (!isShowBack) {
-            if (TextUtils.isEmpty(tvSmsCode)) {
+            if (TextUtils.isEmpty(tvSmsCode.trim())) {
                 ToastUtils.showToast(this, "验证码不能为空");
                 return;
             }
 
-            if (tvPassword.length() > 6 || tvPassword.length() < 16) {
-                ToastUtils.showToast(this, "请输入6-16的密码");
-            }
             if (!CheckGetUtil.checkNum(tvSmsCode, mImgCode.getCode())) {
                 mImgCode.createNewCode();
                 ToastUtils.showToast(this, "验证码输入错误");
+                return;
             }
-            int y = 1 + (int) (Math.random() * 100);
-            final UserInfoModel model = new UserInfoModel(DaoUserInfo.getCount() + y, tvUserName, tvPassword, "", "", "");
+            //校驗用戶名只能為一個
+            List<UserInfoModel> mList = new ArrayList<>();
+            mList = DaoUserInfo.query();
+
+            for (int i = 0; i < mList.size(); i++) {
+                if (tvUserName.equals(mList.get(i).getUserName())) {
+                    username = mList.get(i).getUserName();
+                }
+            }
+            if (tvUserName.equals(username)) {
+                ToastUtils.showToast(this, "用戶名已经存在");
+                return;
+            }
+
+            final UserInfoModel model = new UserInfoModel(DaoUserInfo.getCount(), tvUserName, tvPassword, "", "", "", "", "");
             SharedPreferencesUtil.setStringPreferences(this, Config.UserName, tvUserName);
             SharedPreferencesUtil.setStringPreferences(this, Config.UserPassWord, tvPassword);
 
@@ -221,12 +233,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }).compose(RxUtil.<UserInfoModel>applySchedulers()).subscribe(new Action1<UserInfoModel>() {
                 @Override
                 public void call(UserInfoModel model) {
-                    ToastUtils.showToast(LoginActivity.this, "恭喜你注册成功");
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("id", 1);
+                    startActivity(intent);
+                    startActivity(intent);
                     finish();
                 }
             });
         } else {
+            //登錄
             List<UserInfoModel> mList = new ArrayList<>();
             mList = DaoUserInfo.query();
             for (int i = 0; i < mList.size(); i++) {
@@ -248,12 +263,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             SharedPreferencesUtil.setStringPreferences(this, Config.UserName, tvUserName);
             SharedPreferencesUtil.setStringPreferences(this, Config.UserPassWord, tvPassword);
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            RxBus.getInstance().post(Config.TxtForgetGesturePassword, true);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("id", 1);
+            startActivity(intent);
+            //发送消息到解锁页面 登陆成功之后让解锁页面关闭
+            EventBusUtil.sendEvent(new Event(C.EventCode.UserForgetGesturePassword, true));
             this.finish();
 
         }
     }
+
 
     //注册
     public void register(View view) {
@@ -288,8 +307,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // RxBus.getInstance().removeObserverable(Config.userUrl);
+        ToastUtils.removeToast();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - firstTime > 2000) {
+            ToastUtils.showToast(this, getString(R.string.press_one_exit));
+            firstTime = System.currentTimeMillis();
+            return;
+        } else {
+            App app = (App) getApplication();
+            app.destroyReceiver();
+            ToastUtils.removeToast();
+            finish();
+
+            ActivityManager activityMgr = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+            activityMgr.killBackgroundProcesses(getPackageName());
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
+
+        }
+        super.onBackPressed();
+    }
+
 
     public void addLayoutListener(final View main, final View scroll) {
         main.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

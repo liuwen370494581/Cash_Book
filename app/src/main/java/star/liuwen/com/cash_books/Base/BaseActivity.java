@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 import com.squareup.leakcanary.RefWatcher;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.ActivityKiller;
@@ -33,6 +38,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         mTitle = (RelativeLayout) findViewById(R.id.titleBar);
         title = (TextView) findViewById(R.id.title);
         rightTxt = (TextView) findViewById(R.id.toolbar_righ_tv);
+
+        //加入EventBus
+        if (isRegisterEventBus()) {
+            EventBusUtil.register(this);
+        }
         initView();
         ActivityKiller.getInstance().addActivity(this);
     }
@@ -44,6 +54,48 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 是否注册事件分发
+     *
+     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
+     */
+    protected boolean isRegisterEventBus() {
+        return false;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventBusCome(Event event) {
+        if (event != null) {
+            receiveEvent(event);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onStickyEventBusCome(Event event) {
+        if (event != null) {
+            receiveStickyEvent(event);
+        }
+    }
+
+    /**
+     * 接收到分发到事件
+     *
+     * @param event 事件
+     */
+    protected void receiveEvent(Event event) {
+
+    }
+
+    /**
+     * 接受到分发的粘性事件
+     *
+     * @param event 粘性事件
+     */
+    protected void receiveStickyEvent(Event event) {
+
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -52,6 +104,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtils.removeToast();
         RefWatcher refWatcher = App.getRefWatcher(this);
         refWatcher.watch(this);
+        if (isRegisterEventBus()) {
+            EventBusUtil.unregister(this);
+        }
     }
 
     /**

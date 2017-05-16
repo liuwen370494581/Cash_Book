@@ -24,8 +24,6 @@ public class Config {
             "#AD254C", "#A688C4", "#936651", "#936651", "#E0A904", "#FE673E"};
 
 
-    public final static String isBgCash = "isBgCash";
-
     public final static String isRemindPush = "isRemindPush";
     public final static String isOpenCodedLock = "isOpenCodedLock";
     public final static String isBudgetPush = "isBudgetPush";
@@ -53,7 +51,6 @@ public class Config {
 
 
     public final static String TarGetUrl = "TarGetUrl";
-    public final static String userUrl = "userUrl";
     public final static String userNickName = "userNickName";
     public final static String userSignature = "userSignature";
     public final static String userSex = "userSix";
@@ -67,7 +64,6 @@ public class Config {
 
     public static final String LockPassword = "LockPassword";
     public static final String PlanSaveMoneyModel = "PlanSaveMoneyModel";
-    public static final String Game = "Game";
 
     public static final String FistStar = "FirstStar";
     public static final String UserName = "UserName";
@@ -115,19 +111,4 @@ public class Config {
     public static final int ACTION_BACK_TO_HOME = 6; //默认值
     public static final int ACTION_RESTART_APP = 9;//被强杀
     public static final int ACTION_KICK_OUT = 10;//被踢出
-
-
-    //RxBus标识符
-    public static final String RxToZhiChuFragment = "RxToZhiChu";
-    public static final String RxToSHouRuFragment = "RxToSHouRu";
-    public static final String RxPayShowActivityToWalletFragment = "RxPayShowActivityToWalletFragment";
-
-    public static final String RxModelToWalletFragment = "RxModelToWalletFragment";
-    public static final String RxPaySettingToWalletFragment = "RxPaySettingToWalletFragment";
-    public static final String RxHomeFragmentToReportsFragment = "RxHomeFragmentToReportsFragment";
-    public static final String RxUserInFoToMyFragment = "RxUserInFoToMyFragment";
-    public static final String RxPaySettingToPayShowActivityAndWalletFragment = "RxPaySettingToPayShowActivityAndWalletFragment";
-    public static final String RxChoiceColorToPaySettingAndPayShowAndWalletFragment = "RxChoiceColorToPaySettingAndPayShowAndWalletFragment";
-
-
 }

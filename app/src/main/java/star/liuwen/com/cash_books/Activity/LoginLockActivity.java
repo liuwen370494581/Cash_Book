@@ -3,19 +3,17 @@ package star.liuwen.com.cash_books.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.GraphicLock.GraphicLockView;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
-import star.liuwen.com.cash_books.RxBus.RxBusResult;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.CircleImageView;
@@ -23,25 +21,13 @@ import star.liuwen.com.cash_books.View.CircleImageView;
 /**
  * Created by liuwen on 2017/2/10.
  */
-public class LoginLockActivity extends AppCompatActivity implements GraphicLockView.OnGraphicLockListener {
+public class LoginLockActivity extends BaseActivity implements GraphicLockView.OnGraphicLockListener {
     private CircleImageView imgUser;
     private TextView txtForgetPassword;
     private GraphicLockView mLockView;
 
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_lock_activity);
-        initView();
-        initData();
-    }
-
-
-    private void initView() {
-
+    public void initView() {
         imgUser = (CircleImageView) findViewById(R.id.user_info_url);
         txtForgetPassword = (TextView) findViewById(R.id.text_forget_password);
         mLockView = (GraphicLockView) findViewById(R.id.agl_gl_lock);
@@ -50,7 +36,6 @@ public class LoginLockActivity extends AppCompatActivity implements GraphicLockV
         if (bt != null) {
             imgUser.setImageBitmap(bt);
         }
-        initData();
         mLockView.setOnGraphicLockListener(this);
         txtForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,25 +45,24 @@ public class LoginLockActivity extends AppCompatActivity implements GraphicLockV
                 startActivity(intent);
             }
         });
-
     }
 
-    private void initData() {
-        RxBus.getInstance().toObserverableOnMainThread(Config.userUrl, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                imgUser.setImageBitmap((Bitmap) o);
-            }
-        });
 
-        RxBus.getInstance().toObserverableOnMainThread(Config.TxtForgetGesturePassword, new RxBusResult() {
-            @Override
-            public void onRxBusResult(Object o) {
-                if((boolean)o){
-                    finish();
-                }
-            }
-        });
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case C.EventCode.UserUrl:
+                imgUser.setImageBitmap((Bitmap) event.getData());
+                break;
+            case C.EventCode.UserForgetGesturePassword:
+                finish();
+                break;
+        }
     }
 
     @Override
@@ -98,8 +82,11 @@ public class LoginLockActivity extends AppCompatActivity implements GraphicLockV
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().release();
+    public int activityLayoutRes() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        return R.layout.login_lock_activity;
     }
+
+
 }

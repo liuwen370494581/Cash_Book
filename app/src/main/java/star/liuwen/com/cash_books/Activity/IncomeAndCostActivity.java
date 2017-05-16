@@ -11,7 +11,6 @@ import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Fragment.ShouRuFragment;
 import star.liuwen.com.cash_books.Fragment.ZhiChuFragment;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 
 /**
  * Created by liuwen on 2016/12/29.
@@ -61,14 +60,6 @@ public class IncomeAndCostActivity extends BaseActivity implements View.OnClickL
 
     public void onClose(View view) {
         IncomeAndCostActivity.this.finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable("AccountModel");
-        RxBus.getInstance().removeObserverable(Config.RxToZhiChuFragment);
-        RxBus.getInstance().release();
     }
 
     @Override

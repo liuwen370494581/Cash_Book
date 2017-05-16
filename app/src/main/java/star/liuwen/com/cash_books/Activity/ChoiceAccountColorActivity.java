@@ -18,8 +18,10 @@ import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Enage.DataEnige;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
-import star.liuwen.com.cash_books.RxBus.RxBus;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.ColorModel;
 
@@ -94,14 +96,10 @@ public class ChoiceAccountColorActivity extends BaseActivity implements BGAOnRVI
         ChoiceAccount choiceModel = DaoChoiceAccount.queryByAccountId(model.getId()).get(0);
         choiceModel.setColor(color_show);
         DaoChoiceAccount.updateAccount(choiceModel);
-        RxBus.getInstance().post(Config.RxChoiceColorToPaySettingAndPayShowAndWalletFragment, color_show);
+        EventBusUtil.sendEvent(new Event(C.EventCode.ChoiceColorToPaySettingAndPayShowAndWalletFragment, color_show));
+
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxBus.getInstance().removeObserverable(Config.RxChoiceColorToPaySettingAndPayShowAndWalletFragment);
-    }
 
     private class ChoiceColorAdapter extends BGARecyclerViewAdapter<ColorModel> {
         private int color_show;
