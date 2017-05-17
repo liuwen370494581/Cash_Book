@@ -47,7 +47,7 @@ dependencies {
     compile 'cn.aigestudio.datepicker:DatePicker:2.2.0'
     //时间选择器
     compile 'com.bigkoo:pickerview:2.1.1'
-    //rxBus;
+    //rx系列;
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     //搜索框

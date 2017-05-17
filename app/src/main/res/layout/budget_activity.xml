@@ -96,6 +96,6 @@
             android:layout_height="200dp"
             android:layout_centerInParent="true"
             custom:circle_prefix_text="月预算"
-            custom:circle_progress="20"/>
+            custom:circle_progress="0"/>
     </RelativeLayout>
 </LinearLayout>

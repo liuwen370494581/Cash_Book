@@ -1,6 +1,7 @@
 package star.liuwen.com.cash_books.Activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,6 +13,7 @@ import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
+import star.liuwen.com.cash_books.Utils.SnackBarUtil;
 
 /**
  * Created by liuwen on 2017/5/11.
@@ -56,13 +58,22 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         imageBudget.setImageResource(isShowPush ? R.mipmap.more_push_on : R.mipmap.more_push_off);
         reBudgetMonthShow.setVisibility(isShowPush ? View.VISIBLE : View.GONE);
         reBudgetMonth.setVisibility(isShowPush ? View.VISIBLE : View.GONE);
-
         reBudgetMonth.setOnClickListener(this);
 
     }
 
     private void onSure() {
+        if (!isOpenBudget) {
+            SnackBarUtil.show(imageBudget, "您还没有开启预算");
+            return;
+        }
 
+        if (TextUtils.isEmpty(txtBudgetMonth.getText().toString().trim())) {
+            SnackBarUtil.show(txtBudgetMonth, "您还没有编辑预算");
+            return;
+        }
+
+        SharedPreferencesUtil.setBooleanPreferences(this, Config.isBudgetPush, isOpenBudget);
         this.finish();
     }
 
@@ -72,7 +83,6 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         reBudgetMonthShow.setVisibility(!isOpenBudget ? View.VISIBLE : View.GONE);
         isOpenBudget = !isOpenBudget;
         SharedPreferencesUtil.setBooleanPreferences(this, Config.isBudgetPush, isOpenBudget);
-
     }
 
     private static final int Budget = 120;

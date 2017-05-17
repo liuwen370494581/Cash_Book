@@ -60,6 +60,8 @@ public class ChoiceAccountColorActivity extends BaseActivity implements BGAOnRVI
         reChoiceColorBg = (RelativeLayout) findViewById(R.id.qb_ry_xinyka);
 
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
+
+
         if (model != null) {
             color_show = model.getColor();
             imgCardUrl.setImageResource(model.getUrl());

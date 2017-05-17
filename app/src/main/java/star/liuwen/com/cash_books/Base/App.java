@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Enage.DataEnige;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -61,9 +65,18 @@ public class App extends Application {
         DaoMaster daoMaster = new DaoMaster(db);
         mDaoSession = daoMaster.newSession();
         if (SharedPreferencesUtil.getBooleanPreferences(this, Config.FistStar, true)) {
-            DataEnige.InsertAccountData();
-            DataEnige.InsertShouRuData();
-            DataEnige.InsertZHiCHuData();
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    //这里判断个数==0的时候才插入 不然不插入
+                    if (DaoChoiceAccount.getCount() == 0) {
+                        DataEnige.InsertAccountData();
+                        DataEnige.InsertShouRuData();
+                        DataEnige.InsertZHiCHuData();
+                    }
+                }
+            });
         }
     }
 

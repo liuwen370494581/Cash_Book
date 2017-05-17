@@ -101,8 +101,8 @@ public class Config {
     public static final String TxtBudgetYuSuan = "TxtBudgetYuSuan";
 
     public static final String ModelWallet = "ModelWallet";
-    public static final String ModelSaveAPen = "ModeSaveAPen";
     public static final String ModelChoiceAccount = "ModelChoiceAccount";
+    public static final String ModelPlanSaveMoney = "ModelPlanSaveMoney";
 
     public static final int STATUS_FORCE_KILLED = -1;//程序被crash
     public static final int STATUS_NORMAL = 1; //正常状态
