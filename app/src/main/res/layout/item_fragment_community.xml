@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp">
+
+        <star.liuwen.com.cash_books.View.CircleImageView
+            android:id="@+id/item_comm_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/maicai"/>
+
+        <TextView
+            android:id="@+id/item_comm_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/item_comm_image"
+            android:padding="2dp"
+            android:text="小月月"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/item_comm_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_comm_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/item_comm_image"
+            android:padding="2dp"
+            android:text="北京"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/item_comm_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_comm_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/item_comm_location"
+            android:padding="2dp"
+            android:text="30分钟前"
+            android:textSize="12sp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/item_comm_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:padding="2dp"
+            android:text="测试内存"
+            android:textColor="@color/text_color_33"
+            android:textSize="14sp"/>
+
+        <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
+            android:id="@+id/npl_item_moment_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:bga_npl_itemCornerRadius="0dp"
+            app:bga_npl_itemSpanCount="3"
+            app:bga_npl_itemWhiteSpacing="4dp"
+            app:bga_npl_itemWidth="0dp"
+            app:bga_npl_otherWhiteSpacing="64dp"
+            app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
+            app:bga_npl_showAsLargeWhenOnlyOne="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/item_comm_discuss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="评论"/>
+
+            <TextView
+                android:id="@+id/item_comm_discuss_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@id/item_comm_discuss"
+                android:padding="2dp"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/item_comm_goodJop_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:padding="2dp"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/item_comm_goodJop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/item_comm_goodJop_number"
+                android:padding="2dp"
+                android:text="点赞"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/background"/>
+</LinearLayout>

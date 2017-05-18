@@ -143,7 +143,7 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
             helper.setText(R.id.txt_bao, model.getWealthBaoOrNewOrHot());
             helper.setText(R.id.txt_year_shouyilv, model.getWealthYearYield());
             helper.setText(R.id.txt_time, model.getWealthIsHuoqiOrDingQi());
-            mProgress = (DonutProgress) helper.getView(R.id.double_progress).findViewById(R.id.double_progress);
+            mProgress = helper.getView(R.id.double_progress);
             mProgress.setProgress((float) model.getWealthPlan());
 
             if (model.getWealthIsHuoqiOrDingQi().equals(Config.HUOQI)) {

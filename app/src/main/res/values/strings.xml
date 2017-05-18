@@ -137,4 +137,5 @@
     <string name="login">登录</string>
     <string name="register_cash_book">注册记账宝</string>
     <string name="back_login">返回登陆</string>
+    <string name="community">社区</string>
 </resources>
