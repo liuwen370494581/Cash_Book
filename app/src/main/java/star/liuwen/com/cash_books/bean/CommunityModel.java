@@ -10,7 +10,7 @@ public class CommunityModel implements Serializable {
     private static final long serialVersionUID = 1L;//为了避免反序列化失败 加的一个uid
     private String content;//标题内容
     private ArrayList<String> photos;//图片
-    private int userPhoto;//用户头像
+    private String userPhotoUrl;//用户头像地址
     private String userName;//用户名字
     private String userLocation;//用户位置
     private String userTime;//用户发布时间
@@ -33,13 +33,6 @@ public class CommunityModel implements Serializable {
         this.photos = photos;
     }
 
-    public int getUserPhoto() {
-        return userPhoto;
-    }
-
-    public void setUserPhoto(int userPhoto) {
-        this.userPhoto = userPhoto;
-    }
 
     public String getUserName() {
         return userName;
@@ -81,17 +74,30 @@ public class CommunityModel implements Serializable {
         this.goodJob = goodJob;
     }
 
+
+    public String getUserPhotoUrl() {
+        return userPhotoUrl;
+    }
+
+    public void setUserPhotoUrl(String userPhotoUrl) {
+        this.userPhotoUrl = userPhotoUrl;
+    }
+
     public CommunityModel() {
     }
+
+
 
     public CommunityModel(String content, ArrayList<String> photos) {
         this.content = content;
         this.photos = photos;
     }
 
-    public CommunityModel(String content, int userPhoto, String userName, String userLocation, String userTime, ArrayList<String> discuss, int goodJob, ArrayList<String> photos) {
+
+
+    public CommunityModel(String content, String userPhotoUrl, String userName, String userLocation, String userTime, ArrayList<String> discuss, int goodJob, ArrayList<String> photos) {
         this.content = content;
-        this.userPhoto = userPhoto;
+        this.userPhotoUrl = userPhotoUrl;
         this.userName = userName;
         this.userLocation = userLocation;
         this.userTime = userTime;

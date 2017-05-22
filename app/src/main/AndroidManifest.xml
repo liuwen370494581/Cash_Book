@@ -213,8 +213,14 @@
             android:name=".Activity.ChoiceAccountColorActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--增加预算页面-->
         <activity
             android:name=".Activity.BudgetActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
+        <!--发表朋友圈页面-->
+        <activity
+            android:name=".Activity.AddCommunityActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
     </application>

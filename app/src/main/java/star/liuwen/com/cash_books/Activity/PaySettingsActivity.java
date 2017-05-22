@@ -169,6 +169,8 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
             public void ClickRight() {
                 EventBusUtil.sendEvent(new Event(C.EventCode.PaySettingToWalletFragment, true));
                 DaoChoiceAccount.deleteChoiceAccountByModel(model);
+                //删除账户的时候 清除选项存储中保存账户的值 避免出现支出或者收入没有及时更新到账户上的bug
+                SharedPreferencesUtil.cleanSharePreferences(PaySettingsActivity.this, Config.TxtChoiceAccount);
                 Intent intent = new Intent(PaySettingsActivity.this, MainActivity.class);
                 intent.putExtra("id", 2);
                 startActivity(intent);

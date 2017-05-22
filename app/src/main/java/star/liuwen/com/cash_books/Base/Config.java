@@ -9,6 +9,7 @@ public class Config {
 
     public static final String RootPath = getRootPath() + "/Cash_Books/"; //上传经过压缩好的相册
     public static final String SHARED_PREFERENCES_FILE_NAME = "Jzb";
+    public static final String UserUrl = Config.RootPath + "head.jpg";
 
     public static final String PhotoPath = getRootPath() + "/cashPhoto"; //存放拍好的相册
 
@@ -50,7 +51,6 @@ public class Config {
     public final static String PayShowDetailModel = "PayShowDetailModel";
 
 
-    public final static String TarGetUrl = "TarGetUrl";
     public final static String userNickName = "userNickName";
     public final static String userSignature = "userSignature";
     public final static String userSex = "userSix";
@@ -99,10 +99,10 @@ public class Config {
     public static final String TxtSearchResult = "TxtSearchResult";
     public static final String TxtIssuingBank = "TxtIssuingBank";
     public static final String TxtBudgetYuSuan = "TxtBudgetYuSuan";
+    public static final String TxtCommunity = "TxtCommunity";
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelChoiceAccount = "ModelChoiceAccount";
-    public static final String ModelPlanSaveMoney = "ModelPlanSaveMoney";
 
     public static final int STATUS_FORCE_KILLED = -1;//程序被crash
     public static final int STATUS_NORMAL = 1; //正常状态
