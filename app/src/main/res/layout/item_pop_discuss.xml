@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="8dp">
+
+
+        <ImageView
+            android:id="@+id/item_rd_image"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/maicai"/>
+
+        <TextView
+            android:id="@+id/item_rd_txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/item_rd_image"
+            android:padding="5dp"
+            android:text="淘宝"
+            android:textColor="@color/haowan"
+            android:textSize="@dimen/textSize_14"/>
+
+        <TextView
+            android:id="@+id/item_rd_discuss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_rd_txtName"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/item_rd_image"
+            android:padding="5dp"
+            android:text="就是看的房价快递费你看见你开房健康的减肥看没看没打开吗看到对方的封面可麻烦 吗妈妈封面免费免费开放给吗"
+            android:textColor="@color/text_color_66"
+            android:textSize="12sp"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

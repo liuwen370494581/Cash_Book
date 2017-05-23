@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,8 +30,10 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPreviewActivity;
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 import cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import pub.devrel.easypermissions.EasyPermissions;
 import star.liuwen.com.cash_books.Activity.AddCommunityActivity;
+import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Enage.DataEnige;
@@ -37,13 +42,14 @@ import star.liuwen.com.cash_books.EventBus.Event;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.CircleImageView;
+import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.bean.CommunityModel;
 
 /**
  * Created by liuwen on 2017/5/9.
  * 社区交流页面
  */
-public class CommunityFragment extends BaseFragment implements View.OnClickListener, BGANinePhotoLayout.Delegate, EasyPermissions.PermissionCallbacks, BGAOnItemChildClickListener {
+public class CommunityFragment extends BaseFragment implements View.OnClickListener, BGANinePhotoLayout.Delegate, EasyPermissions.PermissionCallbacks, BGAOnItemChildClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private RecyclerView mRecyclerView;
     private View headView;
@@ -52,6 +58,15 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
     private TextView txtEditContents;
     private BGANinePhotoLayout mCurrentClickNpl;
     private CommunityAdapter mAdapter;
+
+    //下拉刷新控件
+    private DefineBAGRefreshWithLoadView mDefineBAGRefreshWithLoadView = null;
+    private BGARefreshLayout mBGARefreshLayout;
+
+    //显示评论账户
+    private PopupWindow window;
+    private ListView mListView;
+    private PopWindowAdapter mPopWindowAdapter;
 
     @Override
     public void lazyInitData() {
@@ -70,18 +85,31 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
     private void initView() {
         setTitle(getString(R.string.community));
         mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_comm_recycler_view);
-
         headView = View.inflate(getActivity(), R.layout.head_community, null);
         userImage = (CircleImageView) headView.findViewById(R.id.comm_image);
         txtEditContents = (TextView) headView.findViewById(R.id.comm_txt);
         imageEdit = (ImageView) headView.findViewById(R.id.comm_edit);
+
+        mBGARefreshLayout = (BGARefreshLayout) getContentView().findViewById(R.id.define_bga_refresh_with_load);   //设置刷新和加载监听
+        mBGARefreshLayout.setDelegate(this);
+
         txtEditContents.setText(getString(R.string.edit_community));
 
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initAdapter();
+        setBgaRefreshLayout();
+    }
+
+
+    private void initAdapter() {
         mAdapter = new CommunityAdapter(mRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter.setData(DataEnige.getCommunityDate());
         mAdapter.addHeaderView(headView);
-
         mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
 
         Bitmap bt = BitmapFactory.decodeFile(Config.RootPath + "head.jpg");
@@ -91,7 +119,15 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
         imageEdit.setOnClickListener(this);
         mRecyclerView.addOnScrollListener(new BGARVOnScrollListener(getActivity()));
         mAdapter.setOnItemChildClickListener(this);
+    }
 
+    private void setBgaRefreshLayout() {
+        mDefineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(getActivity(), true, true);
+        //设置刷新样式
+        mBGARefreshLayout.setRefreshViewHolder(mDefineBAGRefreshWithLoadView);
+        mDefineBAGRefreshWithLoadView.setRefreshingText("同步社区中...");
+        mDefineBAGRefreshWithLoadView.setPullDownRefreshText("同步社区中...");
+        mDefineBAGRefreshWithLoadView.setReleaseRefreshText("下拉刷新中...");
     }
 
     @Override
@@ -174,8 +210,32 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.ly_03) {
-            ToastUtils.showToast(getActivity(), "你点击了讨论");
+            showDiscuss();
         }
+    }
+
+    private void showDiscuss() {
+        View popView = View.inflate(getActivity(), R.layout.pop_discuss_dialog, null);
+        mListView = (ListView) popView.findViewById(R.id.lv_popup_list);
+        window = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mDefineBAGRefreshWithLoadView.showLoadingMoreImg();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBGARefreshLayout.endRefreshing();
+            }
+        }, 1500);
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
     }
 
     private class CommunityAdapter extends BGARecyclerViewAdapter<CommunityModel> {

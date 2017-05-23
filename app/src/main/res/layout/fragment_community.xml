@@ -8,12 +8,18 @@
 
     <include layout="@layout/common_toolbar"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/f_comm_recycler_view"
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/define_bga_refresh_with_load"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        tools:listitem="@layout/item_fragment_community">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleBar">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/f_comm_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            tools:listitem="@layout/item_fragment_community">
+        </android.support.v7.widget.RecyclerView>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 </LinearLayout>

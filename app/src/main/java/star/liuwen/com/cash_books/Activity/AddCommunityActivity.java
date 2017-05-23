@@ -98,8 +98,8 @@ public class AddCommunityActivity extends BaseActivity implements EasyPermission
                         photoUserUrl,
                         "小妹妹", "华天宾馆",
                         "3分钟前",
-                        new ArrayList<String>(Arrays.asList("你好厉害", "加油", "单身狗", "小气鬼")),
-                        5, mPhotosSnpl.getData())));
+                        new ArrayList<String>(Arrays.asList("")),
+                        0, mPhotosSnpl.getData())));
         finish();
     }
 
