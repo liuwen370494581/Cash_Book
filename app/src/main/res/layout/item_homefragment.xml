@@ -30,11 +30,13 @@
 
         <TextView
             android:id="@+id/item_home_txtzhichuname"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
+            android:ellipsize="end"
             android:padding="4dp"
-            android:text="淘宝dddddddd"
+            android:singleLine="true"
+            android:text="dddsfdgfdgfdfgdgf"
             android:textColor="@color/text_color_33"/>
 
         <TextView
@@ -43,7 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/item_home_txtzhichuname"
+            android:ellipsize="end"
             android:padding="4dp"
+            android:singleLine="true"
             android:text="30.00"
             android:textColor="@color/text_color_99"
             android:textSize="@dimen/textSize_12"/>
@@ -79,7 +83,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
+                android:ellipsize="end"
                 android:padding="4dp"
+                android:singleLine="true"
                 android:text="淘宝dddd"
                 android:textColor="@color/text_color_99"
                 android:textSize="@dimen/textSize_12"/>
@@ -89,7 +95,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
+                android:ellipsize="end"
                 android:padding="4dp"
+                android:singleLine="true"
                 android:text="淘宝ddd"
                 android:textColor="@color/text_color_33"/>
         </LinearLayout>
@@ -115,17 +123,17 @@
         android:layout_marginTop="-1dp">
 
         <View
-            android:layout_gravity="center"
             android:id="@+id/view_3"
             android:layout_width="0.5dp"
             android:layout_height="18dp"
+            android:layout_gravity="center"
             android:background="#A6A6A6"/>
 
         <TextView
-            android:layout_marginTop="-2dp"
             android:id="@+id/item_home_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp"
             android:textSize="14sp"/>
     </FrameLayout>
 </RelativeLayout>

@@ -27,6 +27,8 @@
             android:src="@mipmap/maicai"/>
 
         <TextView
+            android:ellipsize="end"
+            android:singleLine="true"
             android:id="@+id/item_rd_txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,6 +38,8 @@
             android:text="淘宝"/>
 
         <TextView
+            android:ellipsize="end"
+            android:singleLine="true"
             android:id="@+id/item_rd_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,6 +48,8 @@
             android:text="51.9%"/>
 
         <TextView
+            android:ellipsize="end"
+            android:singleLine="true"
             android:id="@+id/item_rd_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

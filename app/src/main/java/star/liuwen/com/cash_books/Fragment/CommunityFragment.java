@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -11,9 +13,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -33,7 +37,7 @@ import cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import pub.devrel.easypermissions.EasyPermissions;
 import star.liuwen.com.cash_books.Activity.AddCommunityActivity;
-import star.liuwen.com.cash_books.Adapter.PopWindowAdapter;
+import star.liuwen.com.cash_books.Adapter.PopWindowDiscussAdapter;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Enage.DataEnige;
@@ -66,7 +70,7 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
     //显示评论账户
     private PopupWindow window;
     private ListView mListView;
-    private PopWindowAdapter mPopWindowAdapter;
+    private PopWindowDiscussAdapter mPopWindowAdapter;
 
     @Override
     public void lazyInitData() {
@@ -88,7 +92,7 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
         headView = View.inflate(getActivity(), R.layout.head_community, null);
         userImage = (CircleImageView) headView.findViewById(R.id.comm_image);
         txtEditContents = (TextView) headView.findViewById(R.id.comm_txt);
-        imageEdit = (ImageView) headView.findViewById(R.id.comm_edit);
+        imageEdit = (ImageView) headView.findViewById(R.id.comm_edit);;
 
         mBGARefreshLayout = (BGARefreshLayout) getContentView().findViewById(R.id.define_bga_refresh_with_load);   //设置刷新和加载监听
         mBGARefreshLayout.setDelegate(this);
@@ -211,6 +215,12 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
         if (childView.getId() == R.id.ly_03) {
             showDiscuss();
+            if (window.isShowing()) {
+                window.dismiss();
+            } else {
+                window.showAtLocation(childView, Gravity.BOTTOM, 0, 0);
+                backgroundAlpha(0.5f);
+            }
         }
     }
 
@@ -218,8 +228,32 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
         View popView = View.inflate(getActivity(), R.layout.pop_discuss_dialog, null);
         mListView = (ListView) popView.findViewById(R.id.lv_popup_list);
         window = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopWindowAdapter = new PopWindowDiscussAdapter(getActivity(), R.layout.item_pop_discuss);
+        mPopWindowAdapter.setData(DataEnige.getDiscussDate());
+        mListView.setAdapter(mPopWindowAdapter);
+        window.setFocusable(true);
+        window.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        window.setAnimationStyle(R.style.AnimBottom);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setOutsideTouchable(true);
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+    }
 
-
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getActivity().getWindow().setAttributes(lp);
     }
 
     @Override

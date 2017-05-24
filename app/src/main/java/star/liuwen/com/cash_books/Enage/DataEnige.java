@@ -15,6 +15,7 @@ import star.liuwen.com.cash_books.bean.AccountWealthModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.ColorModel;
 import star.liuwen.com.cash_books.bean.CommunityModel;
+import star.liuwen.com.cash_books.bean.DiscussModel;
 import star.liuwen.com.cash_books.bean.IndexModel;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
 import star.liuwen.com.cash_books.bean.ShouRuModel;
@@ -470,6 +471,20 @@ public class DataEnige {
         list.add(new CommunityModel("7张网络图片", Config.UserUrl, "牛魔", "火焰山", "10分钟前", new ArrayList<String>(Arrays.asList("你好厉害", "加油", "单身狗", "小气鬼")), 10, new ArrayList<>(Arrays.asList("http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered11.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered12.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered13.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered14.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered15.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered16.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered17.png"))));
         list.add(new CommunityModel("8张网络图片", Config.UserUrl, "孙悟空", "西天路上", "10分钟前", new ArrayList<String>(Arrays.asList("你好厉害", "加油", "单身狗", "小气鬼")), 10, new ArrayList<>(Arrays.asList("http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered11.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered12.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered13.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered14.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered15.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered16.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered17.png", "http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered18.png"))));
         return list;
+    }
+
+    public static List<DiscussModel> getDiscussDate() {
+        List<DiscussModel> list = new ArrayList<>();
+        list.add(new DiscussModel(R.mipmap.lvyou, "一棒子敲死一棒人", "应该是521,0是没有,1号才是唯一,所以,5月21号,才是表达唯一爱的时候"));
+        list.add(new DiscussModel(R.mipmap.che, "手机用户5134616132", "应该是521,0是没有,1号才是唯一,所以,5月21号,才是表达唯一爱的时候"));
+        list.add(new DiscussModel(R.mipmap.yanchanghui, "梦给客户", "应该是521,0是没有,1号才是唯一,所以,5月21号,才是表达唯一爱的时候"));
+        list.add(new DiscussModel(R.mipmap.lixishouru, "angle", "应该是521,0是没有,1号才是唯一,所以,5月21号,才是表达唯一爱的时候"));
+        list.add(new DiscussModel(R.mipmap.fang, "李贤宰", "应该是521,0是没有,1号才是唯一,所以,5月21号,才是表达唯一爱的时候"));
+        list.add(new DiscussModel(R.mipmap.bisai, "达康书记", "应该是521,0是没有,1号才是唯一,所以,5月21号,才是表达唯一爱的时候"));
+        list.add(new DiscussModel(R.mipmap.shiwan, "小席", "我喜欢宋祖新"));
+        return list;
+
+
     }
 
 }
