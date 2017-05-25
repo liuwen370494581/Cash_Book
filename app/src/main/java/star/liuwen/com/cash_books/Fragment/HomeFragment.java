@@ -157,13 +157,13 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
             }).compose(RxUtil.<List<AccountModel>>applySchedulers()).subscribe(new Action1<List<AccountModel>>() {
                 @Override
                 public void call(List<AccountModel> models) {
-                    for (int i = 0; i < mList.size(); i++) {
-                        totalZhiChuAdd = totalZhiChuAdd + mList.get(i).getZhiCHuAdd();
-                        totalShouRuAdd = totalShouRuAdd + mList.get(i).getSHouRuAdd();
+                    for (int i = 0; i < models.size(); i++) {
+                        totalZhiChuAdd = totalZhiChuAdd + models.get(i).getZhiCHuAdd();
+                        totalShouRuAdd = totalShouRuAdd + models.get(i).getSHouRuAdd();
                     }
                     tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
                     tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
-                    mAdapter.addNewData(mList);
+                    mAdapter.addNewData(models);
                     mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1));
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
@@ -211,7 +211,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case C.EventCode.ZhiChuToHomeFragment:
-                //
+                //接收从支出或者是收入页面传递过来的值
                 mList = (List<AccountModel>) event.getData();
                 insertHomeList();
                 break;
@@ -402,16 +402,10 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
 
     public class HomesAdapter extends BGARecyclerViewAdapter<AccountModel> {
-        private boolean isFirstShow;
 
         public HomesAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_homefragment);
 
-        }
-
-        public void setFirstShow(boolean isFirstShow) {
-            this.isFirstShow = isFirstShow;
-            mAdapter.notifyDataSetChangedWrapper();
         }
 
         @Override

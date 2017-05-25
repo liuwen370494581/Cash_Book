@@ -6,10 +6,10 @@
 
 
     <TextView
-        android:background="@color/background"
         android:id="@+id/item_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background"
         android:padding="8dp"
         android:textSize="16sp"/>
 
@@ -27,29 +27,27 @@
             android:src="@mipmap/maicai"/>
 
         <TextView
-            android:ellipsize="end"
-            android:singleLine="true"
             android:id="@+id/item_rd_txtName"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/item_rd_image"
-            android:text="淘宝"/>
-
-        <TextView
             android:ellipsize="end"
             android:singleLine="true"
+            android:text="淘宝少时诵诗书三生三世"/>
+
+        <TextView
             android:id="@+id/item_rd_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="51.9%"/>
 
         <TextView
-            android:ellipsize="end"
-            android:singleLine="true"
             android:id="@+id/item_rd_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
