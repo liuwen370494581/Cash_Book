@@ -223,5 +223,10 @@
             android:name=".Activity.AddCommunityActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"/>
+        <!--webView页面-->
+        <activity
+            android:name=".Activity.WebViewActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

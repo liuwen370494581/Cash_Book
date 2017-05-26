@@ -31,6 +31,7 @@ public class App extends Application {
     public static boolean isOpenBudget = false;
     public static String cycleData = "";
     public static String cycleTime = "";
+    public static String UserUrl = Config.RootPath + "head.jpg";
 
 
     private RefWatcher mRefWatcher;

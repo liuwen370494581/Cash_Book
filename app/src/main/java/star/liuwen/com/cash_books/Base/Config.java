@@ -9,7 +9,6 @@ public class Config {
 
     public static final String RootPath = getRootPath() + "/Cash_Books/"; //上传经过压缩好的相册
     public static final String SHARED_PREFERENCES_FILE_NAME = "Jzb";
-    public static final String UserUrl = Config.RootPath + "head.jpg";
 
     public static final String PhotoPath = getRootPath() + "/cashPhoto"; //存放拍好的相册
 
@@ -29,6 +28,13 @@ public class Config {
     public final static String isOpenCodedLock = "isOpenCodedLock";
     public final static String isBudgetPush = "isBudgetPush";
     public final static String ChangeBg = "ChangeBg";
+
+
+    public final static String InviteAReward = "https://www.qeeniao.com/news/27";
+    public final static String NewPersonGift = "https://www.qeeniao.com/news/29";
+    public final static String EveryDaySignIn = "https://www.qeeniao.com/activity";
+    public final static String SafetyGuarantee = "https://www.qeeniao.com/news/21";
+
 
     public final static String ZHI_CHU = "支出";
     public final static String SHOU_RU = "收入";
@@ -99,7 +105,7 @@ public class Config {
     public static final String TxtSearchResult = "TxtSearchResult";
     public static final String TxtIssuingBank = "TxtIssuingBank";
     public static final String TxtBudgetYuSuan = "TxtBudgetYuSuan";
-    public static final String TxtCommunity = "TxtCommunity";
+    public static final String IntentTag_ToWebView = "IntentTag_ToWebView";
 
     public static final String ModelWallet = "ModelWallet";
     public static final String ModelChoiceAccount = "ModelChoiceAccount";

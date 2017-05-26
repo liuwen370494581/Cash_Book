@@ -1,5 +1,6 @@
 package star.liuwen.com.cash_books.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -19,6 +21,7 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.bgabanner.transformer.TransitionEffect;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import star.liuwen.com.cash_books.Activity.WebViewActivity;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Enage.DataEnige;
@@ -30,7 +33,7 @@ import star.liuwen.com.cash_books.bean.AccountWealthModel;
  * Created by liuwen on 2017/5/9.
  * 记账财富页面
  */
-public class AccountingWealthFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate {
+public class AccountingWealthFragment extends BaseFragment implements BGARefreshLayout.BGARefreshLayoutDelegate, View.OnClickListener {
 
     private DefineBAGRefreshWithLoadView mDefineBAGRefreshWithLoadView = null;
     private BGARefreshLayout mBGARefreshLayout;
@@ -39,6 +42,7 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
     private AccountingWealthAdapter mAdapter;
     private BGABanner mBGABanner;
     private int resViews[] = {R.mipmap.welcome_pic_1, R.mipmap.welcome_pic_2, R.mipmap.welcome_pic_3, R.mipmap.welcome_pic_4};
+    private RelativeLayout reNewPersonGift, reEveryDaySignIn, reInviteAReward, reSafetyGuarantee;
 
 
     @Override
@@ -76,6 +80,10 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
     private void initAdapter() {
         headView = View.inflate(getActivity(), R.layout.head_accounting_wealth, null);
         mBGABanner = (BGABanner) headView.findViewById(R.id.banner);
+        reNewPersonGift = (RelativeLayout) headView.findViewById(R.id.onNewPersonGift);
+        reEveryDaySignIn = (RelativeLayout) headView.findViewById(R.id.onEveryDaySignIn);
+        reInviteAReward = (RelativeLayout) headView.findViewById(R.id.inviteAReward);
+        reSafetyGuarantee = (RelativeLayout) headView.findViewById(R.id.safetyGuarantee);
         mAdapter = new AccountingWealthAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -91,6 +99,11 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
                 Glide.with(banner.getContext()).load(model).placeholder(R.mipmap.background).error(R.mipmap.background).dontAnimate().thumbnail(0.1f).into((ImageView) view);
             }
         });
+
+        reNewPersonGift.setOnClickListener(this);
+        reSafetyGuarantee.setOnClickListener(this);
+        reInviteAReward.setOnClickListener(this);
+        reEveryDaySignIn.setOnClickListener(this);
     }
 
     private void initView() {
@@ -103,7 +116,24 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
 
     private void initData() {
 
+    }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+        if (v == reNewPersonGift) {
+            intent.putExtra(Config.IntentTag_ToWebView, Config.NewPersonGift);
+            startActivity(intent);
+        } else if (v == reEveryDaySignIn) {
+            intent.putExtra(Config.IntentTag_ToWebView, Config.EveryDaySignIn);
+            startActivity(intent);
+        } else if (v == reInviteAReward) {
+            intent.putExtra(Config.IntentTag_ToWebView, Config.InviteAReward);
+            startActivity(intent);
+        } else if (v == reSafetyGuarantee) {
+            intent.putExtra(Config.IntentTag_ToWebView, Config.SafetyGuarantee);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -121,6 +151,7 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         return false;
     }
+
 
     private class AccountingWealthAdapter extends BGARecyclerViewAdapter<AccountWealthModel> {
         private DonutProgress mProgress;

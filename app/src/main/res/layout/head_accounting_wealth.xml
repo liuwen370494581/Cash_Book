@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:background="@color/white"
               android:layout_height="match_parent"
+              android:background="@color/white"
               android:orientation="vertical">
 
     <cn.bingoogolapple.bgabanner.BGABanner
@@ -16,89 +16,105 @@
         app:banner_transitionEffect="accordion"/>
 
     <LinearLayout
-        android:layout_marginTop="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
         android:orientation="horizontal">
-      <RelativeLayout
-          android:layout_weight="1"
-          android:padding="10dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-          <ImageView
-              android:layout_marginLeft="15dp"
-              android:id="@+id/image_new"
-              android:src="@mipmap/icon_gouwu"
-              android:layout_width="35dp"
-              android:layout_height="35dp"/>
-          <TextView
-              android:textSize="@dimen/textSize_12"
-              android:layout_centerInParent="true"
-              android:layout_marginTop="8dp"
-              android:layout_below="@id/image_new"
-              android:text="新人双重礼"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"/>
-      </RelativeLayout>
+
         <RelativeLayout
-            android:layout_weight="1"
-            android:padding="10dp"
+            android:id="@+id/onNewPersonGift"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp">
+
             <ImageView
+                android:id="@+id/image_new"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginLeft="15dp"
+                android:src="@mipmap/icon_gouwu"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_new"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:text="新人双重礼"
+                android:textSize="@dimen/textSize_12"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/onEveryDaySignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp">
+
+            <ImageView
                 android:id="@+id/image_waibao"
-                android:src="@mipmap/icon_shouru_type_jiangjin"
                 android:layout_width="35dp"
-                android:layout_height="35dp"/>
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/icon_shouru_type_jiangjin"/>
+
             <TextView
-                android:textSize="@dimen/textSize_12"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/image_waibao"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
                 android:text="每日挖宝"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="@dimen/textSize_12"/>
         </RelativeLayout>
+
         <RelativeLayout
-            android:layout_weight="1"
-            android:padding="10dp"
+            android:id="@+id/inviteAReward"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp">
+
             <ImageView
-                android:layout_marginLeft="15dp"
                 android:id="@+id/image_invite"
-                android:src="@mipmap/lixishouru"
                 android:layout_width="35dp"
-                android:layout_height="35dp"/>
-            <TextView
-                android:textSize="@dimen/textSize_12"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="8dp"
-                android:layout_below="@id/image_invite"
-                android:text="邀请有奖"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
+                android:layout_height="35dp"
                 android:layout_marginLeft="15dp"
-                android:id="@+id/image_safe"
-                android:src="@mipmap/zongxiaofei"
-                android:layout_width="35dp"
-                android:layout_height="35dp"/>
+                android:src="@mipmap/lixishouru"/>
+
             <TextView
-                android:textSize="@dimen/textSize_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_invite"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="8dp"
-                android:layout_below="@id/image_safe"
-                android:text="安全保障"
+                android:text="邀请有奖"
+                android:textSize="@dimen/textSize_12"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/safetyGuarantee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/image_safe"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/zongxiaofei"/>
+
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_safe"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:text="安全保障"
+                android:textSize="@dimen/textSize_12"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

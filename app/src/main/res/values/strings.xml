@@ -139,4 +139,6 @@
     <string name="back_login">返回登陆</string>
     <string name="community">社区</string>
     <string name="edit_community">#520节日到了你想说点什么#</string>
+    <string name="loading">正在加载中</string>
+    <string name="loading_ing">"正在加载中%s"</string>
 </resources>

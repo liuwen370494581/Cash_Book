@@ -17,6 +17,7 @@ import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
 import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.EventBus.C;
@@ -34,8 +35,6 @@ public class AddCommunityActivity extends BaseActivity implements EasyPermission
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
     private static final int REQUEST_CODE_PHOTO_PREVIEW = 2;
     private static final int REQUEST_CODE_PERMISSION_PHOTO_PICKER = 1;
-    private String photoUserUrl;
-
 
     /**
      * 拖拽排序九宫格控件
@@ -65,7 +64,6 @@ public class AddCommunityActivity extends BaseActivity implements EasyPermission
         mContentEt.setText(getString(R.string.edit_community));
         //这个是让editText中的光标暂停到文字的最后面
         mContentEt.setSelection(mContentEt.getText().length());
-        photoUserUrl = Config.UserUrl;
     }
 
 
@@ -82,7 +80,7 @@ public class AddCommunityActivity extends BaseActivity implements EasyPermission
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case C.EventCode.UserUrl:
-                photoUserUrl = (String) event.getData();
+                App.UserUrl = (String) event.getData();
                 break;
         }
     }
@@ -95,9 +93,9 @@ public class AddCommunityActivity extends BaseActivity implements EasyPermission
         }
         EventBusUtil.sendEvent(new Event(C.EventCode.D,
                 new CommunityModel(mContentEt.getText().toString().trim(),
-                        photoUserUrl,
+                        App.UserUrl,
                         "小妹妹", "华天宾馆",
-                        "3分钟前",
+                        "1分钟前",
                         new ArrayList<String>(Arrays.asList("")),
                         0, mPhotosSnpl.getData())));
         finish();
