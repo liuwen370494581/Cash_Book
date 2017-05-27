@@ -28,6 +28,7 @@ import star.liuwen.com.cash_books.Utils.ToastUtils;
 public abstract class BaseActivity extends AppCompatActivity {
     private RelativeLayout mTitle;
     private TextView title, rightTxt;
+    private App mAppInfo;
 
 
     @Override
@@ -53,6 +54,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    public App getAppInfo() {
+        if (null == mAppInfo)
+            mAppInfo = (App) getApplication();
+        return mAppInfo;
+    }
 
     /**
      * 是否注册事件分发

@@ -209,14 +209,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-
     public class WalletAdapter extends BGARecyclerViewAdapter<ChoiceAccount> {
-        private List<ChoiceAccount> list;
 
         public WalletAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.item_fragment_wallet);
