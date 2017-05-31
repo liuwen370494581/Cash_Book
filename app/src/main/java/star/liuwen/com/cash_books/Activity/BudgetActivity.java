@@ -11,9 +11,14 @@ import com.github.lzyzsd.circleprogress.CircleProgress;
 
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.Dao.DaoAccount;
+import star.liuwen.com.cash_books.EventBus.C;
+import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
+import star.liuwen.com.cash_books.bean.AccountModel;
 
 /**
  * Created by liuwen on 2017/5/11.
@@ -26,7 +31,6 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
     private ImageView imageBudget;
     private boolean isOpenBudget = false;
     private String budgetMoney;
-
 
     @Override
     public int activityLayoutRes() {
@@ -52,27 +56,22 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         mCircleProgress = (CircleProgress) findViewById(R.id.circle_progress);
         imageBudget = (ImageView) findViewById(R.id.budget_push);
 
-        boolean isShowPush = SharedPreferencesUtil.getBooleanPreferences(this, Config.isBudgetPush, false);
+        isOpenBudget = SharedPreferencesUtil.getBooleanPreferences(this, Config.isBudgetPush, false);
         String tvYuSuan = SharedPreferencesUtil.getStringPreferences(this, Config.TxtBudgetYuSuan, "");
         txtBudgetMonth.setText(tvYuSuan);
-        imageBudget.setImageResource(isShowPush ? R.mipmap.more_push_on : R.mipmap.more_push_off);
-        reBudgetMonthShow.setVisibility(isShowPush ? View.VISIBLE : View.GONE);
-        reBudgetMonth.setVisibility(isShowPush ? View.VISIBLE : View.GONE);
+        setRightTxtVisible(isOpenBudget);
+        imageBudget.setImageResource(isOpenBudget ? R.mipmap.more_push_on : R.mipmap.more_push_off);
+        reBudgetMonthShow.setVisibility(isOpenBudget ? View.VISIBLE : View.GONE);
+        reBudgetMonth.setVisibility(isOpenBudget ? View.VISIBLE : View.GONE);
         reBudgetMonth.setOnClickListener(this);
-
     }
 
     private void onSure() {
-        if (!isOpenBudget) {
-            SnackBarUtil.show(imageBudget, "您还没有开启预算");
-            return;
-        }
 
         if (TextUtils.isEmpty(txtBudgetMonth.getText().toString().trim())) {
             SnackBarUtil.show(txtBudgetMonth, "您还没有编辑预算");
             return;
         }
-
         SharedPreferencesUtil.setBooleanPreferences(this, Config.isBudgetPush, isOpenBudget);
         this.finish();
     }
@@ -81,8 +80,8 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         imageBudget.setImageResource(!isOpenBudget ? R.mipmap.more_push_on : R.mipmap.more_push_off);
         reBudgetMonth.setVisibility(!isOpenBudget ? View.VISIBLE : View.GONE);
         reBudgetMonthShow.setVisibility(!isOpenBudget ? View.VISIBLE : View.GONE);
+        setRightTxtVisible(!isOpenBudget);
         isOpenBudget = !isOpenBudget;
-        SharedPreferencesUtil.setBooleanPreferences(this, Config.isBudgetPush, isOpenBudget);
     }
 
     private static final int Budget = 120;
@@ -107,7 +106,15 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
             case Budget:
                 txtBudgetMonth.setText(budgetMoney);
                 mCircleProgress.setProgress(100);
+                UpdateAccountBudget(budgetMoney);
                 break;
         }
+    }
+
+    private void UpdateAccountBudget(String budgetMoney) {
+        AccountModel model = DaoAccount.query().get(0);
+        model.setBudget(budgetMoney);
+        DaoAccount.updateAccount(model);
+        EventBusUtil.sendEvent(new Event(C.EventCode.BudgetActivityToHomeFragment));
     }
 }

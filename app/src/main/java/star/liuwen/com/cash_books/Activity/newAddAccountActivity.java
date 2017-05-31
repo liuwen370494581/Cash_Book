@@ -14,6 +14,7 @@ import rx.Subscriber;
 import rx.functions.Action1;
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.Dao.DaoAccountBalance;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.EventBus.C;
 import star.liuwen.com.cash_books.EventBus.Event;
@@ -25,6 +26,7 @@ import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.View.DatePickerDialog;
+import star.liuwen.com.cash_books.bean.BaseModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.PlanSaveMoneyModel;
 
@@ -212,7 +214,16 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
                 TextUtils.isEmpty(tvDebt) ? 0.00 : Double.parseDouble(tvDebt),
                 TextUtils.isEmpty(tvDebtDate) ? "" : tvDebtDate,
                 TextUtils.isEmpty(tvBank.trim()) ? "" : tvBank,
-                model.getColor(), model.getPlanName(), 0.00, 0.00, DateTimeUtil.getCurrentTime_Today());
+                model.getColor(), model.getPlanName(), 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), DateTimeUtil.getCurrentYear());
+
+        //主要是增加账户之后 会有添加余额变更的记录
+        final BaseModel baseModel = new BaseModel(DaoChoiceAccount.getCount() + y, R.mipmap.yuebiangeng
+                , getString(R.string.Balance_change), getString(R.string.pingzhang), Double.parseDouble(tvMoney),
+                Config.ChoiceAccount,
+                Config.SHOU_RU,
+                DateTimeUtil.getCurrentTime_Today(), "", DaoChoiceAccount.getCount() + y, DateTimeUtil.getCurrentYear());
+        DaoAccountBalance.insert(baseModel);
+
         //RxJava链式调用
         Observable.create(new Observable.OnSubscribe<ChoiceAccount>() {
             @Override

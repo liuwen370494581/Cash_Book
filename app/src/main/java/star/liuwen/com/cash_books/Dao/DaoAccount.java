@@ -169,7 +169,7 @@ public class DaoAccount {
      * @param endData
      * @return
      */
-    public static List<AccountModel> queryByIdAndDate(long id, String startData, String endData) {
+    public static List<AccountModel> queryByIdAndDate(long id, StringBuilder startData, StringBuilder endData) {
         List<AccountModel> list = new ArrayList<>();
         list = App.getDaoInstant().getAccountModelDao().queryBuilder().where(AccountModelDao.Properties.ChoiceAccountId.eq(id), AccountModelDao.Properties.Data.between(startData, endData)).build().list();
         Collections.sort(list, new Comparator<AccountModel>() {

@@ -1,11 +1,8 @@
 package star.liuwen.com.cash_books.Activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -56,7 +53,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     private ChoiceAccount model;
     private RecyclerView mRecyclerView;
     private List<AccountModel> mList = new ArrayList<>();
-    private List<BaseModel> choiceList = new ArrayList<>();
+    private List<BaseModel> updateChoiceList = new ArrayList<>();//修改余额的list
     private List<BaseModel> baseList = new ArrayList<>();
     private PaySHowAdapter mAdapter;
     private View headView;
@@ -64,7 +61,9 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     private ViewStub mViewStub;
     private double tvAccountValue;
     private long payShowId;
-    private String payShowDate, startTime, endTime;
+    private String payShowDate;
+    private StringBuilder sbStartTime;
+    private StringBuilder sbEndTime;
 
     @Override
     public int activityLayoutRes() {
@@ -102,9 +101,11 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         mViewStub.inflate();
         mViewStub.setVisibility(View.GONE);
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
+        sbEndTime = new StringBuilder();
+        sbStartTime = new StringBuilder();
+        sbStartTime = sbStartTime.append(DateTimeUtil.getCurrentYearMonth()).append("-01").append("00-").append("00-").append("00");
+        sbEndTime = sbEndTime.append(DateTimeUtil.getCurrentYearMonth()).append("-31").append("23-").append("59-").append("59");
 
-        startTime = DateTimeUtil.getCurrentYearMonth() + "-01";
-        endTime = DateTimeUtil.getCurrentYearMonth() + "-31";
 
         mAdapter = new PaySHowAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
@@ -113,7 +114,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             payShowId = model.getId();
             payShowDate = model.getTimeMinSec();
             if (DaoAccount.queryByAccountType(model.getMAccountType()).size() != 0 || DaoChoiceAccount.query().size() != 0) {
-                PayShowList(payShowId, startTime, endTime);
+                PayShowList(payShowId, sbStartTime, sbEndTime);
             } else {
                 mAdapter.setData(baseList);
                 mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
@@ -179,7 +180,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     }
 
 
-    private void PayShowList(long id, String startTime, String endTime) {
+    private void PayShowList(long id, StringBuilder startTime, StringBuilder endTime) {
         baseList.clear();
         mList = DaoAccount.queryByIdAndDate(id, startTime, endTime);
         //账户的支出和消费记录list
@@ -199,10 +200,10 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             baseList.add(baseModel);
         }
         //账户的修改余额的list
-        choiceList = DaoAccountBalance.queryByIDAndDate(id, startTime, endTime);
-        for (int i = 0; i < choiceList.size(); i++) {
-            baseList.add(choiceList.get(i));
-            tvAccountValue = choiceList.get(0).getMoney();
+        updateChoiceList = DaoAccountBalance.queryByIDAndDate(id, startTime, endTime);
+        for (int i = 0; i < updateChoiceList.size(); i++) {
+            baseList.add(updateChoiceList.get(i));
+            tvAccountValue = updateChoiceList.get(0).getMoney();
         }
 
         Collections.sort(baseList, new Comparator<BaseModel>() {
@@ -221,6 +222,9 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             mViewStub.setVisibility(View.GONE);
             mAdapter.setData(baseList);
         }
+        //避免数据再次重复添加
+        zhiChu = 0;
+        liuRu = 0;
         for (BaseModel model : baseList) {
             if (model.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                 zhiChu += model.getMoney();
@@ -252,7 +256,8 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             @Override
             public void onTimeSelect(Date date) {
                 txtMonth.setText(DateTimeUtil.getTime(date));
-                PayShowList(payShowId, DateTimeUtil.getTime(date) + "-01", DateTimeUtil.getTime(date) + "-31");
+                PayShowList(payShowId, new StringBuilder().append(DateTimeUtil.getTime(date)).append("-01").append("00-").append("00-").append("00"),
+                        new StringBuilder().append(DateTimeUtil.getTime(date)).append("-31").append("23-").append("59-").append("59"));
             }
         });
         //显示
@@ -310,7 +315,7 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         for (int i = 0; i < baseList.size(); i++) {
             tvAccountValue = baseList.get(0).getMoney();
         }
-        int s = 1 + (int) (Math.random() * 10000000);
+        int s = 1 + (int) (Math.random() * 100);
         final BaseModel baseModel = new BaseModel(DaoChoiceAccount.getCount() + s, R.mipmap.yuebiangeng
                 , getString(R.string.Balance_change), getString(R.string.pingzhang), Double.parseDouble(data),
                 Config.ChoiceAccount,
@@ -330,7 +335,9 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
                 mAdapter.setData(baseList);
                 mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 mViewStub.setVisibility(View.GONE);
-                //更新页面数据
+                //更新页面数据 避免数据重复添加
+                liuRu = 0;
+                zhiChu = 0;
                 for (BaseModel bm : baseList) {
                     if (bm.getZhiChuShouRuType().equals(Config.ZHI_CHU)) {
                         zhiChu += bm.getMoney();
@@ -415,12 +422,5 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             }
             return true;
         }
-    }
-
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        Log.e("MainActivity", "onSaveInstanceState被调用了");
     }
 }

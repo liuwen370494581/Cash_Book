@@ -198,8 +198,8 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
             intent.putExtra(Config.SaveAPenPlatform, "AccountName");
             startActivityForResult(intent, ACCOUNT);
         } else if (v == reMoney) {
-            intent.putExtra(Config.SaveAPenPlatform, "AccountMoney");
-            startActivityForResult(intent, MONEY);
+//            intent.putExtra(Config.SaveAPenPlatform, "AccountMoney");
+//            startActivityForResult(intent, MONEY);
         } else if (v == reCreditLimit) {
             intent.putExtra(Config.SaveAPenPlatform, "CreditLimit");
             startActivityForResult(intent, CreditLimit);

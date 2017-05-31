@@ -134,7 +134,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         tvShouRuData = (NumberAnimTextView) headView.findViewById(R.id.home_shouru_data);
         tvZhiChuData = (NumberAnimTextView) headView.findViewById(R.id.home_zhichu_data);
         mCircleProgress = (CircleProgress) headView.findViewById(R.id.f_h_image);
-        mCircleProgress.setProgress(Integer.valueOf("10").intValue());
         mCircleProgress.setPrefixText(DateTimeUtil.getCurrentMonth());
         mCircleProgress.setUnfinishedColor(R.color.white);
         mCircleProgress.setOnClickListener(this);
@@ -164,7 +163,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
                     tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
                     mAdapter.addNewData(models);
-                    mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1));
+                    mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1, ""));
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
                 }
             });
@@ -215,6 +214,32 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 mList = (List<AccountModel>) event.getData();
                 insertHomeList();
                 break;
+            case C.EventCode.BudgetActivityToHomeFragment:
+                updateBudget();
+                break;
+        }
+    }
+
+    private void updateBudget() {
+        if (DaoAccount.getCount() != 0) {
+            Observable.create(new Observable.OnSubscribe<List<AccountModel>>() {
+                @Override
+                public void call(Subscriber<? super List<AccountModel>> subscriber) {
+                    mList = DaoAccount.query();
+                    subscriber.onNext(mList);
+                }
+            }).compose(RxUtil.<List<AccountModel>>applySchedulers()).subscribe(new Action1<List<AccountModel>>() {
+                @Override
+                public void call(List<AccountModel> models) {
+                    for (int i = 0; i < models.size(); i++) {
+                        totalZhiChuAdd = totalZhiChuAdd + models.get(i).getZhiCHuAdd();
+
+                    }
+                    String budget = models.get(0).getBudget();
+                    int budgetMoney = (int) ((Integer.parseInt(budget) / totalZhiChuAdd) * 100);
+                    mCircleProgress.setProgress(budgetMoney);
+                }
+            });
         }
     }
 
@@ -263,7 +288,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     @Override
                     public void call(List<AccountModel> models) {
                         if (models.size() == 1) {
-                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1));
+                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1, ""));
                         }
                     }
                 });
@@ -311,7 +336,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     @Override
                     public void call(List<AccountModel> models) {
                         if (models.size() == 1) {
-                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1));
+                            mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1, ""));
                         }
                     }
                 });

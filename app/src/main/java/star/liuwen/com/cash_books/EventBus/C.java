@@ -27,6 +27,7 @@ public final class C {
         public static final int NewSaveMoneyPlanActivityToMyFragment = 20008;
         public static final int SaveAPenActivityToShowSaveMoneyPlay = 20009;
         public static final int TarGetUrl = 200010;
+        public static final int BudgetActivityToHomeFragment = 300001;
 
 
         // other more

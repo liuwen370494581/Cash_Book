@@ -229,6 +229,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar_righ_tv.setOnClickListener(onClickListener);
     }
 
+    public void setRightTxtVisible(boolean isShow) {
+        TextView toolbar_righ_tv = (TextView) findViewById(R.id.toolbar_righ_tv);
+        if (toolbar_righ_tv == null) {
+            return;
+        }
+        if (isShow) {
+            toolbar_righ_tv.setVisibility(View.VISIBLE);
+        } else {
+            toolbar_righ_tv.setVisibility(View.GONE);
+        }
+    }
+
     /**
      * 右侧只显示一个图片
      *

@@ -77,7 +77,7 @@ public class DaoAccountBalance {
      * @param endData
      * @return
      */
-    public static List<BaseModel> queryByIDAndDate(long id, String startData, String endData) {
+    public static List<BaseModel> queryByIDAndDate(long id, StringBuilder startData, StringBuilder endData) {
         List<BaseModel> list = new ArrayList<>();
         list = App.getDaoInstant().getBaseModelDao().queryBuilder().where(BaseModelDao.Properties.ChoiceAccountId.eq(id), BaseModelDao.Properties.Date.between(startData, endData)).build().list();
         Collections.sort(list, new Comparator<BaseModel>() {

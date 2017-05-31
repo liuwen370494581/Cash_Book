@@ -10,8 +10,8 @@ android {
         applicationId "star.liuwen.com.cash_books"
         minSdkVersion 22
         targetSdkVersion 23
-        versionCode 87
-        versionName "1.8.7 "
+        versionCode 88
+        versionName "1.8.8 "
 
     }
     buildTypes {

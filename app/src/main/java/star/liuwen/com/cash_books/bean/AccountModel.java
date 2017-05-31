@@ -27,6 +27,7 @@ public class AccountModel implements Serializable {
     private double AccountYuer;//账户余额
     private String ShowFirstDate;//用来标识是否显示开启了记账之路
     private long choiceAccountId;//用来标识查询账户的唯一数据
+    private String budget;//预算
 
     public AccountModel() {
     }
@@ -55,6 +56,27 @@ public class AccountModel implements Serializable {
         this.timeMinSec = timeMinSec;
         this.zhiChuShouRuType = zhiChuShouRuType;
         this.choiceAccountId = id;
+    }
+
+
+    @Generated(hash = 1182184895)
+    public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
+            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String ShowFirstDate, long choiceAccountId, String budget) {
+        this.id = id;
+        this.AccountType = AccountType;
+        this.Data = Data;
+        this.Money = Money;
+        this.ConsumeType = ConsumeType;
+        this.url = url;
+        this.timeMinSec = timeMinSec;
+        this.zhiChuShouRuType = zhiChuShouRuType;
+        this.consumePercent = consumePercent;
+        this.zhiCHuAdd = zhiCHuAdd;
+        this.sHouRuAdd = sHouRuAdd;
+        this.AccountYuer = AccountYuer;
+        this.ShowFirstDate = ShowFirstDate;
+        this.choiceAccountId = choiceAccountId;
+        this.budget = budget;
     }
 
 
@@ -197,25 +219,15 @@ public class AccountModel implements Serializable {
         this.id = id;
     }
 
-
-    @Generated(hash = 1714161724)
-    public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
-                        float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String ShowFirstDate, long choiceAccountId) {
-        this.id = id;
-        this.AccountType = AccountType;
-        this.Data = Data;
-        this.Money = Money;
-        this.ConsumeType = ConsumeType;
-        this.url = url;
-        this.timeMinSec = timeMinSec;
-        this.zhiChuShouRuType = zhiChuShouRuType;
-        this.consumePercent = consumePercent;
-        this.zhiCHuAdd = zhiCHuAdd;
-        this.sHouRuAdd = sHouRuAdd;
-        this.AccountYuer = AccountYuer;
-        this.ShowFirstDate = ShowFirstDate;
-        this.choiceAccountId = choiceAccountId;
+    public String getBudget() {
+        return budget;
     }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+   
 
 
 }

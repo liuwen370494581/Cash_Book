@@ -175,12 +175,12 @@ public class DataEnige {
 
 
     public static void InsertAccountData() {
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xianjin, "现金", 0.00, 0.00, "", "", R.color.xianjian, Config.CASH, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today()));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_yinhangka, "储蓄卡", 0.00, 0.00, "", "", R.color.chuxuka, Config.CXK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today()));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xinyongka, "信用卡", 0.00, 0.00, "", "", R.color.xinyongka, Config.XYK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today()));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_zhifubao, "支付宝", 0.00, 0.00, "", "", R.color.zhifubao, Config.ZFB, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today()));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借出", 0.00, 0.00, "", "", R.color.jiechu, Config.JC, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today()));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借入", 0.00, 0.00, "", "", R.color.jieru, Config.JR, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today()));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xianjin, "现金", 0.00, 0.00, "", "", R.color.xianjian, Config.CASH, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_yinhangka, "储蓄卡", 0.00, 0.00, "", "", R.color.chuxuka, Config.CXK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xinyongka, "信用卡", 0.00, 0.00, "", "", R.color.xinyongka, Config.XYK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_zhifubao, "支付宝", 0.00, 0.00, "", "", R.color.zhifubao, Config.ZFB, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借出", 0.00, 0.00, "", "", R.color.jiechu, Config.JC, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借入", 0.00, 0.00, "", "", R.color.jieru, Config.JR, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
     }
 
     public static List<PlanSaveMoneyModel> getAddChoiceAccount() {

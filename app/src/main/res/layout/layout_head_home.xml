@@ -40,13 +40,11 @@
         </LinearLayout>
 
         <com.github.lzyzsd.circleprogress.CircleProgress
-            custom:circle_prefix_text="月预算"
             android:id="@+id/f_h_image"
             android:layout_width="52dp"
             android:layout_height="52dp"
             custom:circle_text_size="11sp"
-            android:layout_centerInParent="true"
-            custom:circle_progress="20"/>
+            android:layout_centerInParent="true"/>
 
 
         <LinearLayout

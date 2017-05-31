@@ -1,13 +1,10 @@
 package star.liuwen.com.cash_books.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
-
-import star.liuwen.com.cash_books.Base.Config;
-
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by liuwen on 2017/1/18.
@@ -29,7 +26,7 @@ public class ChoiceAccount implements Serializable {
     private double liuChu; //账户流出
     private double liuRu; //账户流入
     private String timeMinSec;// 消费和支出日期  2017-2-28-12-30-31
-
+    private String date;
 
     public ChoiceAccount(int url, String accountName, double money, double debt, String accountType, int color) {
         this.url = url;
@@ -51,9 +48,9 @@ public class ChoiceAccount implements Serializable {
         mAccountType = accountType;
     }
 
-    @Generated(hash = 659872583)
-    public ChoiceAccount(Long id, int url, String accountName, double money, double Debt, String DebtDate,
-                         String IssuingBank, int color, String mAccountType, double liuChu, double liuRu, String timeMinSec) {
+    @Generated(hash = 562195584)
+    public ChoiceAccount(Long id, int url, String accountName, double money, double Debt, String DebtDate, String IssuingBank, int color,
+            String mAccountType, double liuChu, double liuRu, String timeMinSec, String date) {
         this.id = id;
         this.url = url;
         this.accountName = accountName;
@@ -66,21 +63,11 @@ public class ChoiceAccount implements Serializable {
         this.liuChu = liuChu;
         this.liuRu = liuRu;
         this.timeMinSec = timeMinSec;
+        this.date = date;
     }
-
 
     @Generated(hash = 1743186768)
     public ChoiceAccount() {
-    }
-
-
-    public String getData() {
-        return this.timeMinSec;
-    }
-
-
-    public void setData(String data) {
-        this.timeMinSec = data;
     }
 
 
@@ -199,6 +186,14 @@ public class ChoiceAccount implements Serializable {
 
     public void setTimeMinSec(String timeMinSec) {
         this.timeMinSec = timeMinSec;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
 
