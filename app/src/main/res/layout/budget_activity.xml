@@ -90,12 +90,10 @@
             android:text="本月剩余预算"
             android:textSize="@dimen/textSize_18"/>
 
-        <com.github.lzyzsd.circleprogress.CircleProgress
+        <star.liuwen.com.cash_books.View.WaveLoadingView
             android:id="@+id/circle_progress"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_centerInParent="true"
-            custom:circle_prefix_text="月预算"
-            custom:circle_progress="0"/>
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 </LinearLayout>

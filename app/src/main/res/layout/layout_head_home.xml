@@ -39,11 +39,10 @@
                 android:textSize="@dimen/textSize_18"/>
         </LinearLayout>
 
-        <com.github.lzyzsd.circleprogress.CircleProgress
+        <star.liuwen.com.cash_books.View.WaveLoadingView
             android:id="@+id/f_h_image"
             android:layout_width="52dp"
             android:layout_height="52dp"
-            custom:circle_text_size="11sp"
             android:layout_centerInParent="true"/>
 
 

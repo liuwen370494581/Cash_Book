@@ -216,12 +216,12 @@ public class newAddAccountActivity extends BaseActivity implements View.OnClickL
                 TextUtils.isEmpty(tvBank.trim()) ? "" : tvBank,
                 model.getColor(), model.getPlanName(), 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), DateTimeUtil.getCurrentYear());
 
-        //主要是增加账户之后 会有添加余额变更的记录
+        //这里添加一段代码是增加账户之后 会有添加余额变更的记录
         final BaseModel baseModel = new BaseModel(DaoChoiceAccount.getCount() + y, R.mipmap.yuebiangeng
                 , getString(R.string.Balance_change), getString(R.string.pingzhang), Double.parseDouble(tvMoney),
                 Config.ChoiceAccount,
                 Config.SHOU_RU,
-                DateTimeUtil.getCurrentTime_Today(), "", DaoChoiceAccount.getCount() + y, DateTimeUtil.getCurrentYear());
+                DateTimeUtil.getCurrentTime_Today(), "", DaoChoiceAccount.getCount() + y, DateTimeUtil.getCurrentTime_Today());
         DaoAccountBalance.insert(baseModel);
 
         //RxJava链式调用

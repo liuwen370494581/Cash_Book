@@ -27,7 +27,7 @@ public class AccountModel implements Serializable {
     private double AccountYuer;//账户余额
     private String ShowFirstDate;//用来标识是否显示开启了记账之路
     private long choiceAccountId;//用来标识查询账户的唯一数据
-    private String budget;//预算
+    private String budget;//预算金额
 
     public AccountModel() {
     }
@@ -61,7 +61,7 @@ public class AccountModel implements Serializable {
 
     @Generated(hash = 1182184895)
     public AccountModel(Long id, String AccountType, String Data, double Money, String ConsumeType, int url, String timeMinSec, String zhiChuShouRuType,
-            float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String ShowFirstDate, long choiceAccountId, String budget) {
+                        float consumePercent, double zhiCHuAdd, double sHouRuAdd, double AccountYuer, String ShowFirstDate, long choiceAccountId, String budget) {
         this.id = id;
         this.AccountType = AccountType;
         this.Data = Data;
@@ -226,8 +226,6 @@ public class AccountModel implements Serializable {
     public void setBudget(String budget) {
         this.budget = budget;
     }
-
-   
 
 
 }

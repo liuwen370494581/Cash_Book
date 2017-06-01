@@ -62,8 +62,6 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
     private double tvAccountValue;
     private long payShowId;
     private String payShowDate;
-    private StringBuilder sbStartTime;
-    private StringBuilder sbEndTime;
 
     @Override
     public int activityLayoutRes() {
@@ -101,11 +99,11 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
         mViewStub.inflate();
         mViewStub.setVisibility(View.GONE);
         model = (ChoiceAccount) getIntent().getExtras().getSerializable(Config.ModelWallet);
-        sbEndTime = new StringBuilder();
-        sbStartTime = new StringBuilder();
-        sbStartTime = sbStartTime.append(DateTimeUtil.getCurrentYearMonth()).append("-01").append("00-").append("00-").append("00");
-        sbEndTime = sbEndTime.append(DateTimeUtil.getCurrentYearMonth()).append("-31").append("23-").append("59-").append("59");
 
+        StringBuilder sbEndTime = new StringBuilder();
+        StringBuilder sbStartTime = new StringBuilder();
+        sbStartTime = sbStartTime.append(DateTimeUtil.getCurrentYearMonth()).append("-01").append("-00-").append("00-").append("00");
+        sbEndTime = sbEndTime.append(DateTimeUtil.getCurrentYearMonth()).append("-31").append("-23-").append("59-").append("59");
 
         mAdapter = new PaySHowAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
@@ -256,8 +254,8 @@ public class PayShowActivity extends BaseActivity implements BGAOnRVItemClickLis
             @Override
             public void onTimeSelect(Date date) {
                 txtMonth.setText(DateTimeUtil.getTime(date));
-                PayShowList(payShowId, new StringBuilder().append(DateTimeUtil.getTime(date)).append("-01").append("00-").append("00-").append("00"),
-                        new StringBuilder().append(DateTimeUtil.getTime(date)).append("-31").append("23-").append("59-").append("59"));
+                PayShowList(payShowId, new StringBuilder().append(DateTimeUtil.getTime(date)).append("-01-").append("00-").append("00-").append("00"),
+                        new StringBuilder().append(DateTimeUtil.getTime(date)).append("-31").append("-23-").append("59-").append("59"));
             }
         });
         //显示

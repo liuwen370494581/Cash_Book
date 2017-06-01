@@ -15,7 +15,6 @@ import android.view.ViewStub;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.wyt.searchbox.SearchFragment;
 import com.wyt.searchbox.custom.IOnSearchClickListener;
 
@@ -45,6 +44,7 @@ import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
+import star.liuwen.com.cash_books.View.WaveLoadingView;
 import star.liuwen.com.cash_books.bean.AccountModel;
 
 /**
@@ -68,7 +68,8 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     private AccountModel model;
 
     private SearchFragment searchFragment;//增加了主页搜索功能
-    private CircleProgress mCircleProgress; //预算
+    private WaveLoadingView mCircleProgress; //预算
+    private String budgetMoney;
 
 
     @Override
@@ -133,10 +134,11 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         tvZhiChuMonth = (TextView) headView.findViewById(R.id.home_zhichu_month);
         tvShouRuData = (NumberAnimTextView) headView.findViewById(R.id.home_shouru_data);
         tvZhiChuData = (NumberAnimTextView) headView.findViewById(R.id.home_zhichu_data);
-        mCircleProgress = (CircleProgress) headView.findViewById(R.id.f_h_image);
-        mCircleProgress.setPrefixText(DateTimeUtil.getCurrentMonth());
-        mCircleProgress.setUnfinishedColor(R.color.white);
+        mCircleProgress = (WaveLoadingView) headView.findViewById(R.id.f_h_image);
+
+       // mCircleProgress.setDescribe(getString(R.string.monthBudget));
         mCircleProgress.setOnClickListener(this);
+        //mCircleProgress.setMoney(getString(R.string.calendar_jia));
 
         tvShouRuMonth.setText(String.format("%s收入", DateTimeUtil.getCurrentMonth()));
         tvZhiChuMonth.setText(String.format("%s支出", DateTimeUtil.getCurrentMonth()));
@@ -162,6 +164,8 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     }
                     tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
                     tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
+                    mCircleProgress.setMoney(String.format("%.2f", models.get(0).getMoney()));
+                    mCircleProgress.setPercent(100);
                     mAdapter.addNewData(models);
                     mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1, ""));
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
@@ -215,33 +219,14 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 insertHomeList();
                 break;
             case C.EventCode.BudgetActivityToHomeFragment:
-                updateBudget();
+                String budgetMoney = (String) event.getData();
+                mCircleProgress.setDescribe(getString(R.string.monthBudget));
+                mCircleProgress.setPercent(100);
+                mCircleProgress.setMoney(budgetMoney);
                 break;
         }
     }
 
-    private void updateBudget() {
-        if (DaoAccount.getCount() != 0) {
-            Observable.create(new Observable.OnSubscribe<List<AccountModel>>() {
-                @Override
-                public void call(Subscriber<? super List<AccountModel>> subscriber) {
-                    mList = DaoAccount.query();
-                    subscriber.onNext(mList);
-                }
-            }).compose(RxUtil.<List<AccountModel>>applySchedulers()).subscribe(new Action1<List<AccountModel>>() {
-                @Override
-                public void call(List<AccountModel> models) {
-                    for (int i = 0; i < models.size(); i++) {
-                        totalZhiChuAdd = totalZhiChuAdd + models.get(i).getZhiCHuAdd();
-
-                    }
-                    String budget = models.get(0).getBudget();
-                    int budgetMoney = (int) ((Integer.parseInt(budget) / totalZhiChuAdd) * 100);
-                    mCircleProgress.setProgress(budgetMoney);
-                }
-            });
-        }
-    }
 
     private void insertHomeList() {
         mAdapter.addNewData(mList);

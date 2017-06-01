@@ -7,8 +7,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.lzyzsd.circleprogress.CircleProgress;
-
 import star.liuwen.com.cash_books.Base.BaseActivity;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
@@ -18,6 +16,7 @@ import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.SnackBarUtil;
+import star.liuwen.com.cash_books.View.WaveLoadingView;
 import star.liuwen.com.cash_books.bean.AccountModel;
 
 /**
@@ -25,12 +24,12 @@ import star.liuwen.com.cash_books.bean.AccountModel;
  * 预算页面
  */
 public class BudgetActivity extends BaseActivity implements View.OnClickListener {
-    private CircleProgress mCircleProgress;
+    private WaveLoadingView mCircleProgress;
     private RelativeLayout reBudgetMonth, reBudgetMonthShow;
     private TextView txtBudgetMonth;
     private ImageView imageBudget;
     private boolean isOpenBudget = false;
-    private String budgetMoney;
+    private String budgetMoney;//预算金额
 
     @Override
     public int activityLayoutRes() {
@@ -53,7 +52,10 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         reBudgetMonthShow = (RelativeLayout) findViewById(R.id.re_budget_show);
         reBudgetMonth = (RelativeLayout) findViewById(R.id.re_budget_month);
         txtBudgetMonth = (TextView) findViewById(R.id.budget_txt_time);
-        mCircleProgress = (CircleProgress) findViewById(R.id.circle_progress);
+        mCircleProgress = (WaveLoadingView) findViewById(R.id.circle_progress);
+        mCircleProgress.setDescribe(getString(R.string.monthBudget));
+        mCircleProgress.setMoneySize(50);
+        mCircleProgress.setDescribeSize(25);
         imageBudget = (ImageView) findViewById(R.id.budget_push);
 
         isOpenBudget = SharedPreferencesUtil.getBooleanPreferences(this, Config.isBudgetPush, false);
@@ -73,6 +75,7 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
             return;
         }
         SharedPreferencesUtil.setBooleanPreferences(this, Config.isBudgetPush, isOpenBudget);
+        UpdateAccountBudget();
         this.finish();
     }
 
@@ -105,16 +108,17 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         switch (requestCode) {
             case Budget:
                 txtBudgetMonth.setText(budgetMoney);
-                mCircleProgress.setProgress(100);
-                UpdateAccountBudget(budgetMoney);
+                mCircleProgress.setPercent(100);
+                mCircleProgress.setMoney(budgetMoney);
+                mCircleProgress.setDescribe(getString(R.string.monthBudget));
                 break;
         }
     }
 
-    private void UpdateAccountBudget(String budgetMoney) {
+    private void UpdateAccountBudget() {
         AccountModel model = DaoAccount.query().get(0);
         model.setBudget(budgetMoney);
         DaoAccount.updateAccount(model);
-        EventBusUtil.sendEvent(new Event(C.EventCode.BudgetActivityToHomeFragment));
+        EventBusUtil.sendEvent(new Event(C.EventCode.BudgetActivityToHomeFragment, budgetMoney));
     }
 }
