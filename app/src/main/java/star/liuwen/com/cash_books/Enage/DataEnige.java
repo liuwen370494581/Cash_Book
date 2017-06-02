@@ -7,12 +7,14 @@ import java.util.List;
 
 import star.liuwen.com.cash_books.Base.App;
 import star.liuwen.com.cash_books.Base.Config;
+import star.liuwen.com.cash_books.Dao.DaoBudget;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.Dao.DaoShouRuModel;
 import star.liuwen.com.cash_books.Dao.DaoZhiChuModel;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.bean.AccountWealthModel;
+import star.liuwen.com.cash_books.bean.BudgetModel;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 import star.liuwen.com.cash_books.bean.ColorModel;
 import star.liuwen.com.cash_books.bean.CommunityModel;
@@ -175,12 +177,12 @@ public class DataEnige {
 
 
     public static void InsertAccountData() {
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xianjin, "现金", 0.00, 0.00, "", "", R.color.xianjian, Config.CASH, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_yinhangka, "储蓄卡", 0.00, 0.00, "", "", R.color.chuxuka, Config.CXK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xinyongka, "信用卡", 0.00, 0.00, "", "", R.color.xinyongka, Config.XYK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_zhifubao, "支付宝", 0.00, 0.00, "", "", R.color.zhifubao, Config.ZFB, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借出", 0.00, 0.00, "", "", R.color.jiechu, Config.JC, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
-        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借入", 0.00, 0.00, "", "", R.color.jieru, Config.JR, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(),""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xianjin, "现金", 0.00, 0.00, "", "", R.color.xianjian, Config.CASH, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), ""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_yinhangka, "储蓄卡", 0.00, 0.00, "", "", R.color.chuxuka, Config.CXK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), ""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_xinyongka, "信用卡", 0.00, 0.00, "", "", R.color.xinyongka, Config.XYK, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), ""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_account_zhifubao, "支付宝", 0.00, 0.00, "", "", R.color.zhifubao, Config.ZFB, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), ""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借出", 0.00, 0.00, "", "", R.color.jiechu, Config.JC, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), ""));
+        DaoChoiceAccount.insertChoiceAccount(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.jiedai, "借入", 0.00, 0.00, "", "", R.color.jieru, Config.JR, 0.00, 0.00, DateTimeUtil.getCurrentTime_Today(), ""));
     }
 
     public static List<PlanSaveMoneyModel> getAddChoiceAccount() {
@@ -212,6 +214,13 @@ public class DataEnige {
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.tuikuan, "退款"));
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.zhifubao, "支付宝"));
         DaoShouRuModel.insertShouRu(new ShouRuModel(DaoShouRuModel.getCount(), R.mipmap.icon_shouru_type_qita, "其他"));
+    }
+
+    public static void InsertBudgetData() {
+        DaoBudget.insert(new BudgetModel(DaoBudget.getCount(), false, "0.00", 0, "未设置预算"));
+        DaoBudget.insert(new BudgetModel(DaoBudget.getCount(), false, "0.00", 0, "未设置预算"));
+        DaoBudget.insert(new BudgetModel(DaoBudget.getCount(), false, "0.00", 0, "未设置预算"));
+        DaoBudget.insert(new BudgetModel(DaoBudget.getCount(), false, "0.00", 0, "未设置预算"));
     }
 
 
@@ -485,7 +494,7 @@ public class DataEnige {
         list.add(new DiscussModel(R.mipmap.shiwan, "小席", "我喜欢宋祖新"));
         return list;
 
-
     }
 
 }
+

@@ -75,6 +75,7 @@ public class App extends Application {
                         DataEnige.InsertAccountData();
                         DataEnige.InsertShouRuData();
                         DataEnige.InsertZHiCHuData();
+                        DataEnige.InsertBudgetData();
                     }
                 }
             });

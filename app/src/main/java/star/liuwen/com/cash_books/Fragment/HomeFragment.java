@@ -35,6 +35,7 @@ import star.liuwen.com.cash_books.Activity.SearchResultActivity;
 import star.liuwen.com.cash_books.Base.BaseFragment;
 import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoAccount;
+import star.liuwen.com.cash_books.Dao.DaoBudget;
 import star.liuwen.com.cash_books.Dialog.TipandEditDialog;
 import star.liuwen.com.cash_books.EventBus.C;
 import star.liuwen.com.cash_books.EventBus.Event;
@@ -46,6 +47,7 @@ import star.liuwen.com.cash_books.View.DefineBAGRefreshWithLoadView;
 import star.liuwen.com.cash_books.View.NumberAnimTextView;
 import star.liuwen.com.cash_books.View.WaveLoadingView;
 import star.liuwen.com.cash_books.bean.AccountModel;
+import star.liuwen.com.cash_books.bean.BudgetModel;
 
 /**
  * 明细
@@ -70,6 +72,7 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     private SearchFragment searchFragment;//增加了主页搜索功能
     private WaveLoadingView mCircleProgress; //预算
     private String budgetMoney;
+    private BudgetModel mBudgetModel;
 
 
     @Override
@@ -134,19 +137,24 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
         tvZhiChuMonth = (TextView) headView.findViewById(R.id.home_zhichu_month);
         tvShouRuData = (NumberAnimTextView) headView.findViewById(R.id.home_shouru_data);
         tvZhiChuData = (NumberAnimTextView) headView.findViewById(R.id.home_zhichu_data);
+
         mCircleProgress = (WaveLoadingView) headView.findViewById(R.id.f_h_image);
-
-       // mCircleProgress.setDescribe(getString(R.string.monthBudget));
+        mCircleProgress.setDescribe(getString(R.string.no_setting_month_Budget));
         mCircleProgress.setOnClickListener(this);
-        //mCircleProgress.setMoney(getString(R.string.calendar_jia));
 
+        if (DaoBudget.getCount() != 0) {
+            mBudgetModel = DaoBudget.query().get(0);
+            mCircleProgress.setDescribe(mBudgetModel.getBudgetDescription());
+            mCircleProgress.setMoney(mBudgetModel.getBudgetMoney());
+            mCircleProgress.setPercent(mBudgetModel.getBudgetRemainMoney());
+        }
         tvShouRuMonth.setText(String.format("%s收入", DateTimeUtil.getCurrentMonth()));
         tvZhiChuMonth.setText(String.format("%s支出", DateTimeUtil.getCurrentMonth()));
-
         mList = new ArrayList<>();
         mAdapter = new HomesAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         if (DaoAccount.query().size() != 0) {
             Observable.create(new Observable.OnSubscribe<List<AccountModel>>() {
@@ -164,8 +172,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                     }
                     tvZhiChuData.setNumberString(String.format("%.2f", totalZhiChuAdd));
                     tvShouRuData.setNumberString(String.format("%.2f", totalShouRuAdd));
-                    mCircleProgress.setMoney(String.format("%.2f", models.get(0).getMoney()));
-                    mCircleProgress.setPercent(100);
                     mAdapter.addNewData(models);
                     mAdapter.addLastItem(new AccountModel(DaoAccount.getCount(), "", "", 0, "", R.mipmap.xiaolian, "", "", 0, 0, 0, 0, "你于" + DateTimeUtil.getCurrentYear() + "开启了你的记账之路", -1, ""));
                     mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
@@ -217,12 +223,18 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 //接收从支出或者是收入页面传递过来的值
                 mList = (List<AccountModel>) event.getData();
                 insertHomeList();
+                if (mBudgetModel.getOpenBudget()) {
+                    mBudgetModel = DaoBudget.query().get(0);
+                    mCircleProgress.setMoney(mBudgetModel.getBudgetMoney());
+                    mCircleProgress.setDescribe(getString(R.string.monthBudget));
+                    mCircleProgress.setPercent(mBudgetModel.getBudgetRemainMoney());
+                }
                 break;
             case C.EventCode.BudgetActivityToHomeFragment:
-                String budgetMoney = (String) event.getData();
+                mBudgetModel = (BudgetModel) event.getData();
                 mCircleProgress.setDescribe(getString(R.string.monthBudget));
                 mCircleProgress.setPercent(100);
-                mCircleProgress.setMoney(budgetMoney);
+                mCircleProgress.setMoney(mBudgetModel.getBudgetMoney());
                 break;
         }
     }
@@ -250,6 +262,12 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 model.setConsumePercent((float) (model.getMoney() / zhiChuAdd) * 100);
                 model.setShowFirstDate("");
                 model.setChoiceAccountId(mList.get(i).getChoiceAccountId());
+                //这里设置金额主要是为了和预算挂钩 消费支出的金额和预算并且更新
+                mBudgetModel.setBudgetMoney(String.format("%.2f", Double.parseDouble(mBudgetModel.getBudgetMoney()) - mList.get(i).getMoney()));
+                double dPercent = (mList.get(i).getMoney() / Double.parseDouble(mBudgetModel.getBudgetMoney())) * 100;
+                int budgetPercent = (int) dPercent;
+                mBudgetModel.setBudgetRemainMoney(100 - budgetPercent);
+                DaoBudget.update(mBudgetModel);
                 Observable.create(new Observable.OnSubscribe<AccountModel>() {
                     @Override
                     public void call(Subscriber<? super AccountModel> subscriber) {
@@ -406,7 +424,9 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     @Override
     public void onClick(View v) {
         if (v == mCircleProgress) {
-            startActivity(new Intent(getActivity(), BudgetActivity.class));
+            Intent intent = new Intent(getActivity(), BudgetActivity.class);
+            intent.putExtra(Config.ModelBudget, mBudgetModel);
+            startActivity(intent);
         }
     }
 
