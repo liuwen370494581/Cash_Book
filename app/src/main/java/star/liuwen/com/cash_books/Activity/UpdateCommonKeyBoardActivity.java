@@ -174,6 +174,11 @@ public class UpdateCommonKeyBoardActivity extends BaseActivity {
                 public void enter() {
                     onSure(position);
                 }
+
+                @Override
+                public void keySet() {
+
+                }
             });
         } else {
             mKeyBoardView.setVisibility(View.GONE);

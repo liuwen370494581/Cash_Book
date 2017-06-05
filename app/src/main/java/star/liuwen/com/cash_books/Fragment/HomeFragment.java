@@ -238,8 +238,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
                 break;
         }
     }
-
-
     private void insertHomeList() {
         mAdapter.addNewData(mList);
         for (int i = 0; i < mList.size(); i++) {

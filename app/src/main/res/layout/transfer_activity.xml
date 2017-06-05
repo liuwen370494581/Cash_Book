@@ -148,6 +148,12 @@
             android:visibility="visible"/>
     </RelativeLayout>
 
+
+    <View
+        android:layout_above="@+id/keyboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/text_color_bg"/>
     <android.inputmethodservice.KeyboardView
         android:id="@+id/keyboard_view"
         android:layout_width="match_parent"

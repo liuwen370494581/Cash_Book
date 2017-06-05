@@ -19,6 +19,7 @@ public class KeyboardUtil {
     private Keyboard k1;// 数字键盘
     private EditText ed;
     private int KEY_ENTER_CODE = 13;
+    private int KEY_SET_CODE = -3;
 
     public KeyboardUtil(Activity act, Context ctx, EditText edit) {
         this.ed = edit;
@@ -68,7 +69,11 @@ public class KeyboardUtil {
                 if (null != onEnterListener) {
                     onEnterListener.enter();
                 }
-                hideKeyboard();
+            }
+            if (KEY_SET_CODE == primaryCode) {
+                if (null != onEnterListener) {
+                    onEnterListener.keySet();
+                }
             }
         }
 
@@ -127,6 +132,8 @@ public class KeyboardUtil {
 
     public interface EnterListener {
         void enter();
+
+        void keySet();
     }
 
 

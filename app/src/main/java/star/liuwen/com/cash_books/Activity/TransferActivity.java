@@ -5,7 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.inputmethodservice.KeyboardView;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -31,8 +30,6 @@ import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
 import star.liuwen.com.cash_books.Utils.KeyboardUtil;
-import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
-import star.liuwen.com.cash_books.Utils.ToastUtils;
 import star.liuwen.com.cash_books.bean.ChoiceAccount;
 
 /**
@@ -150,6 +147,11 @@ public class TransferActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void enter() {
                 TransferActivity.this.finish();
+                reShowDate.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void keySet() {
                 reShowDate.setVisibility(View.GONE);
             }
         });

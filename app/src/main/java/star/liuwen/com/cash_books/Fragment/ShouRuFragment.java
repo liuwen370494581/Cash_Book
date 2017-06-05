@@ -8,9 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -22,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -51,6 +57,7 @@ import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.MainActivity;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
+import star.liuwen.com.cash_books.Utils.KeyboardUtil;
 import star.liuwen.com.cash_books.Utils.RxUtil;
 import star.liuwen.com.cash_books.Utils.SharedPreferencesUtil;
 import star.liuwen.com.cash_books.Utils.ToastUtils;
@@ -68,7 +75,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private ZhiChuAdapter mAdapter;
     private EditText edName;
     private ImageView imageName;
-    private TextView txtName, tvData, tvZhanghu, tvSure;
+    private TextView txtName, tvData, tvZhanghu;
     private Integer AccountUrl;
     private PopupWindow window;
     private List<AccountModel> homListData;
@@ -80,6 +87,9 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private ChoiceAccount model;
     private double accountMoney;//用来计算账户的余额
     private long shouRuId;//用来标识每个item独有的属性
+
+    private KeyboardUtil mKeyboardUtil;
+    private RelativeLayout reShowKeyBoard;
 
 
     @Override
@@ -95,6 +105,17 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         initView();
         return getContentView();
     }
+
+    private void initView() {
+        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_shouru_recycler);
+        tvData = (TextView) getContentView().findViewById(R.id.f_shouru_data);
+        tvZhanghu = (TextView) getContentView().findViewById(R.id.f_shouru_zhanghu);
+        reShowKeyBoard = (RelativeLayout) getContentView().findViewById(R.id.re_show_keyBoard);
+        tvData.setOnClickListener(this);
+        tvZhanghu.setOnClickListener(this);
+        reShowKeyBoard.setOnClickListener(this);
+    }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -118,6 +139,9 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         mAdapter = new ZhiChuAdapter(mRecyclerView);
         mAdapter.addHeaderView(headView);
 
+        mKeyboardUtil = new KeyboardUtil(getActivity(), getActivity(), edName);
+        mKeyboardUtil.showKeyboard();
+
         final GridLayoutManager manager = new GridLayoutManager(getActivity(), 5, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         mList = new ArrayList<>();
@@ -135,17 +159,90 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         mAdapter.setOnRVItemLongClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnRVItemClickListener(this);
+
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.e("MainActivity", "你往下面滑动了" + newState);
+                mKeyboardUtil.hideKeyboard();
+                reShowKeyBoard.setVisibility(View.GONE);
+            }
+
+        });
+
+        //键盘的点击事件
+        setListener();
     }
 
-    private void initView() {
-        mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_shouru_recycler);
-        tvData = (TextView) getContentView().findViewById(R.id.f_shouru_data);
-        tvZhanghu = (TextView) getContentView().findViewById(R.id.f_shouru_zhanghu);
-        tvSure = (TextView) getContentView().findViewById(R.id.f_shouru_sure);
-        tvData.setOnClickListener(this);
-        tvZhanghu.setOnClickListener(this);
-        tvSure.setOnClickListener(this);
+    private void setListener() {
+        edName.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                edName.setInputType(InputType.TYPE_NULL);
+                mKeyboardUtil.showKeyboard();
+                reShowKeyBoard.setVisibility(View.VISIBLE);
+                edName.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER);
+                return true;
+            }
+        });
+
+        edName.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 3);
+                        edName.setText(s);
+                        edName.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    edName.setText(s);
+                    edName.setSelection(2);
+                }
+
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        edName.setText(s.subSequence(0, 1));
+                        edName.setSelection(1);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
+        mKeyboardUtil.setOnEnterListener(new KeyboardUtil.EnterListener() {
+            @Override
+            public void enter() {
+                doSure();
+            }
+
+            @Override
+            public void keySet() {
+                reShowKeyBoard.setVisibility(View.GONE);
+            }
+        });
     }
+
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
@@ -210,8 +307,6 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
             }
         } else if (v == tvData) {
             showData();
-        } else if (v == tvSure) {
-            doSure();
         }
     }
 
@@ -238,6 +333,7 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
                 Config.SHOU_RU, shouRuId));
         EventBusUtil.sendEvent(new Event(C.EventCode.ZhiChuToHomeFragment, homListData));
         updateChoiceAccountYuer(shouRuId);
+        reShowKeyBoard.setVisibility(View.GONE);
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("id", 1);
         startActivity(intent);
