@@ -144,9 +144,11 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
         if (DaoBudget.getCount() != 0) {
             mBudgetModel = DaoBudget.query().get(0);
-            mCircleProgress.setDescribe(mBudgetModel.getBudgetDescription());
-            mCircleProgress.setMoney(mBudgetModel.getBudgetMoney());
-            mCircleProgress.setPercent(mBudgetModel.getBudgetRemainMoney());
+            if(mBudgetModel.getOpenBudget()){
+                mCircleProgress.setDescribe(mBudgetModel.getBudgetDescription());
+                mCircleProgress.setMoney(mBudgetModel.getBudgetMoney());
+                mCircleProgress.setPercent(mBudgetModel.getBudgetRemainMoney());
+            }
         }
         tvShouRuMonth.setText(String.format("%s收入", DateTimeUtil.getCurrentMonth()));
         tvZhiChuMonth.setText(String.format("%s支出", DateTimeUtil.getCurrentMonth()));

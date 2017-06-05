@@ -163,9 +163,8 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.e("MainActivity", "你往下面滑动了" + newState);
-                    mKeyboardUtil.hideKeyboard();
-                    reShowKeyBoard.setVisibility(View.GONE);
+                mKeyboardUtil.hideKeyboard();
+                reShowKeyBoard.setVisibility(View.GONE);
             }
 
         });
@@ -428,7 +427,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
                 for (ChoiceAccount model : accounts) {
                     accountMoney = model.getMoney();
                 }
-                Log.e("MainActivity", accountMoney + "");
             }
         });
     }

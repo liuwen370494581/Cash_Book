@@ -1,84 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/relay"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/white"
-             android:clipToPadding="true"
-             android:fitsSystemWindows="true">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/relay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clipToPadding="true"
+                android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="4dp"
+        android:id="@+id/f_shouru_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:clipToPadding="true"
-        android:fitsSystemWindows="true">
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/f_shouru_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-
-        <RelativeLayout
-            android:id="@+id/re_show_keyBoard"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_above="@+id/keyboard_view"
-            android:background="@color/background">
-
-            <TextView
-                android:id="@+id/f_shouru_zhanghu"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="13dp"
-                android:background="@drawable/zhichu_shouru_button"
-                android:clickable="true"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="5dp"
-                android:singleLine="true"
-                android:text="账户"
-                android:textColor="@color/text_color_33"
-                android:textSize="16sp"
-                android:visibility="visible"/>
-
-            <TextView
-                android:id="@+id/f_shouru_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="18dp"
-                android:layout_toRightOf="@id/f_shouru_zhanghu"
-                android:background="@drawable/zhichu_shouru_button"
-                android:clickable="true"
-                android:paddingBottom="5dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="5dp"
-                android:text="选择日期"
-                android:textColor="@color/text_color_33"
-                android:textSize="16sp"
-                android:visibility="visible"/>
-        </RelativeLayout>
-
-
-        <android.inputmethodservice.KeyboardView
-            android:id="@+id/keyboard_view"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/f_shouru_zhanghu"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#F4F4F4"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:keyBackground="@drawable/shuzi_selector"
-            android:keyTextColor="#000000"
-            android:keyTextSize="20sp"
-            android:shadowColor="#FFFFFF"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:background="@drawable/zhichu_shouru_button"
+            android:clickable="true"
+            android:paddingBottom="5dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+            android:text="账户"
+            android:textColor="@color/text_color_33"
+            android:textSize="16sp"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/f_shouru_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@id/f_shouru_zhanghu"
+            android:background="@drawable/zhichu_shouru_button"
+            android:clickable="true"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:text="选择日期"
+            android:textColor="@color/text_color_33"
+            android:textSize="16sp"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/f_shouru_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/zhichu_shouru_button"
+            android:clickable="true"
+            android:paddingBottom="5dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:text="确定"
+            android:textColor="@color/text_color_33"
+            android:textSize="16sp"
+            android:visibility="visible"/>
     </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>
