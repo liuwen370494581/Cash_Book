@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+    >
+
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/item_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="现金"
+        android:textColor="@color/text_color_33"
+        android:textSize="16sp"/>
+
+    <CheckBox
+        android:id="@+id/cb_choice"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:button="@drawable/checkbox_style"/>
+
+    <View
+        android:id="@+id/item_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/item_tv_name"
+        android:background="#cacaca"/>
+</RelativeLayout>

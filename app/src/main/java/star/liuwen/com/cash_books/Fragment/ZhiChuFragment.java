@@ -12,7 +12,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -92,6 +91,7 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
 
     private KeyboardUtil mKeyboardUtil;
     private RelativeLayout reShowKeyBoard;
+
 
     @Override
     public void lazyInitData() {
@@ -538,6 +538,9 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
 //        dialog.getWindow().setContentView(picker, params);
 //        dialog.getWindow().setGravity(Gravity.CENTER);
 //    }
+
+
+
 
 }
 

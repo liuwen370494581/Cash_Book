@@ -61,6 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return mAppInfo;
     }
 
+
     /**
      * 是否注册事件分发
      *

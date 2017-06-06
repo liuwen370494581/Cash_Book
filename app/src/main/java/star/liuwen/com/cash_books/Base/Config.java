@@ -60,6 +60,9 @@ public class Config {
     public final static String userNickName = "userNickName";
     public final static String userSignature = "userSignature";
     public final static String userSex = "userSix";
+    public static final String UserName = "UserName";
+    public static final String UserPassWord = "UserPassWord";
+    public static final String UserLocation = "UserLocation";
 
 
     public final static String HuoBICh = "HuoBICh";
@@ -72,9 +75,7 @@ public class Config {
     public static final String PlanSaveMoneyModel = "PlanSaveMoneyModel";
 
     public static final String FistStar = "FirstStar";
-    public static final String UserName = "UserName";
-    public static final String UserPassWord = "UserPassWord";
-    public static final String UserLocation = "UserLocation";
+
 
     public static final String PlanMoney = "PlanMoney";
     public static final String PlanFinishTime = "PlanFinishTime";
@@ -84,7 +85,7 @@ public class Config {
     public static final String SaveAPenPlatform = "SaveAPenPlatform";
     public static final String TextInPut = "TextInPut";
 
-
+    public static final String TxtChoiceAccountPop = "TxtChoiceAccountPop";
     public static final String TxtMoney = "TxtMoney";
     public static final String TxtPercent = "TxtPercent";
     public static final String TxtRemark = "TxtRemark";
@@ -105,6 +106,7 @@ public class Config {
     public static final String TxtSearchResult = "TxtSearchResult";
     public static final String TxtIssuingBank = "TxtIssuingBank";
     public static final String TxtBudgetYuSuan = "TxtBudgetYuSuan";
+
     public static final String IntentTag_ToWebView = "IntentTag_ToWebView";
 
     public static final String ModelWallet = "ModelWallet";

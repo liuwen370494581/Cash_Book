@@ -1,8 +1,11 @@
 package star.liuwen.com.cash_books.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
@@ -11,12 +14,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
@@ -31,6 +40,7 @@ import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.EventBus.C;
 import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
@@ -50,7 +60,15 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private List<ChoiceAccount> mList;
     private double totalYue, yuer;
 
+    private List<ChoiceAccount> dialogList = new ArrayList<>();//弹出选择余额的对话框
+
+    private CheckBox checkBox;
+    private PopupWindow mPopupWindow;
+    private ChoiceAccountPopAdapter mPopAdapter;
+    private ListView mListView;
+
     @Override
+
     public void lazyInitData() {
 
     }
@@ -92,6 +110,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         mRecyclerView.setLayoutManager(mLayoutManager);
         if (DaoChoiceAccount.query().size() != 0) {
             mList = DaoChoiceAccount.query();
+            dialogList = DaoChoiceAccount.query();
             mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
             for (int i = 0; i < mList.size(); i++) {
@@ -102,13 +121,67 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             mAdapter.setData(mList);
             mRecyclerView.setAdapter(mAdapter.getHeaderAndFooterAdapter());
         }
-        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear(),""));
+        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear(), ""));
         mAdapter.setOnRVItemClickListener(this);
         if (SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null) != null) {
             Bitmap bitmap = BitMapUtils.getBitmapByPath(getActivity(), SharedPreferencesUtil.getStringPreferences(getActivity(), Config.ChangeBg, null), false);
             mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
         }
+
+        mRyYuer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChoiceAccountPop();
+                if (mPopupWindow.isShowing()) {
+                    mPopupWindow.dismiss();
+                } else {
+                    int[] location = new int[2];
+                    mRyYuer.getLocationOnScreen(location);
+                    mPopupWindow.showAsDropDown(mRyYuer);
+                    //mPopupWindow.showAtLocation(mRyYuer, Gravity.BOTTOM, 0, 0);
+                    backgroundAlpha(0.5f);
+                }
+            }
+        });
     }
+
+    private void showChoiceAccountPop() {
+        View popView = View.inflate(getActivity(), R.layout.pop_choiceaccount_dialog, null);
+        mListView = (ListView) popView.findViewById(R.id.lv_popup_list);
+        mPopupWindow = new PopupWindow(popView, 380, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopAdapter = new ChoiceAccountPopAdapter(getActivity(), R.layout.item_dialog_showyuer);
+        mPopAdapter.setData(dialogList);
+        mListView.setAdapter(mPopAdapter);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        mPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        mPopupWindow.setAnimationStyle(R.style.AnimBottom);
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+        //先初始化选择的
+        mPopAdapter.initSelected(dialogList.size());
+        //有被选中了 在调用次方法
+        mPopAdapter.setSelected();
+
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getActivity().getWindow().setAttributes(lp);
+    }
+
 
     @Override
     protected boolean isRegisterEventBus() {
@@ -128,13 +201,14 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                     @Override
                     public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
                         mList = DaoChoiceAccount.query();
+                        dialogList = DaoChoiceAccount.query();
                         subscriber.onNext(mList);
                     }
                 }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
                     @Override
                     public void call(List<ChoiceAccount> accounts) {
                         mAdapter.setData(accounts);
-                        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear(),""));
+                        mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear(), ""));
                         for (int i = 0; i < accounts.size(); i++) {
                             yuer = yuer + accounts.get(i).getMoney();
                         }
@@ -169,17 +243,25 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 Bitmap bitmap = BitMapUtils.getBitmapByPath(getActivity(), event.getData().toString(), false);
                 mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
                 break;
+            case C.EventCode.WalletFragment:
+                //接收从选择账户余额中pop传递过来的值
+                HashMap<Integer, Boolean> isSelected = (HashMap<Integer, Boolean>) event.getData();
+
+                break;
         }
     }
 
     private void commonUpdateWalletData() {
         mList.clear();
+        dialogList.clear();
         mAdapter.clear();
         Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
             @Override
             public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
                 mList = DaoChoiceAccount.query();
+                dialogList = DaoChoiceAccount.query();
                 subscriber.onNext(mList);
+                subscriber.onNext(dialogList);
             }
         }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
             @Override
@@ -191,7 +273,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 tvYuer.setText(String.format("%.2f", yuer));
                 //因为余额的数值会添加要设为0重新开始算
                 yuer = 0;
-                mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear(),""));
+                mAdapter.addLastItem(new ChoiceAccount(DaoChoiceAccount.getCount(), R.mipmap.icon_add, "添加账户", 0.00, 0.00, "", "", R.color.transparent, "添加", 0.00, 0.00, DateTimeUtil.getCurrentYear(), ""));
             }
         });
     }
@@ -208,6 +290,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             startActivity(intent);
         }
     }
+
 
     public class WalletAdapter extends BGARecyclerViewAdapter<ChoiceAccount> {
 
@@ -245,4 +328,59 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         }
     }
 
+    private class ChoiceAccountPopAdapter extends BGAAdapterViewAdapter<ChoiceAccount> {
+        private HashMap<Integer, Boolean> isSelected; //记录checkbox是否被选中
+
+
+        public ChoiceAccountPopAdapter(Context context, int itemLayoutId) {
+            super(context, itemLayoutId);
+        }
+
+        public HashMap<Integer, Boolean> getIsSelected() {
+            return isSelected;
+        }
+
+        public void setIsSelected(HashMap<Integer, Boolean> isSelected) {
+            this.isSelected = isSelected;
+        }
+
+        @Override
+        protected void fillData(BGAViewHolderHelper helper, final int position, ChoiceAccount model) {
+            helper.setText(R.id.item_tv_name, model.getAccountName());
+            checkBox = helper.getView(R.id.cb_choice);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isSelected.get(position)) {
+                        isSelected.put(position, false);
+                        setIsSelected(isSelected);
+                        SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
+                        EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
+                    } else {
+                        isSelected.put(position, true);
+                        setIsSelected(isSelected);
+                        SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
+                        EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
+                    }
+                }
+            });
+            checkBox.setChecked(getIsSelected().get(position));
+        }
+
+        public void initSelected(int size) {
+            if (isSelected == null) {
+                isSelected = new HashMap<>();
+                for (int i = 0; i < size; i++) {
+                    isSelected.put(i, true);//设置全部为默认选中状态 设置成false 则默认是没有选中的状态
+                }
+            }
+        }
+
+        public void setSelected() {
+            if (SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop) != null) {
+                isSelected = (HashMap<Integer, Boolean>) SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop);
+                notifyDataSetChanged();
+            }
+        }
+    }
 }
