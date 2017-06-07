@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -93,11 +94,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
     private RelativeLayout reShowKeyBoard;
 
 
-    @Override
-    public void lazyInitData() {
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,6 +101,12 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
         setContentView(R.layout.fragment_zhichu);
         initView();
         return getContentView();
+    }
+
+    @Override
+    protected void onFragmentFirstVisible() {
+        super.onFragmentFirstVisible();
+        Log.e("MainActivity", "第一次加载支出Fragment");
     }
 
     private void initView() {
@@ -538,8 +540,6 @@ public class ZhiChuFragment extends BaseFragment implements View.OnClickListener
 //        dialog.getWindow().setContentView(picker, params);
 //        dialog.getWindow().setGravity(Gravity.CENTER);
 //    }
-
-
 
 
 }

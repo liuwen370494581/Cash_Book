@@ -82,10 +82,6 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
     private long shouRuId;//用来标识每个item独有的属性
 
 
-    @Override
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override
@@ -136,6 +132,8 @@ public class ShouRuFragment extends BaseFragment implements View.OnClickListener
         mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnRVItemClickListener(this);
     }
+
+
 
     private void initView() {
         mRecyclerView = (RecyclerView) getContentView().findViewById(R.id.f_shouru_recycler);

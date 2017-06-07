@@ -59,10 +59,12 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
 
         model = (BudgetModel) getIntent().getExtras().getSerializable(Config.ModelBudget);
         if (model != null) {
-            mCircleProgress.setMoney(model.getBudgetMoney());
-            mCircleProgress.setPercent(model.getBudgetRemainMoney());
-            mCircleProgress.setDescribe(model.getBudgetDescription());
-            txtBudgetMonth.setText(model.getBudgetMoney());
+            if(model.getOpenBudget()){
+                mCircleProgress.setMoney(model.getBudgetMoney());
+                mCircleProgress.setPercent(model.getBudgetRemainMoney());
+                mCircleProgress.setDescribe(model.getBudgetDescription());
+                txtBudgetMonth.setText(model.getBudgetMoney());
+            }
             isOpenBudget = model.getOpenBudget();
         }
 

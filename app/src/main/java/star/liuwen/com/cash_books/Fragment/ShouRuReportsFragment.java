@@ -47,10 +47,6 @@ public class ShouRuReportsFragment extends BaseFragment implements View.OnClickL
     private float[] money;
     private View headView;
 
-    @Override
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override

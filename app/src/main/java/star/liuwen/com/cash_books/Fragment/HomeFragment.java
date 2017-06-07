@@ -75,10 +75,6 @@ public class HomeFragment extends BaseFragment implements BGARefreshLayout.BGARe
     private BudgetModel mBudgetModel;
 
 
-    @Override
-    public void lazyInitData() {
-
-    }
 
 
     @Nullable

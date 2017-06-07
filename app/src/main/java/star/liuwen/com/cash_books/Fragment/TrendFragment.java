@@ -14,12 +14,6 @@ import star.liuwen.com.cash_books.R;
  */
 public class TrendFragment extends BaseFragment {
 
-
-    @Override
-    public void lazyInitData() {
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -25,10 +25,6 @@ public class ManageMoneyFragment
     private TextView txtChargeWealth, txtMyWealth;
     private FragmentAdapter mFragmentAdapter;
 
-    @Override
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override

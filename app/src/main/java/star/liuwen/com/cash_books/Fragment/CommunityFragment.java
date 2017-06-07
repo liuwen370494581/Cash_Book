@@ -72,10 +72,6 @@ public class CommunityFragment extends BaseFragment implements View.OnClickListe
     private ListView mListView;
     private PopWindowDiscussAdapter mPopWindowAdapter;
 
-    @Override
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override

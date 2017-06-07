@@ -14,10 +14,6 @@ import star.liuwen.com.cash_books.R;
  * 我的财富页面
  */
 public class MyWealthFragment extends BaseFragment {
-    @Override
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override

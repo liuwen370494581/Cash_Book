@@ -45,10 +45,6 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
     private RelativeLayout reNewPersonGift, reEveryDaySignIn, reInviteAReward, reSafetyGuarantee;
 
 
-    @Override
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override

@@ -32,10 +32,7 @@ public class P2PFragment extends BaseFragment {
     private LinearLayoutManager mLayoutManager;
 
 
-    @Override
-    public void lazyInitData() {
 
-    }
 
     @Nullable
     @Override

@@ -23,10 +23,6 @@ public class ReportFragment extends BaseFragment implements View.OnClickListener
     private ZhiChuReportsFragment mZhiChuReportsFragment;
     private TrendFragment mTrendFragment;
 
-    @Override
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override

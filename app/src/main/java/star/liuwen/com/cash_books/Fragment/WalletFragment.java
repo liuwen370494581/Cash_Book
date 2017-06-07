@@ -40,7 +40,6 @@ import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.EventBus.C;
 import star.liuwen.com.cash_books.EventBus.Event;
-import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
@@ -67,11 +66,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private ChoiceAccountPopAdapter mPopAdapter;
     private ListView mListView;
 
-    @Override
-
-    public void lazyInitData() {
-
-    }
 
     @Nullable
     @Override
@@ -245,8 +239,12 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 break;
             case C.EventCode.WalletFragment:
                 //接收从选择账户余额中pop传递过来的值
-                HashMap<Integer, Boolean> isSelected = (HashMap<Integer, Boolean>) event.getData();
-
+//                int position = (int) event.getData();
+//                if (mPopAdapter.getIsSelected().get(position)) {
+//                  double money=  dialogList.get(position).getMoney();
+//                } else {
+//
+//                }
                 break;
         }
     }
@@ -355,12 +353,12 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                         isSelected.put(position, false);
                         setIsSelected(isSelected);
                         SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
-                        EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
+                      //  EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, position));
                     } else {
                         isSelected.put(position, true);
                         setIsSelected(isSelected);
                         SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
-                        EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
+                       // EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, position));
                     }
                 }
             });

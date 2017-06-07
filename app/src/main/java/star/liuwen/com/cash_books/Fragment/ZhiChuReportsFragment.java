@@ -48,10 +48,6 @@ public class ZhiChuReportsFragment extends BaseFragment implements OnClickListen
     private View headView;
 
 
-    @Override
-    public void lazyInitData() {
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
