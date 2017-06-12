@@ -14,21 +14,15 @@ import star.liuwen.com.cash_books.R;
  */
 public class TrendFragment extends BaseFragment {
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         setContentView(R.layout.trend_fragment);
-        initView();
-        initData();
         return getContentView();
     }
 
-    private void initView() {
 
-    }
-
-    private void initData() {
-
-    }
 }

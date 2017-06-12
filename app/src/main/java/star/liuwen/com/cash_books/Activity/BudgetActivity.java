@@ -67,8 +67,6 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
             }
             isOpenBudget = model.getOpenBudget();
         }
-
-//        isOpenBudget = SharedPreferencesUtil.getBooleanPreferences(this, Config.isBudgetPush, false);
         setRightTxtVisible(isOpenBudget);
         imageBudget.setImageResource(isOpenBudget ? R.mipmap.more_push_on : R.mipmap.more_push_off);
         reBudgetMonthShow.setVisibility(isOpenBudget ? View.VISIBLE : View.GONE);
@@ -82,7 +80,6 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
             SnackBarUtil.show(txtBudgetMonth, "您还没有编辑预算");
             return;
         }
-//        SharedPreferencesUtil.setBooleanPreferences(this, Config.isBudgetPush, isOpenBudget);
         UpdateAccountBudget();
         this.finish();
     }

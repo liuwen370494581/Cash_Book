@@ -10,15 +10,27 @@ android {
         applicationId "star.liuwen.com.cash_books"
         minSdkVersion 22
         targetSdkVersion 23
-        versionCode 91
-        versionName "1.9.1 "
+        versionCode 92
+        versionName "1.9.2 "
 
     }
     buildTypes {
-        release {
-            //zipAlignEnabled true //这个在打包时需要设置为true，能优化我们的java字节码，提高运行效率；
-            minifyEnabled false //开启混淆
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            minifyEnabled true
+            useProguard true
+            //移除没用的资源文件
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+
         }
     }
 }

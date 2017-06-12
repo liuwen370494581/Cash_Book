@@ -40,6 +40,7 @@ import star.liuwen.com.cash_books.Base.Config;
 import star.liuwen.com.cash_books.Dao.DaoChoiceAccount;
 import star.liuwen.com.cash_books.EventBus.C;
 import star.liuwen.com.cash_books.EventBus.Event;
+import star.liuwen.com.cash_books.EventBus.EventBusUtil;
 import star.liuwen.com.cash_books.R;
 import star.liuwen.com.cash_books.Utils.BitMapUtils;
 import star.liuwen.com.cash_books.Utils.DateTimeUtil;
@@ -57,7 +58,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private TextView tvYuer;
     private DrawerLayout mDrawerLayout;
     private List<ChoiceAccount> mList;
-    private double totalYue, yuer;
+    private double totalYue, yuer, totalPopMoney;
 
     private List<ChoiceAccount> dialogList = new ArrayList<>();//弹出选择余额的对话框
 
@@ -161,7 +162,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
         //先初始化选择的
         mPopAdapter.initSelected(dialogList.size());
         //有被选中了 在调用次方法
-        mPopAdapter.setSelected();
+        // mPopAdapter.setSelected();
 
     }
 
@@ -238,28 +239,32 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
                 break;
             case C.EventCode.WalletFragment:
-                //接收从选择账户余额中pop传递过来的值
-//                int position = (int) event.getData();
-//                if (mPopAdapter.getIsSelected().get(position)) {
-//                  double money=  dialogList.get(position).getMoney();
-//                } else {
-//
-//                }
+                yuer = 0;
+                totalPopMoney = 0;
+                HashMap<Long, Boolean> hashMap = (HashMap<Long, Boolean>) event.getData();
+                for (int i = 0; i < dialogList.size(); i++) {
+                    totalPopMoney += dialogList.get(i).getMoney();
+                    if (!hashMap.get(dialogList.get(i).getId())) {
+                        yuer += dialogList.get(i).getMoney();
+                    }
+                }
+                yuer = totalPopMoney - yuer;
+                tvYuer.setText(String.format("%.2f", yuer));
                 break;
         }
     }
 
     private void commonUpdateWalletData() {
         mList.clear();
-        dialogList.clear();
         mAdapter.clear();
+        dialogList.clear();
+        mPopAdapter.clear();
         Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
             @Override
             public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {
                 mList = DaoChoiceAccount.query();
                 dialogList = DaoChoiceAccount.query();
                 subscriber.onNext(mList);
-                subscriber.onNext(dialogList);
             }
         }).compose(RxUtil.<List<ChoiceAccount>>applySchedulers()).subscribe(new Action1<List<ChoiceAccount>>() {
             @Override
@@ -327,58 +332,63 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     }
 
     private class ChoiceAccountPopAdapter extends BGAAdapterViewAdapter<ChoiceAccount> {
-        private HashMap<Integer, Boolean> isSelected; //记录checkbox是否被选中
+        private HashMap<Long, Boolean> isSelected; //记录checkbox是否被选中
 
 
         public ChoiceAccountPopAdapter(Context context, int itemLayoutId) {
             super(context, itemLayoutId);
         }
 
-        public HashMap<Integer, Boolean> getIsSelected() {
+        public HashMap<Long, Boolean> getIsSelected() {
             return isSelected;
         }
 
-        public void setIsSelected(HashMap<Integer, Boolean> isSelected) {
+        public void setIsSelected(HashMap<Long, Boolean> isSelected) {
             this.isSelected = isSelected;
         }
 
         @Override
-        protected void fillData(BGAViewHolderHelper helper, final int position, ChoiceAccount model) {
-            helper.setText(R.id.item_tv_name, model.getAccountName());
+        protected void fillData(BGAViewHolderHelper helper, final int position, final ChoiceAccount model) {
+            if (model.getIssuingBank() == null || model.getIssuingBank().equals("")) {
+                helper.setText(R.id.item_tv_name, model.getAccountName());
+            } else {
+                helper.setText(R.id.item_tv_name, model.getIssuingBank());
+            }
             checkBox = helper.getView(R.id.cb_choice);
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isSelected.get(position)) {
-                        isSelected.put(position, false);
+                    if (isSelected.get(model.getId())) {
+                        isSelected.put(model.getId(), false);
                         setIsSelected(isSelected);
-                        SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
-                      //  EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, position));
+                        // SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
+                        EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
                     } else {
-                        isSelected.put(position, true);
+                        isSelected.put(model.getId(), true);
                         setIsSelected(isSelected);
-                        SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
-                       // EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, position));
+                        // SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
+                        EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
                     }
                 }
             });
-            checkBox.setChecked(getIsSelected().get(position));
+            checkBox.setChecked(getIsSelected().get(model.getId()));
         }
 
         public void initSelected(int size) {
             if (isSelected == null) {
                 isSelected = new HashMap<>();
                 for (int i = 0; i < size; i++) {
-                    isSelected.put(i, true);//设置全部为默认选中状态 设置成false 则默认是没有选中的状态
+                    isSelected.put(dialogList.get(i).getId(), true);//设置全部为默认选中状态 设置成false 则默认是没有选中的状态
                 }
             }
         }
 
-        public void setSelected() {
-            if (SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop) != null) {
-                isSelected = (HashMap<Integer, Boolean>) SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop);
-                notifyDataSetChanged();
-            }
-        }
+//        public void setSelected() {
+//            if (SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop) != null) {
+//                isSelected = (HashMap<Long, Boolean>) SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop);
+//                notifyDataSetChanged();
+//
+//            }
+//        }
     }
 }

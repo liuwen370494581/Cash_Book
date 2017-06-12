@@ -5,12 +5,4 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-  <TextView
-      android:textSize="@dimen/textSize_18"
-      android:textColor="@color/blue"
-      android:layout_marginTop="200dp"
-      android:layout_gravity="center"
-      android:text="该页面正在开发中"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
 </LinearLayout>

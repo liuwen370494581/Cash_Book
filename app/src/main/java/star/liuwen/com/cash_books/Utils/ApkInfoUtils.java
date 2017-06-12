@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -60,6 +62,27 @@ public class ApkInfoUtils {
             inputMethodManager.hideSoftInputFromWindow(((Activity) context).getCurrentFocus()
                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    /**
+     * 判断当前手机是否有连接的wifi
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isWifiActive(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo[] infos = connectivityManager.getAllNetworkInfo();
+            if (infos != null) {
+                for (NetworkInfo ni : infos) {
+                    if (ni.getTypeName().equals("WIFI") && ni.isConnected()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }
