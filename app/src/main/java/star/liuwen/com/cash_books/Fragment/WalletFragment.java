@@ -66,6 +66,7 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private PopupWindow mPopupWindow;
     private ChoiceAccountPopAdapter mPopAdapter;
     private ListView mListView;
+    private HashMap<Integer, Boolean> isChecked;
 
 
     @Nullable
@@ -133,7 +134,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                     int[] location = new int[2];
                     mRyYuer.getLocationOnScreen(location);
                     mPopupWindow.showAsDropDown(mRyYuer);
-                    //mPopupWindow.showAtLocation(mRyYuer, Gravity.BOTTOM, 0, 0);
                     backgroundAlpha(0.5f);
                 }
             }
@@ -160,9 +160,10 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             }
         });
         //先初始化选择的
+
         mPopAdapter.initSelected(dialogList.size());
         //有被选中了 在调用次方法
-        // mPopAdapter.setSelected();
+        isChecked=mPopAdapter.getIsSelected();
 
     }
 
@@ -239,12 +240,13 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                 mDrawerLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
                 break;
             case C.EventCode.WalletFragment:
+                //设置为0,避免重复添加
                 yuer = 0;
                 totalPopMoney = 0;
-                HashMap<Long, Boolean> hashMap = (HashMap<Long, Boolean>) event.getData();
+                HashMap<Integer, Boolean> hashMap = (HashMap<Integer, Boolean>) event.getData();
                 for (int i = 0; i < dialogList.size(); i++) {
                     totalPopMoney += dialogList.get(i).getMoney();
-                    if (!hashMap.get(dialogList.get(i).getId())) {
+                    if (!hashMap.get(i)) {
                         yuer += dialogList.get(i).getMoney();
                     }
                 }
@@ -332,18 +334,18 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     }
 
     private class ChoiceAccountPopAdapter extends BGAAdapterViewAdapter<ChoiceAccount> {
-        private HashMap<Long, Boolean> isSelected; //记录checkbox是否被选中
+        private HashMap<Integer, Boolean> isSelected; //记录checkbox是否被选中
 
 
         public ChoiceAccountPopAdapter(Context context, int itemLayoutId) {
             super(context, itemLayoutId);
         }
 
-        public HashMap<Long, Boolean> getIsSelected() {
+        public HashMap<Integer, Boolean> getIsSelected() {
             return isSelected;
         }
 
-        public void setIsSelected(HashMap<Long, Boolean> isSelected) {
+        public void setIsSelected(HashMap<Integer, Boolean> isSelected) {
             this.isSelected = isSelected;
         }
 
@@ -358,37 +360,31 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isSelected.get(model.getId())) {
-                        isSelected.put(model.getId(), false);
+                    if (isSelected.get(position)) {
+                        isSelected.put(position, false);
                         setIsSelected(isSelected);
-                        // SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
                         EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
                     } else {
-                        isSelected.put(model.getId(), true);
+                        isSelected.put(position, true);
                         setIsSelected(isSelected);
-                        // SharedPreferencesUtil.setObj(getActivity(), Config.TxtChoiceAccountPop, isSelected);
                         EventBusUtil.sendEvent(new Event(C.EventCode.WalletFragment, isSelected));
                     }
                 }
             });
-            checkBox.setChecked(getIsSelected().get(model.getId()));
+            checkBox.setChecked(getIsSelected().get(position));
         }
 
         public void initSelected(int size) {
             if (isSelected == null) {
                 isSelected = new HashMap<>();
                 for (int i = 0; i < size; i++) {
-                    isSelected.put(dialogList.get(i).getId(), true);//设置全部为默认选中状态 设置成false 则默认是没有选中的状态
+                    isSelected.put(i, true);//设置全部为默认选中状态 设置成false 则默认是没有选中的状态
                 }
             }
         }
 
-//        public void setSelected() {
-//            if (SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop) != null) {
-//                isSelected = (HashMap<Long, Boolean>) SharedPreferencesUtil.getObj(getActivity(), Config.TxtChoiceAccountPop);
-//                notifyDataSetChanged();
-//
-//            }
-//        }
+        public void setSelected() {
+
+        }
     }
 }
