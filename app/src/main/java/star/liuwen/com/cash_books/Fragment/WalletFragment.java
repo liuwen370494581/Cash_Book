@@ -258,7 +258,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
 
     private void commonUpdateWalletData() {
         mList.clear();
-        mAdapter.clear();
         dialogList.clear();
         mPopAdapter.clear();
         Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
@@ -381,10 +380,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
                     isSelected.put(i, true);//设置全部为默认选中状态 设置成false 则默认是没有选中的状态
                 }
             }
-        }
-
-        public void setSelected() {
-
         }
     }
 }

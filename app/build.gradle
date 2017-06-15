@@ -26,12 +26,21 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled true
             useProguard true
-            //移除没用的资源文件
+            //使用场景是当项目使用了很多第三方库的时候，这些库包含了很多资源文件，但是您的项目只使用了其中一小部分 这里设置为true的时候 即可删除项目中没有用到的资源
+            //切记不可再debug版本的时候 使用
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
         }
+    }
+    //在编译打包的时候排除下列中不想添加到apk中的文件
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 }
 //greendao配置
@@ -49,12 +58,13 @@ dependencies {
     //greendao3
     compile 'org.greenrobot:greendao:3.1.1'
     //万能适配器
-    compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
+    compile 'cn.bingoogolapple:bga-adapter:1.1.9@aar'
+    //下拉刷新的控件
     compile 'cn.bingoogolapple:bga-refreshlayout:1.0.7@aar'
+    //动画库
     compile 'com.nineoldandroids:library:2.4.0'
     //banner
     compile 'cn.bingoogolapple:bga-banner:2.1.0@aar'
-
     //日历选择器
     compile 'cn.aigestudio.datepicker:DatePicker:2.2.0'
     //时间选择器
@@ -65,7 +75,6 @@ dependencies {
     //搜索框
     compile 'com.wenwenwen888:searchbox:1.0.0'
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
-
     //内存检测工具
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
