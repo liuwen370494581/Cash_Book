@@ -215,6 +215,11 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+    }
+
     private static final int ACCOUNT = 101;
     private static final int MONEY = 102;
     private static final int CreditLimit = 103;
@@ -288,11 +293,6 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //  RxBus.getInstance().release();
-    }
 
     private void updateChoiceAccountCommon(boolean isIssubank) {
         if (isIssubank) {
@@ -309,4 +309,5 @@ public class PaySettingsActivity extends BaseActivity implements View.OnClickLis
         }
 
     }
+
 }

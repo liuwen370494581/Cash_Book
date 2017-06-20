@@ -259,7 +259,6 @@ public class WalletFragment extends BaseFragment implements BGAOnRVItemClickList
     private void commonUpdateWalletData() {
         mList.clear();
         dialogList.clear();
-        mPopAdapter.clear();
         Observable.create(new Observable.OnSubscribe<List<ChoiceAccount>>() {
             @Override
             public void call(Subscriber<? super List<ChoiceAccount>> subscriber) {

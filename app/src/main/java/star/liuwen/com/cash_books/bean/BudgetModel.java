@@ -21,6 +21,8 @@ public class BudgetModel implements Serializable {
     private String budgetMoney;//月预算金额
     private int budgetRemainMoney;// 百分比
     private String budgetDescription;//预算描述
+
+
     public String getBudgetDescription() {
         return this.budgetDescription;
     }

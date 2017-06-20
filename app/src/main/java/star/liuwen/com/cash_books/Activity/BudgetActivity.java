@@ -59,7 +59,7 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
 
         model = (BudgetModel) getIntent().getExtras().getSerializable(Config.ModelBudget);
         if (model != null) {
-            if(model.getOpenBudget()){
+            if (model.getOpenBudget()) {
                 mCircleProgress.setMoney(model.getBudgetMoney());
                 mCircleProgress.setPercent(model.getBudgetRemainMoney());
                 mCircleProgress.setDescribe(model.getBudgetDescription());
@@ -75,7 +75,6 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void onSure() {
-
         if (TextUtils.isEmpty(txtBudgetMonth.getText().toString().trim())) {
             SnackBarUtil.show(txtBudgetMonth, "您还没有编辑预算");
             return;
@@ -91,6 +90,11 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         setRightTxtVisible(!isOpenBudget);
         isOpenBudget = !isOpenBudget;
         if (!isOpenBudget) {
+            //还原预算设置
+            mCircleProgress.setMoney(getString(R.string.ling));
+            mCircleProgress.setPercent(0);
+            mCircleProgress.setDescribe(getString(R.string.no_setting_month_Budget));
+            txtBudgetMonth.setText(getString(R.string.ling));
             UpdateAccountBudget();
         }
     }
