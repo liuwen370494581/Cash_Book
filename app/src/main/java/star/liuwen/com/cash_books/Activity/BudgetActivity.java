@@ -1,5 +1,7 @@
 package star.liuwen.com.cash_books.Activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -48,6 +50,9 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
                 onSure();
             }
         });
+        //结果以MB为单位进行返回，我们开发时应用程序的内存不能超过这个限制，否则会出现OOM。
+        ActivityManager manager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+        int heapSize = manager.getMemoryClass();//256M  超出256M  软件才会oom
 
         reBudgetMonthShow = (RelativeLayout) findViewById(R.id.re_budget_show);
         reBudgetMonth = (RelativeLayout) findViewById(R.id.re_budget_month);
@@ -134,5 +139,34 @@ public class BudgetActivity extends BaseActivity implements View.OnClickListener
         model.setBudgetRemainMoney(isOpenBudget ? 100 : 0);
         DaoBudget.update(model);
         EventBusUtil.sendEvent(new Event(C.EventCode.BudgetActivityToHomeFragment, model));
+    }
+
+
+    /**
+     * TRIM_MEMORY_COMPLETE：内存不足，并且该进程在后台进程列表最后一个，马上就要被清理
+     * TRIM_MEMORY_MODERATE：内存不足，并且该进程在后台进程列表的中部。
+     * TRIM_MEMORY_BACKGROUND：内存不足，并且该进程是后台进程。
+     * TRIM_MEMORY_UI_HIDDEN：内存不足，并且该进程的UI已经不可见了。
+     * 以上4个是4.0增加
+     * TRIM_MEMORY_RUNNING_CRITICAL：内存不足(后台进程不足3个)，并且该进程优先级比较高，需要清理内存
+     * TRIM_MEMORY_RUNNING_LOW：内存不足(后台进程不足5个)，并且该进程优先级比较高，需要清理内存
+     * TRIM_MEMORY_RUNNING_MODERATE：内存不足(后台进程超过5个)，并且该进程优先级比较高，需要清理内存
+     * 以上3个是4.1增加
+     * 系统也提供了一个ComponentCallbacks2，通过Context.registerComponentCallbacks()注册后，就会被系统回调到。
+     *
+     * @param level
+     */
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        switch (level) {
+            case TRIM_MEMORY_BACKGROUND:
+
+                break;
+
+            case TRIM_MEMORY_UI_HIDDEN:
+                //当UI隐藏掉的时候 释放资源  让内存释放
+                break;
+        }
     }
 }

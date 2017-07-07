@@ -36,7 +36,6 @@ public class App extends Application {
 
     private RefWatcher mRefWatcher;
     private static DaoSession mDaoSession;
-
     public NetworkUtils.NetworkType mNetType;
     private NetStateReceiver netStateReceiver;
 

@@ -22,6 +22,7 @@
     </style>
 
 
+    <!--弹出周一和周五的popwindow-->
     <!--  这个是加入的代码 -->
     <style name="mypopwindow_anim_style">
         <item name="android:windowEnterAnimation">@anim/popshow_anim</item>

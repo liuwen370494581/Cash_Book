@@ -93,6 +93,7 @@ public class AccountingWealthFragment extends BaseFragment implements BGARefresh
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
                 Glide.with(banner.getContext()).load(model).placeholder(R.mipmap.background).error(R.mipmap.background).dontAnimate().thumbnail(0.1f).into((ImageView) view);
+
             }
         });
 

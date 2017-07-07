@@ -340,4 +340,11 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isFragmentVisible() {
         return isFragmentVisible;
     }
+
+
+    //简化findById的写法
+    public <T extends View> T getView(int viewId) {
+        return (T) getContentView().findViewById(viewId);
+    }
+
 }

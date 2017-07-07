@@ -312,4 +312,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar_righ_tv.setOnClickListener(onClickListener);
     }
 
+    //简化findByID的写法
+
+    public <T extends View> T getView(int viewId) {
+        return (T) this.findViewById(viewId);
+    }
+
 }

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import star.liuwen.com.cash_books.R;
 
-//popWindow页面显示类
+//popWindow页面显示类  主要弹出(周一到周五)这个popwindow
 public class SelectRemindCyclePopup implements OnClickListener {
     private TextView tv_mon, tv_tue, tv_wed, tv_thu, tv_fri, tv_sat, tv_sun, tv_sure, every_day,
             tv_drugcycle_once;
